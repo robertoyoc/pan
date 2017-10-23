@@ -1,10 +1,3 @@
-body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
-}
 body{
     font-family: 'Roboto Slab', serif;
     font-family: 'Kurale', serif;
@@ -61,5 +54,5 @@ footer.page-footer {
 }
 
 #map{
-  height: 400px;
+  height: 400px; 
 }

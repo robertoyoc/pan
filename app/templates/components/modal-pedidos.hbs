@@ -1,0 +1,51 @@
+<div id="pedidos" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4>Pedidos</h4>
+      <div class="row">
+        <div class="col s12">
+    <table class="striped centered bordered">
+        <thead>
+          <tr>
+              <th>Articulo</th>
+              <th>Cantidad</th>
+              <th>Precio Unitario</th>
+              <th>Costo Total</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Dona</td>
+            <td><input type="number" name="quantity" min="1" value="1"></td>
+            <td>$8.00</td>
+            <td>$24.00</td>
+          </tr>
+          <tr>
+            <td>Pastel</td>
+            <td><input type="number" name="quantity" min="1" value="1"></td>
+            <td>$82.00</td>
+            <td>$240.00</td>
+          </tr>
+          <tr>
+            <td>Cuadro</td>
+            <td><input type="number" name="quantity" min="1" value="1"></td>
+            <td>$7.00</td>
+            <td>$21.00</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>Pago total:</td>
+            <td>$500.00</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top: 1%;"><a class="waves-effect waves-light btn brown right" href="#productos" onclick="$('#pedidos').modal('close');"><i class="material-icons right">add</i>Agregas Más</a>
+      <a class="waves-effect waves-light btn green right" href="#pagar" {{action 'pagar'}} style="margin-right: 1%;"><i class="material-icons right">attach_money</i>Pagar</a></div>
+  </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+    </div>
+</div>
