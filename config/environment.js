@@ -31,6 +31,11 @@ module.exports = function(environment) {
       // when it is created
     }
   };
+  ENV['ember-simple-google-maps'] = {
+    url: 'https://maps.googleapis.com/maps/api/js',
+    version: '3',
+    apiKey: 'AIzaSyC89TSJ7xLWE0-Ync0PnNkHcYmg3nVp7Yg'
+  }
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;

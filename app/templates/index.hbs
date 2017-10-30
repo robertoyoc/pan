@@ -151,7 +151,26 @@
       <div class="col s12 center" id="sucursales">
         <h3><i class="mdi-content-send brown-text"></i></h3>
         <h4>Sucursales</h4>
-        {{em-map}}
+          {{#m-wrapper query=".collapsible" method="collapsible"}}
+          <div class="col s12 l4">
+              <ul class="collapsible" data-collapsible="accordion">
+                <li>
+                  <div class="collapsible-header active" {{action 'map' 'villita' on='click'}}><i class="material-icons">store_mall_directory</i>La Villita</div>
+                  <div class="collapsible-body"><span><i class="material-icons">place</i>Av Benito Juárez 804, Centro, 42000 Pachuca de Soto, Hgo.<br><i class="material-icons">local_phone</i>771 713 2511<br><i class="material-icons">watch_later</i>06:30-22:30</span></div>
+                </li>
+                <li>
+                  <div class="collapsible-header" {{action 'map' "sanjavier" on='click'}}><i class="material-icons">store_mall_directory</i>San Javier</div>
+                  <div class="collapsible-body"><span><i class="material-icons">place</i>Blvd. Valle de San Javier 504, Valle de San Javier, 42086 Pachuca de Soto, Hgo.<br><i class="material-icons">local_phone</i>771 714 7870<br><i class="material-icons">watch_later</i>06:30-22:30</span></div>
+                </li>
+              </ul>
+
+          </div>
+          <div class="col s12 l8">
+            <p id="map">
+              {{location-map lat= 0 lon=0}}
+            </p>
+          </div>
+          {{/m-wrapper}}
       </div>
     </div>
 
@@ -305,8 +324,11 @@
           <input id="password" type="password" class="validate">
           <label for="password">Password</label>
         </div>
+
         <div class="input-field col s12">
+        {{#m-wrapper query="select" method="material_select"}}
         <i class="material-icons prefix">people</i>
+
           <select>
             <option value="" disabled selected>Elige Opción</option>
             <option value="1">Empresa</option>
@@ -315,7 +337,9 @@
             <option value="4">Cliente</option>
             <option value="5">Otro</option>
           </select>
-    <label>Soy:</label>
+
+        <label>Soy:</label>
+        {{/m-wrapper}}
   </div>
         <a class="waves-effect waves-light btn red right"><i class="material-icons right">done</i>Registrarse</a>
       </div>
