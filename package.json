@@ -47,6 +47,6 @@
   },
   "private": true,
   "dependencies": {
-    "firebase": "^4.4.0"
+    "firebase": "4.4.0"
   }
 }
