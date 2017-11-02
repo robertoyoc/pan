@@ -1,8 +1,17 @@
 import Ember from 'ember';
+const perfiles = [
+  { name: 'Empresa'},
+  { name: 'Repartidor'},
+  { name: 'Cliente'}
+  ];
 
 export default Ember.Controller.extend({
-
+  perfiles,
   actions:{
+    foo(){},
+    showSlide(){
+      window.$('.button-collapse').sideNav('show');
+    },
     cerrar(){
       this.$('.button-collapse').sideNav('hide');
 

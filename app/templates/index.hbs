@@ -2,7 +2,7 @@
 
 {{!-- menu --}}
 
-{{#m-wrapper query=".button-colapse" method="sideNav"}}
+{{#m-wrapper query=".button-collapse" method="sideNav"}}
 
 <div class="navbar-fixed">
   <nav>
@@ -166,7 +166,9 @@
 
           </div>
           <div class="col s12 l8">
+            {{location-map}}
             <p id="map">
+
 
             </p>
           </div>
@@ -306,41 +308,43 @@
       <div class="row">
         <div class="input-field col s12">
           <i class="material-icons prefix">perm_identity</i>
-          <input id="name" type="text" class="validate">
+          {{input type="text" value=name class="validate"}}
           <label for="name">Nombre</label>
         </div>
         <div class="input-field col s12">
           <i class="material-icons prefix">account_circle</i>
-          <input id="user" type="text" class="validate">
+          {{input type="text" value=user class="validate"}}
           <label for="user">Nombre de Usuario</label>
         </div>
         <div class="input-field col s12">
           <i class="material-icons prefix">email</i>
-          <input id="email" type="email" class="validate">
+          {{input type="email" value=email class="validate"}}
           <label for="email">Email</label>
         </div>
         <div class="input-field col s12">
           <i class="material-icons prefix">vpn_key</i>
-          <input id="password" type="password" class="validate">
+          {{input type="password" value=pass class="validate"}}
           <label for="password">Password</label>
         </div>
 
-        <div class="input-field col s12">
+
         {{#m-wrapper query="select" method="material_select"}}
+        <div class="input-field col s12">
+
         <i class="material-icons prefix">people</i>
 
           <select>
+
             <option value="" disabled selected>Elige Opción</option>
-            <option value="1">Empresa</option>
-            <option value="2">Sucursal</option>
-            <option value="3">Repartidor</option>
-            <option value="4">Cliente</option>
-            <option value="5">Otro</option>
+            {{#each perfiles as |perfil value|}}
+              <option {{action 'setPerfil' value on="click" }}>{{perfil.name}}</option>
+            {{/each}}
           </select>
 
         <label>Soy:</label>
+      </div>
         {{/m-wrapper}}
-  </div>
+
         <a class="waves-effect waves-light btn red right"><i class="material-icons right">done</i>Registrarse</a>
       </div>
     </div>

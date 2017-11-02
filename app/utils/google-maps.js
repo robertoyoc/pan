@@ -5,14 +5,13 @@ const google = window.google;
 export default EmberObject.extend({
 
   init(element) {
-    // console.log("here")
-    this.set('mapcoder', new google.maps.Map(element));
-    // console.log("here2")
+    //console.log(element)
+    //this.set('mapcoder', new google.maps.Map(element));
   },
 
-  createMap(element, lat, lon) {
-    let map = new google.maps.Map(element, { scrollwheel: false, zoom: 10 });
-    this.pinLocation(lat, lon, map);
+  createMap(lat, lon) {
+    let map = new google.maps.Map(window.$('#map'), { scrollwheel: false, zoom: 10 });
+    //this.pinLocation(lat, lon, map);
     return map;
   },
 
