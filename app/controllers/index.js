@@ -7,13 +7,75 @@ const perfiles = [
 
 export default Ember.Controller.extend({
   perfiles,
+  firebase: Ember.inject.service('firebaseApp'),
+  store: Ember.inject.service(),
+  session: Ember.inject.service(),
+  user: Ember.computed('session', function(){
+    let email = this.get('session.currentUser.email')
+    let res = email.split("@")
+    return res[0];
+  }),
+
   actions:{
+    signIn(user, pass){
+      let newemail = user + "@panlavillita.mx";
+      this.get('session').open('firebase', {
+        provider: 'password',
+        email: newemail,
+        password: pass
+      }).then((data)=>{
+        window.$('login').modal('close');
+        console.log(data)
+
+      }).catch((error)=>{
+        console.log(error)
+      });
+    },
+    signOut(){
+      this.get('session').close();
+
+    },
+    perfil(){
+      window.$('.button-collapse').sideNav('show');
+    },
+    createUser(nombre, apellido, user, pass){
+      let Controller= this;
+      let newemail = user + "@panlavillita.mx";
+      this.get('firebase').auth().createUserWithEmailAndPassword(newemail, pass).then((usuario)=>{
+        this.get('store').createRecord('account', {
+          uid: usuario.uid,
+          nombre: nombre,
+          apellido: apellido,
+          perfil: "cliente"
+        }).save().then(()=>{
+          swal(
+          'Guardado!',
+          'La información ha sido almacenada',
+          'success'
+          ).then(()=>{
+            window.$('#register').modal('close');
+            this.get('session').open('firebase', {
+              provider: 'password',
+              email: newemail,
+              password: pass
+            })
+          })
+
+        });
+      }).catch(function(error) {
+  // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(error)
+        // ...
+      });
+    },
     foo(){},
     showSlide(){
       window.$('.button-collapse').sideNav('show');
     },
     cerrar(){
-      this.$('.button-collapse').sideNav('hide');
+      window.$('.button-collapse').sideNav('hide');
 
     },
     login(){

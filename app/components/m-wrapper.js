@@ -12,5 +12,6 @@ export default Ember.Component.extend({
     var method = this.get('method');
     var options = this.get('options');
     this.$(query)[method](options);
+    window.$(".button-collapse").sideNav({closeOnClick: true});
   }
 });

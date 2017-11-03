@@ -1,5 +1,3 @@
-
-
 {{!-- menu --}}
 
 {{#m-wrapper query=".button-collapse" method="sideNav"}}
@@ -11,8 +9,14 @@
       <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul class="center right hide-on-med-and-down" style="margin-right: 14%;">
         <li><a href="#pedidos" {{action 'pedidos'}}><i class="material-icons left">shopping_cart</i><span>$XXX.XX</span></a></li>
-        <li><a href="#login" {{action 'login'}} >Iniciar Sesión</a></li>
-        <li><a href="#register"{{action 'register'}}>Registrarse</a></li>
+        {{#if session.isAuthenticated}}
+          <li><a href="#register"{{action 'perfil'}}>Mi perfil</a></li>
+        {{else}}
+          <li><a href="#login" {{action 'login'}} >Iniciar Sesión</a></li>
+          <li><a href="#register"{{action 'register'}}>Registrarse</a></li>
+        {{/if}}
+
+
       </ul>
       <ul class="left hide-on-med-and-down" style="margin-left: 18%;">
         <li><a href="#historia">Historia</a></li>
@@ -22,7 +26,21 @@
     </div>
   </nav>
 </div>
+
+
 <ul id="slide-out" class="side-nav">
+  {{#if session.isAuthenticated}}
+   <li><div class="user-view">
+      <div class="background">
+        <img src="https://www.viajejet.com/wp-content/viajes/Quesadillas.jpg">
+      </div>
+      <a href="#!user"><img class="circle" src="media/anonim.png"></a>
+      <a href="#!name"><span class="white-text name">Usuario</span></a>
+      <a href="#!email"><span class="white-text email">{{user}}</span></a>
+    </div></li>
+    <li><a {{action 'signOut'}}>Cerrar Sesión</a></li>
+
+  {{else}}
   <li><div class="userView">
     <div class="background">
       <img src="media/local.jpg">
@@ -30,13 +48,25 @@
     <a href="#"><img class="circle" src="media/logobg.png"></a>
     <a><span class="white-text name">Panadería La Villita</span></a>
   </div></li>
-    <li><a href="#historia" {{action 'cerrar' on="click"}}><i class="material-icons">import_contacts</i>Historia</a></li>
-    <li><a href="#sucursales" {{action 'cerrar' on="click"}}><i class="material-icons">store_mall_directory</i>Sucursales</a></li>
-    <li><a href="#productos" onclick="cerrar()"><i class="material-icons">restaurant_menu</i>Productos</a></li>
-    <li><a href="#pedidos" {{action 'cerrar' on="click"}}><i class="material-icons">shopping_cart</i><span>$XXX.XX</span></a></li>
+
+  {{/if}}
+    <li><a href="#pedidos"><i class="material-icons">shopping_cart</i><span>$XXX.XX</span></a></li>
     <li><div class="divider"></div></li>
-    <li><a href="#login" {{action 'cerrar' on="click"}}><i class="material-icons">person</i>Ingresar</a></li>
-    <li><a href="#register" {{action 'cerrar' on="click"}}><i class="material-icons">person_add</i>Registrarse</a></li>
+
+    <div class="hide-on-large-only">
+      <li><a href="#historia"><i class="material-icons">import_contacts</i>Historia</a></li>
+      <li><a href="#sucursales"><i class="material-icons">store_mall_directory</i>Sucursales</a></li>
+      <li><a href="#productos" ><i class="material-icons">restaurant_menu</i>Productos</a></li>
+
+      {{#unless session.isAuthenticated}}
+      <li><a href="#login"><i class="material-icons">person</i>Ingresar</a></li>
+        <li><a href="#register"><i class="material-icons">person_add</i>Registrarse</a></li>
+      {{/unless}}
+    </div>
+
+
+
+
 </ul>
 
 {{/m-wrapper}}
@@ -280,15 +310,15 @@
       <div class="row">
         <div class="input-field col s12">
           <i class="material-icons prefix">account_circle</i>
-          <input id="user" type="text" class="validate">
+          {{input type="text" value=loginuser class="validate"}}
           <label for="user">Usuario</label>
         </div>
         <div class="input-field col s12">
           <i class="material-icons prefix">vpn_key</i>
-          <input id="password" type="password" class="validate">
+          {{input type="password" value=loginpass class="validate"}}
           <label for="password">Password</label>
         </div>
-        <a class="waves-effect waves-light btn red right"><i class="material-icons right">done</i>Entrar</a>
+        <a {{action 'signIn' loginuser loginpass on="click"}}class="waves-effect waves-light btn red right"><i class="material-icons right">done</i>Entrar</a>
       </div>
     </div>
     <div class="modal-footer">
@@ -308,18 +338,18 @@
       <div class="row">
         <div class="input-field col s12">
           <i class="material-icons prefix">perm_identity</i>
-          {{input type="text" value=name class="validate"}}
+          {{input type="text" value=nombre class="validate"}}
           <label for="name">Nombre</label>
+        </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix">perm_identity</i>
+          {{input type="text" value=apellido class="validate"}}
+          <label for="name">Apellido</label>
         </div>
         <div class="input-field col s12">
           <i class="material-icons prefix">account_circle</i>
           {{input type="text" value=user class="validate"}}
           <label for="user">Nombre de Usuario</label>
-        </div>
-        <div class="input-field col s12">
-          <i class="material-icons prefix">email</i>
-          {{input type="email" value=email class="validate"}}
-          <label for="email">Email</label>
         </div>
         <div class="input-field col s12">
           <i class="material-icons prefix">vpn_key</i>
@@ -328,24 +358,7 @@
         </div>
 
 
-        {{#m-wrapper query="select" method="material_select"}}
-        <div class="input-field col s12">
-
-        <i class="material-icons prefix">people</i>
-
-          <select>
-
-            <option value="" disabled selected>Elige Opción</option>
-            {{#each perfiles as |perfil value|}}
-              <option {{action 'setPerfil' value on="click" }}>{{perfil.name}}</option>
-            {{/each}}
-          </select>
-
-        <label>Soy:</label>
-      </div>
-        {{/m-wrapper}}
-
-        <a class="waves-effect waves-light btn red right"><i class="material-icons right">done</i>Registrarse</a>
+        <a {{action "createUser" nombre apellido user pass}} class="waves-effect waves-light btn red right"><i class="material-icons right">done</i>Registrarse</a>
       </div>
     </div>
     <div class="modal-footer">
