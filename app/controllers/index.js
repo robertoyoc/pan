@@ -10,11 +10,18 @@ export default Ember.Controller.extend({
   firebase: Ember.inject.service('firebaseApp'),
   store: Ember.inject.service(),
   session: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
   user: Ember.computed('session', function(){
     let email = this.get('session.currentUser.email')
     let res = email.split("@")
     return res[0];
   }),
+  // cart: Ember.computed('currentUser', function(){
+  //   this.get('store').query('cart', {
+  //     orderBy: 'propietario',
+  //     equalTo: this.get()
+  //   })
+  // }),
 
   actions:{
     signIn(user, pass){
