@@ -11,10 +11,11 @@ export default Ember.Service.extend({
     get() {
       if (this.get('isAuthenticated')) {
         this._retreiveAccount()
+        return this.get('_account');
       } else {
         this.set('_account', null)
       }
-      return this.get('_account');
+
     }
   }),
 
@@ -24,7 +25,7 @@ export default Ember.Service.extend({
 
   _retreiveAccount() {
     return this.get('store').query('account', {
-      orderBy: 'user',
+      orderBy: 'uid',
       equalTo: this.get('session.currentUser.uid'),
       limitToLast: 1
     }).then((account) => {

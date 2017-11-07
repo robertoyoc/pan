@@ -1,6 +1,9 @@
-{{log cart._cart}}
-{{log currentUser}}
 {{!-- menu --}}
+
+{{#each model.productos as |producto|}}
+  <button {{action 'addtoCart' producto}}>Add {{producto.nombre}} now</button>
+{{/each}}
+
 
 {{#m-wrapper query=".button-collapse" method="sideNav"}}
 
@@ -10,7 +13,7 @@
       <a href="#" class="brand-logo center"><img src="media/logonew.jpg"></a>
       <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul class="center right hide-on-med-and-down" style="margin-right: 14%;">
-        <li><a href="#pedidos" {{action 'pedidos'}}><i class="material-icons left">shopping_cart</i><span>$XXX.XX</span></a></li>
+        <li><a href="#pedidos" {{action 'pedidos'}}><i class="material-icons left">shopping_cart</i><span>${{model.cart.valor}}</span></a></li>
         {{#if session.isAuthenticated}}
           <li><a href="#register"{{action 'perfil'}}>Mi perfil</a></li>
         {{else}}
@@ -52,7 +55,7 @@
   </div></li>
 
   {{/if}}
-    <li><a href="#pedidos"{{action 'pedidos'}}><i class="material-icons">shopping_cart</i><span>$XXX.XX</span></a></li>
+    <li><a href="#pedidos"{{action 'pedidos'}}><i class="material-icons">shopping_cart</i><span>${{model.cart.valor}}</span></a></li>
     <li><div class="divider"></div></li>
 
     <div class="hide-on-large-only">
@@ -391,30 +394,15 @@
         </thead>
 
         <tbody>
-          <tr>
-            <td>Dona</td>
-            <td><input type="number" name="quantity" min="1" value="1"></td>
-            <td>$8.00</td>
-            <td>$24.00</td>
-          </tr>
-          <tr>
-            <td>Pastel</td>
-            <td><input type="number" name="quantity" min="1" value="1"></td>
-            <td>$82.00</td>
-            <td>$240.00</td>
-          </tr>
-          <tr>
-            <td>Cuadro</td>
-            <td><input type="number" name="quantity" min="1" value="1"></td>
-            <td>$7.00</td>
-            <td>$21.00</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td>Pago total:</td>
-            <td>$500.00</td>
-          </tr>
+
+          {{#each model.cart.pedidos as |pedido|}}
+            <tr>
+              <td>{{pedido.producto.nombre}}</td>
+              <td>{{input type="number" value=pedido.cantidad min=1}} </td>
+              <td>{{pedido.producto.precio}}</td>
+              <td>{{pedido.total}}</td>
+            </tr>
+          {{/each}}
         </tbody>
       </table>
       <div style="margin-top: 1%;"><a class="waves-effect waves-light btn brown right" href="#productos" onclick="$('#pedidos').modal('close');"><i class="material-icons right">add</i>Agregas Más</a>

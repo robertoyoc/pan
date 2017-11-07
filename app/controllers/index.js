@@ -11,7 +11,6 @@ export default Ember.Controller.extend({
   store: Ember.inject.service(),
   session: Ember.inject.service(),
   currentUser: Ember.inject.service(),
-  cart: Ember.inject.service(),
   user: Ember.computed('session', function(){
     let email = this.get('session.currentUser.email')
     let res = email.split("@")
@@ -19,9 +18,24 @@ export default Ember.Controller.extend({
   }),
 
   init(){
+    //console.log(this.get('model.cart'))
   },
 
   actions:{
+    addtoCart(producto){
+
+      // if(this.get('model.cart.pedidos').findBy('id', producto.get('id'))){
+      //   let pedido = this.get('store').findRecord('pedido', );
+      // }
+
+      this.get('model.cart.pedidos').createRecord({
+        producto: producto,
+        cantidad: 1
+      });
+
+    },
+
+
     signIn(user, pass){
       let newemail = user + "@panlavillita.mx";
       this.get('session').open('firebase', {
@@ -88,6 +102,7 @@ export default Ember.Controller.extend({
     },
     pedidos(){
        window.$('#pedidos').modal('open');
+
     },
     map(sucursal){
       switch(sucursal){
