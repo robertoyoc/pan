@@ -11,17 +11,15 @@ export default Ember.Controller.extend({
   store: Ember.inject.service(),
   session: Ember.inject.service(),
   currentUser: Ember.inject.service(),
+  cart: Ember.inject.service(),
   user: Ember.computed('session', function(){
     let email = this.get('session.currentUser.email')
     let res = email.split("@")
     return res[0];
   }),
-  // cart: Ember.computed('currentUser', function(){
-  //   this.get('store').query('cart', {
-  //     orderBy: 'propietario',
-  //     equalTo: this.get()
-  //   })
-  // }),
+
+  init(){
+  },
 
   actions:{
     signIn(user, pass){
@@ -30,12 +28,10 @@ export default Ember.Controller.extend({
         provider: 'password',
         email: newemail,
         password: pass
-      }).then((data)=>{
+      }).then(()=>{
         window.$('login').modal('close');
-        console.log(data)
 
-      }).catch((error)=>{
-        console.log(error)
+      }).catch(()=>{
       });
     },
     signOut(){
@@ -46,7 +42,6 @@ export default Ember.Controller.extend({
       window.$('.button-collapse').sideNav('show');
     },
     createUser(nombre, apellido, user, pass){
-      let Controller= this;
       let newemail = user + "@panlavillita.mx";
       this.get('firebase').auth().createUserWithEmailAndPassword(newemail, pass).then((usuario)=>{
         this.get('store').createRecord('account', {
@@ -55,7 +50,7 @@ export default Ember.Controller.extend({
           apellido: apellido,
           perfil: "cliente"
         }).save().then(()=>{
-          swal(
+          window.swal(
           'Guardado!',
           'La información ha sido almacenada',
           'success'
@@ -69,11 +64,11 @@ export default Ember.Controller.extend({
           })
 
         });
-      }).catch(function(error) {
-  // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(error)
+      }).catch(function(/*error*/) {
+          // Handle Errors here.
+        // var errorCode = error.code;
+        // var errorMessage = error.message;
+
         // ...
       });
     },

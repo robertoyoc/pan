@@ -1,5 +1,5 @@
-
-
+{{log cart._cart}}
+{{log currentUser}}
 {{!-- menu --}}
 
 {{#m-wrapper query=".button-collapse" method="sideNav"}}
@@ -52,7 +52,7 @@
   </div></li>
 
   {{/if}}
-    <li><a href="#pedidos"><i class="material-icons">shopping_cart</i><span>$XXX.XX</span></a></li>
+    <li><a href="#pedidos"{{action 'pedidos'}}><i class="material-icons">shopping_cart</i><span>$XXX.XX</span></a></li>
     <li><div class="divider"></div></li>
 
     <div class="hide-on-large-only">
