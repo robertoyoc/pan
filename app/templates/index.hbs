@@ -13,7 +13,7 @@
       <a href="#" class="brand-logo center"><img src="media/logonew.jpg"></a>
       <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul class="center right hide-on-med-and-down" style="margin-right: 14%;">
-        <li><a href="#pedidos" {{action 'pedidos'}}><i class="material-icons left">shopping_cart</i><span>${{model.cart.valor}}</span></a></li>
+        <li><a href="#pedidos" {{action 'pedidos'}}><i class="material-icons left">shopping_cart</i><span>${{cartTotal}}</span></a></li>
         {{#if session.isAuthenticated}}
           <li><a href="#register"{{action 'perfil'}}>Mi perfil</a></li>
         {{else}}
@@ -55,7 +55,7 @@
   </div></li>
 
   {{/if}}
-    <li><a href="#pedidos"{{action 'pedidos'}}><i class="material-icons">shopping_cart</i><span>${{model.cart.valor}}</span></a></li>
+    <li><a href="#pedidos"{{action 'pedidos'}}><i class="material-icons">shopping_cart</i><span>${{cartTotal}}</span></a></li>
     <li><div class="divider"></div></li>
 
     <div class="hide-on-large-only">

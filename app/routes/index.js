@@ -1,8 +1,10 @@
-import Ember from 'ember';
+import { hash } from 'rsvp';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
-  session: Ember.inject.service(),
-  store: Ember.inject.service(),
+export default Route.extend({
+  session: service(),
+  store: service(),
 
   beforeModel(){
     return this.get('session').fetch().catch(function() {})
@@ -10,7 +12,7 @@ export default Ember.Route.extend({
   },
 
   model(){
-    return Ember.RSVP.hash({
+    return hash({
       cart: this.get('store').createRecord('cart', {
         valor: 0
       }),

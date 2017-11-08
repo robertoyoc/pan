@@ -1,20 +1,31 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Controller from '@ember/controller';
 const perfiles = [
   { name: 'Empresa'},
   { name: 'Repartidor'},
   { name: 'Cliente'}
   ];
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   perfiles,
-  firebase: Ember.inject.service('firebaseApp'),
-  store: Ember.inject.service(),
-  session: Ember.inject.service(),
-  currentUser: Ember.inject.service(),
-  user: Ember.computed('session', function(){
+  firebase: service('firebaseApp'),
+  store: service(),
+  session: service(),
+  currentUser: service(),
+  user: computed('session', function(){
     let email = this.get('session.currentUser.email')
     let res = email.split("@")
     return res[0];
+  }),
+  cartTotal: computed('model.cart.pedidos.@each.total', function(){
+    let total =0;
+    this.get('model.cart.pedidos').forEach((pedido)=>{
+      total = total + pedido.get('total');
+    });
+    this.set("model.cart.valor", total)
+
+    return total;
   }),
 
   init(){

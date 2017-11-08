@@ -1,13 +1,16 @@
-import Ember from 'ember';
+import { Promise as EmberPromise } from 'rsvp';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
+import Service, { inject as service } from '@ember/service';
 
-export default Ember.Service.extend({
-  session: Ember.inject.service(),
-  store: Ember.inject.service(),
+export default Service.extend({
+  session: service(),
+  store: service(),
   _account: null,
 
-  isAuthenticated: Ember.computed.alias('session.isAuthenticated'),
+  isAuthenticated: alias('session.isAuthenticated'),
 
-  account: Ember.computed('isAuthenticated', '_account', {
+  account: computed('isAuthenticated', '_account', {
     get() {
       if (this.get('isAuthenticated')) {
         this._retreiveAccount()
@@ -38,7 +41,7 @@ export default Ember.Service.extend({
     if (this.get('isLoading')) {
       return;
     }
-    return new Ember.RSVP.Promise((resolve, reject) => {
+    return new EmberPromise((resolve, reject) => {
       this.get('isLoading', true);
 
       let callback = () => {
@@ -60,6 +63,6 @@ export default Ember.Service.extend({
     }).then(() => {
       this.get('isLoading', false);
       return this.get('_account');
-    })
+    });
   }
 });

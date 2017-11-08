@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Mixin from '@ember/object/mixin';
 
-export default Ember.Mixin.create({
-  session: Ember.inject.service(),
-  store: Ember.inject.service(),
+export default Mixin.create({
+  session: service(),
+  store: service(),
   beforeModel(transition){
     let route =this;
     this.get('session').fetch().then(function(){
