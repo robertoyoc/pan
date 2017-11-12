@@ -35,14 +35,27 @@ export default Controller.extend({
   actions:{
     addtoCart(producto){
 
-      // if(this.get('model.cart.pedidos').findBy('id', producto.get('id'))){
-      //   let pedido = this.get('store').findRecord('pedido', );
-      // }
+      let isNew = true;
+      let pedidoId;
+      this.get('model.cart.pedidos').forEach((pedido)=>{
+        if(pedido.get('producto.id')==producto.get('id')){
+          isNew=false;
+          pedidoId = pedido.get('id');
+        }
 
-      this.get('model.cart.pedidos').createRecord({
-        producto: producto,
-        cantidad: 1
       });
+
+      if(isNew){
+        this.get('model.cart.pedidos').createRecord({
+          producto: producto,
+          cantidad: 1
+        });
+      }
+      else{
+        console.log(this.get('model.cart.pedidos').findBy('id', pedidoId).get('cantidad'))
+      }
+
+
 
     },
 

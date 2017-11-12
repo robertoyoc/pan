@@ -5,7 +5,7 @@
 {{/each}}
 
 
-{{#m-wrapper query=".button-collapse" method="sideNav"}}
+{{#m-wrapper query=".button-collapse" method="sideNav" options='{"closeOnClick":true}'}}
 
 <div class="navbar-fixed">
   <nav>
@@ -403,10 +403,28 @@
               <td>{{pedido.total}}</td>
             </tr>
           {{/each}}
+          {{#if model.cart.pedidos}}
+            <tr>
+              <td> </td>
+              <td> </td>
+              <td>Total</td>
+              <td>${{cartTotal}}</td>
+
+            </tr>
+          {{/if}}
         </tbody>
       </table>
-      <div style="margin-top: 1%;"><a class="waves-effect waves-light btn brown right" href="#productos" onclick="$('#pedidos').modal('close');"><i class="material-icons right">add</i>Agregas Más</a>
-      <a class="waves-effect waves-light btn green right" href="#pagar" {{action 'pagar'}} style="margin-right: 1%;"><i class="material-icons right">attach_money</i>Pagar</a></div>
+
+
+      <div style="margin-top: 1%;">
+
+      {{#if model.cart.pedidos}}
+      <a class="waves-effect waves-light btn green right" href="#pagar" {{action 'pagar'}} style="margin-right: 1%;"><i class="material-icons right">attach_money</i>Pagar</a>
+      {{else}}
+      Aún no tienes pedidos
+      <a class="waves-effect waves-light btn brown right" href="#productos" onclick="$('#pedidos').modal('close');"><i class="material-icons right">add</i>Agregar</a>
+      {{/if}}
+      </div>
   </div>
       </div>
     </div>
