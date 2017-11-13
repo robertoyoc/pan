@@ -12,5 +12,6 @@ export default Component.extend({
     if(typeof(options)=="string")
       options = JSON.parse(options);
     this.$(query)[method](options);
+    window.Materialize.updateTextFields();
   }
 });

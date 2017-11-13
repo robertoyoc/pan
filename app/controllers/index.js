@@ -1,4 +1,4 @@
-import { computed, observer } from '@ember/object';
+import { computed, observer, get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 import { all } from 'rsvp';
@@ -52,9 +52,17 @@ export default Controller.extend({
 
   init(){
     //console.log(this.get('model.cart'))
+    this.set('tooManyRequest', false)
   },
 
   actions:{
+
+    hi(){
+      this.set('loginuserError', 'correo incorrecto')
+      window.$('#loginuser').removeClass('valid')
+      window.$('#loginuser').addClass('invalid')
+
+    },
     addtoCart(producto){
 
       let account = this.get('currentUser.account');
@@ -86,26 +94,120 @@ export default Controller.extend({
         cart.save()
       ])
 
+    },
 
+    activateError(id){
+      window.$(id).removeClass('valid');
+      window.$(id).addClass('invalid');
+    },
+    desactivateError(id){
+      window.$(id).removeClass('invalid');
+      window.$(id).addClass('valid');
+    },
+    toogleError(data, attr){
+      data.validate().then(({validations})=>{
+        switch(attr){
+          case 'user':
+          if(get(data, 'validations.attrs.user.isInvalid')){
+            this.set('loginUserError', 'Este campo no puede estar vacío.')
+            this.send('activateError', '#loginuser')
+          }
+          else{
+            this.set('loginUserError', null);
+            this.send('desactivateError', '#loginuser')
+          }
+          break;
+          case 'pass':
+          if(get(data, 'validations.attrs.pass.isInvalid')){
+            if(get(data, 'validations.attrs.pass.error.type')=='presence')
+              this.set('loginPassError', 'Este campo no puede estar vacío.')
+            else
+              this.set('loginPassError', 'La contraseña es demasiado corta.')
+            this.send('activateError', '#loginpass')
+          }
+          else{
+            this.set('loginPassError', null);
+            this.send('desactivateError', '#loginpass')
+          }
+          break;
+          case 'regUser':
+            if(get(data, 'validations.attrs.user.isInvalid')){
+              this.set('regUserError', 'Este campo no puede estar vacío.')
+              this.send('activateError', '#regUser')
+            }
+          break;
+          case 'regPass':
+            if(get(data, 'validations.attrs.pass.isInvalid')){
+              if(get(data, 'validations.attrs.pass.error.type')=='presence')
+                this.set('regPassError', 'Este campo no puede estar vacío.')
+              else
+                this.set('regPassError', 'La contraseña es demasiado corta.')
+              this.send('activateError', '#regPass')
+            }else{
+              this.set('regPassError', null);
+              this.send('desactivateError', '#regPass')
+            }
+
+          break;
+          case 'regNombre':
+            if(get(data, 'validations.attrs.nombre.isInvalid')){
+              this.set('regNombreError', 'Este campo no puede estar vacío.')
+              this.send('activateError', '#regNombre')
+            }
+          break;
+          case 'regApellido':
+            if(get(data, 'validations.attrs.apellido.isInvalid')){
+              this.set('regApellidoError', 'Este campo no puede estar vacío.')
+              this.send('activateError', '#regApellido')
+            }
+          break;
+
+        }
+
+      });
 
     },
 
 
-    signIn(user, pass){
-      let newemail = user + "@panlavillita.mx";
-      this.get('session').open('firebase', {
-        provider: 'password',
-        email: newemail,
-        password: pass
-      }).then(()=>{
-        this.set('loginuser', null);
-        this.set('loginpass', null);
-        window.$('#login').modal('close');
-        this.send('sessionChanged');
+    signIn(data){
 
-      }).catch((error)=>{
-        console.log('error')
+      data.validate().then(({validations})=>{
+        if(get(data, 'validations.isValid')){
+          let newemail = data.user + "@panlavillita.mx";
+          this.get('session').open('firebase', {
+            provider: 'password',
+            email: newemail,
+            password: data.pass
+          }).then(()=>{
+
+            this.set('model.login.user', null);
+            this.set('model.login.pass', null);
+            window.$('#loginuser').removeClass('invalid');
+            window.$('#loginpass').removeClass('invalid');
+            window.$('#loginpass').removeClass('valid');
+            window.$('#loginuser').removeClass('valid');
+            window.$('#login').modal('close');
+            data.destroyRecord();
+
+            this.send('sessionChanged');
+
+          }).catch((error)=>{
+            switch(error.code){
+              case "auth/user-not-found":
+              this.set('loginUserError', 'Usuario no encontrado.')
+              break;
+              case "auth/wrong-password":
+              this.set('loginPassError', 'Contraseña incorrecta.')
+              break;
+              case "auth/too-many-requests":
+              this.set('loginPassError', 'Demasiadas peticiones.')
+
+            }
+            this.send('activateError', '#loginuser')
+          });
+        }
       });
+
 
     },
     signOut(){
@@ -117,36 +219,51 @@ export default Controller.extend({
     perfil(){
       window.$('.button-collapse').sideNav('show');
     },
-    createUser(nombre, apellido, user, pass){
-      let newemail = user + "@panlavillita.mx";
-      this.get('firebase').auth().createUserWithEmailAndPassword(newemail, pass).then((usuario)=>{
-        this.get('store').createRecord('account', {
-          uid: usuario.uid,
-          nombre: nombre,
-          apellido: apellido,
-          perfil: "cliente"
-        }).save().then(()=>{
-          window.swal(
-          'Guardado!',
-          'La información ha sido almacenada',
-          'success'
-          ).then(()=>{
-            window.$('#register').modal('close');
-            this.get('session').open('firebase', {
-              provider: 'password',
-              email: newemail,
-              password: pass
-            })
-          })
+    createUser(data){
 
-        });
-      }).catch(function(/*error*/) {
-          // Handle Errors here.
-        // var errorCode = error.code;
-        // var errorMessage = error.message;
+      let Controller = this;
+      data.validate().then(()=>{
+        if(get(data, 'validations.isValid')){
+          let newemail = data.user + "@panlavillita.mx";
+          this.get('firebase').auth().createUserWithEmailAndPassword(newemail, data.pass).then((usuario)=>{
+            this.get('store').createRecord('account', {
+              uid: usuario.uid,
+              nombre: data.nombre,
+              apellido: data.apellido,
+              perfil: "cliente"
+            }).save().then(()=>{
+              window.swal(
+              'Guardado!',
+              'La información ha sido almacenada',
+              'success'
+              ).then(()=>{
+                window.$('#register').modal('close');
+                this.get('session').open('firebase', {
+                  provider: 'password',
+                  email: newemail,
+                  password: data.pass
+                })
+              })
 
-        // ...
-      });
+            });
+          }).catch(function(error) {
+              // Handle Errors here.
+            // var errorCode = error.code;
+            // var errorMessage = error.message;
+
+            // ...
+            switch(error.code){
+              case "auth/email-already-in-use":
+              Controller.set("regUserError", "Usuario ya se encuentra registrado.")
+              Controller.send('activateError', "#regUser")
+            }
+          });
+        }
+
+
+      })
+
+
     },
     foo(){},
     showSlide(){

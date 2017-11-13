@@ -46,7 +46,9 @@ export default Route.extend({
     else{
       return hash({
         cart: null,
-        productos: this.get('store').findAll("producto")
+        productos: this.get('store').findAll("producto"),
+        login: this.get('store').createRecord('login'),
+        register: this.get('store').createRecord('register')
       });
     }
 

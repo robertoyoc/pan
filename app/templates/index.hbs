@@ -1,11 +1,11 @@
 {{!-- menu --}}
 
-<button {{action 'sessionChanged'}}>Sal</button>
+{{!-- <button {{action 'sessionChanged'}}>Sal</button>
 
 {{#each model.productos as |producto|}}
   <button {{action 'addtoCart' producto}}>Add {{producto.nombre}} now</button>
 {{/each}}
-
+ --}}
 
 {{#m-wrapper query=".button-collapse" method="sideNav" options='{"closeOnClick":true}'}}
 
@@ -103,7 +103,7 @@
 
 <div class="container">
     <div class="section">
-      <div class="row" id="productos">
+      <div class="row" id="productos" style="padding-top:50px">
         <div class="col s12 center">
           <h4>Productos</h4>
         </div>
@@ -185,7 +185,7 @@
   <div class="section">
 
     <div class="row">
-      <div class="col s12 center" id="sucursales">
+      <div class="col s12 center" id="sucursales" style="padding-top:50px">
         <h3><i class="mdi-content-send brown-text"></i></h3>
         <h4>Sucursales</h4>
           {{#m-wrapper query=".collapsible" method="collapsible"}}
@@ -236,7 +236,7 @@
 <div class="container">
   <div class="section">
 
-    <div class="row" id="historia">
+    <div class="row" id="historia" style="padding-top:50px">
       <div class="col s12 center">
           <h3><i class="mdi-content-send brown-text"></i></h3>
           <h4>Historia</h4>
@@ -316,16 +316,17 @@
       <h4>Iniciar Sesión</h4>
       <div class="row">
         <div class="input-field col s12">
-          <i class="material-icons prefix">account_circle</i>
-          {{input type="text" value=loginuser class="validate"}}
-          <label for="user">Usuario</label>
+          <i class="material-icons prefix ">account_circle</i>
+          {{input type="text" id="loginuser" value=model.login.user class="validate" focus-out=(action 'toogleError' model.login 'user')}}
+          <label for="loginuser" data-error="{{if loginUserError loginUserError 'Revisando...'}}" data-success="Correcto">Usuario</label>
         </div>
         <div class="input-field col s12">
           <i class="material-icons prefix">vpn_key</i>
-          {{input type="password" value=loginpass class="validate"}}
-          <label for="password">Password</label>
+          {{input type="password" id="loginpass" value=model.login.pass class="validate"
+          focus-out=(action 'toogleError' model.login 'pass')}}
+          <label for="loginpass" data-error="{{if loginPassError loginPassError 'Revisando...'}}" data-success="Correcto">Password</label>
         </div>
-        <a {{action 'signIn' loginuser loginpass on="click"}}class="waves-effect waves-light btn red right"><i class="material-icons right">done</i>Entrar</a>
+        <a {{action 'signIn' model.login on="click"}} class="waves-effect waves-light btn red right" ><i class="material-icons right">done</i>Entrar</a>
       </div>
     </div>
     <div class="modal-footer">
@@ -339,33 +340,36 @@
 
 
 {{#m-wrapper query=".modal" method="modal"}}
-<div id="register" class="modal modal-fixed-footer">
-    <div class="modal-content">
+<div id="register" class="modal modal-fixed-footer" >
+    <div class="modal-content" style="overflow-y:hidden">
       <h4>Registrarse</h4>
       <div class="row">
         <div class="input-field col s12">
           <i class="material-icons prefix">perm_identity</i>
-          {{input type="text" value=nombre class="validate"}}
-          <label for="name">Nombre</label>
+
+          {{!-- {{input type="text" id="loginuser" value=model.login.user class="validate" focus-out=(action 'toogleError' model.login 'user')}}
+          <label for="loginuser" data-error="{{if loginUserError loginUserError 'Revisando...'}}" data-success="Correcto">Usuario</label> --}}
+          {{input type="text" id="regNombre" value=model.register.nombre  focus-out=(action 'toogleError' model.register 'regNombre') class="validate"}}
+          <label for="regNombre" data-error="{{if regNombreError regNombreError 'Revisando'}}" data-success="Correcto">Nombre</label>
         </div>
         <div class="input-field col s12">
           <i class="material-icons prefix">perm_identity</i>
-          {{input type="text" value=apellido class="validate"}}
-          <label for="name">Apellido</label>
+          {{input type="text" id="regApellido" value=model.register.apellido  focus-out=(action 'toogleError' model.register 'regApellido') class="validate"}}
+          <label for="regApellido" data-error="{{if regApellidoError regApellidoError 'Revisando'}}" data-success="Correcto">Apellido</label>
         </div>
         <div class="input-field col s12">
           <i class="material-icons prefix">account_circle</i>
-          {{input type="text" value=user class="validate"}}
-          <label for="user">Nombre de Usuario</label>
+          {{input type="text" id="regUser" value=model.register.user  focus-out=(action 'toogleError' model.register 'regUser') class="validate"}}
+          <label for="regUser" data-error="{{if regUserError regUserError 'Revisando'}}" data-success="Correcto">Usuario</label>
         </div>
         <div class="input-field col s12">
           <i class="material-icons prefix">vpn_key</i>
-          {{input type="password" value=pass class="validate"}}
-          <label for="password">Password</label>
+           {{input type="password" id="regPass" value=model.register.pass  focus-out=(action 'toogleError' model.register 'regPass') class="validate"}}
+          <label for="regUser" data-error="{{if regPassError regPassError 'Revisando'}}" data-success="Correcto">Contraseña</label>
         </div>
 
 
-        <a {{action "createUser" nombre apellido user pass}} class="waves-effect waves-light btn red right"><i class="material-icons right">done</i>Registrarse</a>
+        <a {{action "createUser" model.register}} class="waves-effect waves-light btn red right"><i class="material-icons right">done</i>Registrarse</a>
       </div>
     </div>
     <div class="modal-footer">
