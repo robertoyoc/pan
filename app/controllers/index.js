@@ -1,6 +1,7 @@
-import { computed } from '@ember/object';
+import { computed, observer } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
+import { all } from 'rsvp';
 const perfiles = [
   { name: 'Empresa'},
   { name: 'Repartidor'},
@@ -13,17 +14,38 @@ export default Controller.extend({
   store: service(),
   session: service(),
   currentUser: service(),
-  user: computed('session', function(){
-    let email = this.get('session.currentUser.email')
-    let res = email.split("@")
-    return res[0];
+  user: computed('session.isAuthenticated', function(){
+    if(this.get('session.currentUser.email')){
+      let email = this.get('session.currentUser.email')
+      let res = email.split("@")
+      return res[0];
+    }
+    else
+      return null
+
+
   }),
   cartTotal: computed('model.cart.pedidos.@each.total', function(){
     let total =0;
-    this.get('model.cart.pedidos').forEach((pedido)=>{
-      total = total + pedido.get('total');
-    });
-    this.set("model.cart.valor", total)
+    if(this.get('model.cart')){
+      this.get('model.cart.pedidos').forEach((pedido)=>{
+        if(pedido.get('total')){
+          total = total + pedido.get('total');
+        }
+      });
+
+      if(this.get('model.cart.pedidos.length')>0&&total!=0)
+        this.set("model.cart.valor", total)
+
+      if(this.get('model.cart.hasDirtyAttributes')){
+        all([
+          this.get('model.cart.pedidos').invoke('save'),
+          this.get('model.cart').save()
+        ])
+      }
+
+    }
+
 
     return total;
   }),
@@ -35,9 +57,12 @@ export default Controller.extend({
   actions:{
     addtoCart(producto){
 
+      let account = this.get('currentUser.account');
+      let cart = this.get('model.cart')
+
       let isNew = true;
       let pedidoId;
-      this.get('model.cart.pedidos').forEach((pedido)=>{
+      cart.get('pedidos').forEach((pedido)=>{
         if(pedido.get('producto.id')==producto.get('id')){
           isNew=false;
           pedidoId = pedido.get('id');
@@ -46,14 +71,20 @@ export default Controller.extend({
       });
 
       if(isNew){
-        this.get('model.cart.pedidos').createRecord({
+        cart.get('pedidos').createRecord({
           producto: producto,
           cantidad: 1
         });
       }
       else{
-        console.log(this.get('model.cart.pedidos').findBy('id', pedidoId).get('cantidad'))
+        let pedido = cart.get('pedidos').findBy('id', pedidoId)
+        pedido.set('cantidad', pedido.get('cantidad')+1)
       }
+
+      return all([
+        cart.get('pedidos').invoke('save'),
+        cart.save()
+      ])
 
 
 
@@ -67,13 +98,20 @@ export default Controller.extend({
         email: newemail,
         password: pass
       }).then(()=>{
-        window.$('login').modal('close');
+        this.set('loginuser', null);
+        this.set('loginpass', null);
+        window.$('#login').modal('close');
+        this.send('sessionChanged');
 
-      }).catch(()=>{
+      }).catch((error)=>{
+        console.log('error')
       });
+
     },
     signOut(){
+
       this.get('session').close();
+      this.send('sessionChanged')
 
     },
     perfil(){

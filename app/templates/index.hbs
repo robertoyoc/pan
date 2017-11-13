@@ -1,5 +1,7 @@
 {{!-- menu --}}
 
+<button {{action 'sessionChanged'}}>Sal</button>
+
 {{#each model.productos as |producto|}}
   <button {{action 'addtoCart' producto}}>Add {{producto.nombre}} now</button>
 {{/each}}
