@@ -7,7 +7,6 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
-  this.route('register');
   this.route('admin', function() {
     this.route('inv-produccion');
     this.route('compras');
@@ -35,15 +34,12 @@ Router.map(function() {
     this.route('sucursales');
     this.route('nvo-sucursal');
   });
-  this.route('vendedor', function() {});
 
   this.route('cliente', function() {
     this.route('perfil');
     this.route('historial-compras');
     this.route('especiales');
   });
-  this.route('nva-venta');
-  this.route('nvo-especial');
 
   this.route('dueno', function() {
     this.route('finanzas');
@@ -52,6 +48,11 @@ Router.map(function() {
     this.route('nvo-retiro');
     this.route('grafica');
   });
+
+  this.route('vendedor');
+  this.route('nva-venta');
+  this.route('nvo-especial');
+  this.route('register');
 });
 
 export default Router;
