@@ -1,0 +1,27 @@
+
+{{log user}}
+{{#m-wrapper query=".modal" method="modal"}}
+<div id="login" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4>Iniciar Sesión</h4>
+      <div class="row">
+        <div class="input-field col s12">
+          <i id="usericon" class="material-icons prefix ">account_circle</i>
+          {{input type="text" id="loginuser" value=user class="validate" focus-out=(action 'toogleError' this 'user')}}
+          <label for="loginuser" data-error="{{if loginUserError loginUserError 'Revisando...'}}" data-success="Correcto">Usuario</label>
+        </div>
+        <div class="input-field col s12">
+          <i id="passicon" class="material-icons prefix">vpn_key</i>
+          {{input type="password" id="loginpass" value=pass class="validate"
+          focus-out=(action 'toogleError' this 'pass')}}
+          <label id="userlabel" for="loginpass" data-error="{{if loginPassError loginPassError 'Revisando...'}}" data-success="Correcto">Password</label>
+        </div>
+        <a {{action 'signIn' this on="click"}} class="waves-effect waves-light btn red right" ><i class="material-icons right">done</i>Entrar</a>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+    </div>
+</div>
+
+{{/m-wrapper}}
