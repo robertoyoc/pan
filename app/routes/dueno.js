@@ -10,7 +10,7 @@ export default Route.extend(AuthenticatedRoute, {
 		this._super(...arguments)
 		return this.get('session').fetch().catch(()=>{
 			return this.get('currentUser.account').then((account)=>{
-				if(account.get('perfil')!='admin'){
+				if(account.get('perfil')!='dueno'){
 					transition.abort()
 					this.transitionTo('index')
 				}
