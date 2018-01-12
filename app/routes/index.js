@@ -8,7 +8,7 @@ export default Route.extend({
   currentUser: service(),
 
   beforeModel(){
-    return this.get('session').fetch().catch(function() {})
+    return this.get('session').fetch().catch(()=>{})
   },
 
   model(){
