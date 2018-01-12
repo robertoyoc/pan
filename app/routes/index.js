@@ -8,7 +8,13 @@ export default Route.extend({
   currentUser: service(),
 
   beforeModel(){
-    return this.get('session').fetch().catch(function() {})
+     // this.get('session').fetch().then(()=>{
+     //  debugger
+     //  this.get('session').close()
+     // })
+
+    return this.get('session').fetch().catch(function() {
+    })
   },
 
   model(){
@@ -47,8 +53,6 @@ export default Route.extend({
       return hash({
         cart: null,
         productos: this.get('store').findAll("producto"),
-        login: this.get('store').createRecord('login'),
-        register: this.get('store').createRecord('register')
       });
     }
 

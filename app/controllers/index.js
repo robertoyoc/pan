@@ -10,7 +10,6 @@ const perfiles = [
 
 export default Controller.extend({
   perfiles,
-  firebase: service('firebaseApp'),
   store: service(),
   session: service(),
   currentUser: service(),
@@ -104,112 +103,7 @@ export default Controller.extend({
       window.$(id).removeClass('invalid');
       window.$(id).addClass('valid');
     },
-    toogleError(data, attr){
-      data.validate().then(({validations})=>{
-        switch(attr){
-          case 'user':
-          if(get(data, 'validations.attrs.user.isInvalid')){
-            this.set('loginUserError', 'Este campo no puede estar vacío.')
-            this.send('activateError', '#loginuser')
-          }
-          else{
-            this.set('loginUserError', null);
-            this.send('desactivateError', '#loginuser')
-          }
-          break;
-          case 'pass':
-          if(get(data, 'validations.attrs.pass.isInvalid')){
-            if(get(data, 'validations.attrs.pass.error.type')=='presence')
-              this.set('loginPassError', 'Este campo no puede estar vacío.')
-            else
-              this.set('loginPassError', 'La contraseña es demasiado corta.')
-            this.send('activateError', '#loginpass')
-          }
-          else{
-            this.set('loginPassError', null);
-            this.send('desactivateError', '#loginpass')
-          }
-          break;
-          case 'regUser':
-            if(get(data, 'validations.attrs.user.isInvalid')){
-              this.set('regUserError', 'Este campo no puede estar vacío.')
-              this.send('activateError', '#regUser')
-            }
-          break;
-          case 'regPass':
-            if(get(data, 'validations.attrs.pass.isInvalid')){
-              if(get(data, 'validations.attrs.pass.error.type')=='presence')
-                this.set('regPassError', 'Este campo no puede estar vacío.')
-              else
-                this.set('regPassError', 'La contraseña es demasiado corta.')
-              this.send('activateError', '#regPass')
-            }else{
-              this.set('regPassError', null);
-              this.send('desactivateError', '#regPass')
-            }
-
-          break;
-          case 'regNombre':
-            if(get(data, 'validations.attrs.nombre.isInvalid')){
-              this.set('regNombreError', 'Este campo no puede estar vacío.')
-              this.send('activateError', '#regNombre')
-            }
-          break;
-          case 'regApellido':
-            if(get(data, 'validations.attrs.apellido.isInvalid')){
-              this.set('regApellidoError', 'Este campo no puede estar vacío.')
-              this.send('activateError', '#regApellido')
-            }
-          break;
-
-        }
-
-      });
-
-    },
-
-
-    signIn(data){
-
-      data.validate().then(({validations})=>{
-        if(get(data, 'validations.isValid')){
-          let newemail = data.user + "@panlavillita.mx";
-          this.get('session').open('firebase', {
-            provider: 'password',
-            email: newemail,
-            password: data.pass
-          }).then(()=>{
-
-            this.set('model.login.user', null);
-            this.set('model.login.pass', null);
-            window.$('#loginuser').removeClass('invalid');
-            window.$('#loginpass').removeClass('invalid');
-            window.$('#loginpass').removeClass('valid');
-            window.$('#loginuser').removeClass('valid');
-            window.$('#login').modal('close');
-            data.destroyRecord();
-
-            this.send('sessionChanged');
-
-          }).catch((error)=>{
-            switch(error.code){
-              case "auth/user-not-found":
-              this.set('loginUserError', 'Usuario no encontrado.')
-              break;
-              case "auth/wrong-password":
-              this.set('loginPassError', 'Contraseña incorrecta.')
-              break;
-              case "auth/too-many-requests":
-              this.set('loginPassError', 'Demasiadas peticiones.')
-
-            }
-            this.send('activateError', '#loginuser')
-          });
-        }
-      });
-
-
-    },
+  
     signOut(){
 
       this.get('session').close();
@@ -218,52 +112,6 @@ export default Controller.extend({
     },
     perfil(){
       window.$('.button-collapse').sideNav('show');
-    },
-    createUser(data){
-
-      let Controller = this;
-      data.validate().then(()=>{
-        if(get(data, 'validations.isValid')){
-          let newemail = data.user + "@panlavillita.mx";
-          this.get('firebase').auth().createUserWithEmailAndPassword(newemail, data.pass).then((usuario)=>{
-            this.get('store').createRecord('account', {
-              uid: usuario.uid,
-              nombre: data.nombre,
-              apellido: data.apellido,
-              perfil: "cliente"
-            }).save().then(()=>{
-              window.swal(
-              'Guardado!',
-              'La información ha sido almacenada',
-              'success'
-              ).then(()=>{
-                window.$('#register').modal('close');
-                this.get('session').open('firebase', {
-                  provider: 'password',
-                  email: newemail,
-                  password: data.pass
-                })
-              })
-
-            });
-          }).catch(function(error) {
-              // Handle Errors here.
-            // var errorCode = error.code;
-            // var errorMessage = error.message;
-
-            // ...
-            switch(error.code){
-              case "auth/email-already-in-use":
-              Controller.set("regUserError", "Usuario ya se encuentra registrado.")
-              Controller.send('activateError', "#regUser")
-            }
-          });
-        }
-
-
-      })
-
-
     },
     foo(){},
     showSlide(){
@@ -275,9 +123,18 @@ export default Controller.extend({
     },
     login(){
       window.$('#login').modal('open'); //debe ser window para que lo busque en toda la ventana
+       window.$('#loginuser').removeClass('invalid');
+      window.$('#loginpass').removeClass('invalid');
+      window.$('#loginpass').removeClass('valid');
+      window.$('#loginuser').removeClass('valid');
+      window.$(".material-icons").removeClass("active");
+      
     },
     register(){
       window.$('#register').modal('open');
+      window.$(".material-icons").removeClass("active");
+      window.$(".validate").removeClass('valid');
+      
     },
     pedidos(){
        window.$('#pedidos').modal('open');

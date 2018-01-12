@@ -14,7 +14,7 @@
     <div class="nav-wrapper white">
       <a href="#" class="brand-logo center"><img src="media/logonew.jpg"></a>
       <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-      <ul class="center right hide-on-med-and-down" style="margin-right: 14%;">
+      <ul class="center right hide-on-med-and-down" style="margin-left: 5%;">
         <li><a href="#pedidos" {{action 'pedidos'}}><i class="material-icons left">shopping_cart</i><span>${{cartTotal}}</span></a></li>
         {{#if session.isAuthenticated}}
           <li><a href="#register"{{action 'perfil'}}>Mi perfil</a></li>
@@ -45,8 +45,9 @@
       <a href="#!name"><span class="white-text name">Usuario</span></a>
       <a href="#!email"><span class="white-text email">{{user}}</span></a>
     </div></li>
+    <div class="hide-on-large-only">
     <li><a {{action 'signOut'}}>Cerrar Sesión</a></li>
-
+  </div>
   {{else}}
   <li><div class="userView">
     <div class="background">
@@ -59,7 +60,7 @@
   {{/if}}
     <li><a href="#pedidos"{{action 'pedidos'}}><i class="material-icons">shopping_cart</i><span>${{cartTotal}}</span></a></li>
     <li><div class="divider"></div></li>
-
+    <li><a>Ir a Admin</a></li>
     <div class="hide-on-large-only">
       <li><a href="#historia"><i class="material-icons">import_contacts</i>Historia</a></li>
       <li><a href="#sucursales"><i class="material-icons">store_mall_directory</i>Sucursales</a></li>
@@ -310,74 +311,11 @@
 
 {{!-- modal login --}}
 
-{{#m-wrapper query=".modal" method="modal"}}
-<div id="login" class="modal modal-fixed-footer">
-    <div class="modal-content">
-      <h4>Iniciar Sesión</h4>
-      <div class="row">
-        <div class="input-field col s12">
-          <i class="material-icons prefix ">account_circle</i>
-          {{input type="text" id="loginuser" value=model.login.user class="validate" focus-out=(action 'toogleError' model.login 'user')}}
-          <label for="loginuser" data-error="{{if loginUserError loginUserError 'Revisando...'}}" data-success="Correcto">Usuario</label>
-        </div>
-        <div class="input-field col s12">
-          <i class="material-icons prefix">vpn_key</i>
-          {{input type="password" id="loginpass" value=model.login.pass class="validate"
-          focus-out=(action 'toogleError' model.login 'pass')}}
-          <label for="loginpass" data-error="{{if loginPassError loginPassError 'Revisando...'}}" data-success="Correcto">Password</label>
-        </div>
-        <a {{action 'signIn' model.login on="click"}} class="waves-effect waves-light btn red right" ><i class="material-icons right">done</i>Entrar</a>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
-    </div>
-</div>
-
-{{/m-wrapper}}
+{{login-form}}
 
 {{!-- modal register --}}
 
-
-{{#m-wrapper query=".modal" method="modal"}}
-<div id="register" class="modal modal-fixed-footer" >
-    <div class="modal-content" style="overflow-y:hidden">
-      <h4>Registrarse</h4>
-      <div class="row">
-        <div class="input-field col s12">
-          <i class="material-icons prefix">perm_identity</i>
-
-          {{!-- {{input type="text" id="loginuser" value=model.login.user class="validate" focus-out=(action 'toogleError' model.login 'user')}}
-          <label for="loginuser" data-error="{{if loginUserError loginUserError 'Revisando...'}}" data-success="Correcto">Usuario</label> --}}
-          {{input type="text" id="regNombre" value=model.register.nombre  focus-out=(action 'toogleError' model.register 'regNombre') class="validate"}}
-          <label for="regNombre" data-error="{{if regNombreError regNombreError 'Revisando'}}" data-success="Correcto">Nombre</label>
-        </div>
-        <div class="input-field col s12">
-          <i class="material-icons prefix">perm_identity</i>
-          {{input type="text" id="regApellido" value=model.register.apellido  focus-out=(action 'toogleError' model.register 'regApellido') class="validate"}}
-          <label for="regApellido" data-error="{{if regApellidoError regApellidoError 'Revisando'}}" data-success="Correcto">Apellido</label>
-        </div>
-        <div class="input-field col s12">
-          <i class="material-icons prefix">account_circle</i>
-          {{input type="text" id="regUser" value=model.register.user  focus-out=(action 'toogleError' model.register 'regUser') class="validate"}}
-          <label for="regUser" data-error="{{if regUserError regUserError 'Revisando'}}" data-success="Correcto">Usuario</label>
-        </div>
-        <div class="input-field col s12">
-          <i class="material-icons prefix">vpn_key</i>
-           {{input type="password" id="regPass" value=model.register.pass  focus-out=(action 'toogleError' model.register 'regPass') class="validate"}}
-          <label for="regUser" data-error="{{if regPassError regPassError 'Revisando'}}" data-success="Correcto">Contraseña</label>
-        </div>
-
-
-        <a {{action "createUser" model.register}} class="waves-effect waves-light btn red right"><i class="material-icons right">done</i>Registrarse</a>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
-    </div>
-</div>
-
-{{/m-wrapper}}
+{{register-form}}
 
 {{!-- modal pedidos --}}
 
