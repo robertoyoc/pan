@@ -1,1 +1,29 @@
-{{outlet}}
+{{#ember-wormhole to='admin-nav'}}
+  {{#link-to 'admin.inv-produccion' class='breadcrumb'}}Inv. de Producción{{/link-to}}
+  {{#link-to 'admin.lista-mprima' class='breadcrumb'}}Lista{{/link-to}}
+{{/ember-wormhole}}
+
+<center>
+  <h2>Materia prima disponible</h2></center>
+<div class="container">
+  <table class="responsive-table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Cantidad</th>
+        <th>Unidad de medida</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each model as |prima|}}
+        <tr>
+          <td>{{prima.nombre}}</td>
+          <td>{{prima.cantidad}}</td>
+          <td>{{prima.unidad}}</td>
+        </tr>
+        {{else}}
+          Aún no hay materia prima registrada.
+      {{/each}}
+    </tbody>
+  </table>
+</div>

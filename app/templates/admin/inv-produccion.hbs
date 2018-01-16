@@ -1,2 +1,9 @@
-{{outlet}}
-hola esto se ve
+{{#ember-wormhole to='admin-nav'}}
+  {{#link-to 'admin.inv-produccion' class='breadcrumb'}}Inv. de Producción{{/link-to}}
+{{/ember-wormhole}}
+
+<center>
+	{{#link-to 'admin.lista-mprima' class="waves-effect waves-light btn"}}Lista de materia prima {{/link-to}}
+	{{#link-to 'admin.nvo-reparto' class="waves-effect waves-light btn"}}Nuevo reparto {{/link-to}}
+	{{#link-to 'admin.historial-reparto' class="waves-effect waves-light btn"}}Historial de repartos {{/link-to}}
+</center>
