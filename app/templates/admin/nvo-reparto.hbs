@@ -3,48 +3,57 @@
   {{#link-to 'admin.nvo-reparto' class='breadcrumb' }}Reparto{{/link-to}}
 {{/ember-wormhole}}
 <center>
-  <h2>Nuevo reparto</h2></center>
-<div class="container">
-  <div class="card">
+  <h3>Nuevo reparto</h3></center>
+<div class="">
+  <div class="row">
+    <div class="card col m5 offset-m1" style="margin-right: 10px">
     <div class="card-content">
-      <h5>Agregar productos al reparto</h5>
+      <h5>Agregar productos al nuevo reparto</h5>
       <br>
       <div class="row">
         {{#power-select options=model.productos selected=selectedProducto onchange=(action (mut selectedProducto)) searchPlaceholder="Escribe para buscar" placeholder="Escribe para buscar" searchField='nombre' as |mprima|}}
           {{mprima.nombre}}
         {{/power-select}}
       </div>
+      {{log disabledAgregar}}
+      {{#if selectedProducto}}
       <div class="row">
-        {{#m-wrapper query='chip' method='material_chip' class='valign-wrapper' }}
-          {{#if selectedProducto}}
-            <div class="col s12 m4">
-              <div class="chip">
+
+
+        <div class="col m12">
+          {{#m-wrapper query='chip' method='material_chip' class='valign-wrapper' }}
+          <div class="chip">
                 {{selectedProducto.nombre}}
                 <i {{action 'changePrima'}} class="close-notclose material-icons">close</i>
               </div>
-            </div>
-            <div class="input-field col s12 m4">
+          {{/m-wrapper}}
+        </div>
+        <div class="col m12">
+          <h6>Añadir: </h6>
+        </div>
+
+        <div class="input-field col m12">
               {{input id="cantidad" type="number" class="validate" value=cantidad}}
               <label for="cantidad">Cantidad</label>
             </div>
-            <div class="col s12 m4">
-              <h4>{{pluralize selectedProducto.unidad}}</h4>
+            <div class="col m12">
+              {{pluralize selectedProducto.unidad}} al pedido
             </div>
-          {{/if}}
-        {{/m-wrapper}}
+      
       </div>
+      {{/if}}
     </div>
     <div class="card-action">
       <center>
-        <a {{action 'agregar' selectedProducto cantidad}} class="waves-effect waves-light btn">Agregar</a>
+        <a {{action 'agregar' selectedProducto cantidad}} class="waves-effect waves-light btn {{if disabledAgregar 'disabled'}}">Agregar</a>
       </center>
     </div>
   </div>
-  <div class="card">
-    <div class="card-content">
+  <div class="card col m5" style="margin-left:10px">
+    <div class="card-content" style="overflow-y: scroll; max-height: 530px">
       <h5>Productos del reparto</h5>
       <br>
-      <div class="row">
+      <div class="row" >
         <table>
           <thead>
             <tr>
@@ -63,11 +72,19 @@
                 <td><a {{action 'delete' distribucion}} class="btn-floating"><i class="material-icons">delete</i></a></td>
               </tr>
             {{else}}
-            	Agrega pedidos
+              Agrega pedidos
             {{/each}}
           </tbody>
         </table>
       </div>
     </div>
+     <div class="card-action">
+      <center>
+        <a {{action 'enviar'}} class="waves-effect waves-light btn">Enviar reparto</a>
+      </center>
+    </div>
   </div>
+
+  </div>
+  
 </div>
