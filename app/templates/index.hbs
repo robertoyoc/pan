@@ -5,8 +5,8 @@
 {{#each model.productos as |producto|}}
   <button {{action 'addtoCart' producto}}>Add {{producto.nombre}} now</button>
 {{/each}}
- --}}
 
+ --}}
 {{#m-wrapper query=".button-collapse" method="sideNav" options='{"closeOnClick":true}'}}
 
 <div class="navbar-fixed">

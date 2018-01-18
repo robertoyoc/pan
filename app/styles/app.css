@@ -63,3 +63,14 @@ footer.page-footer {
 #map{
   height: 400px;
 }
+
+.close-notclose{
+  cursor: pointer;
+    float: right;
+    font-size: 16px;
+    line-height: 32px;
+    padding-left: 8px;
+}
+.s-28{
+  font-size: 28px;
+}

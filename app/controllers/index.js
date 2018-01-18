@@ -36,13 +36,6 @@ export default Controller.extend({
       if(this.get('model.cart.pedidos.length')>0&&total!=0)
         this.set("model.cart.valor", total)
 
-      if(this.get('model.cart.hasDirtyAttributes')){
-        all([
-          this.get('model.cart.pedidos').invoke('save'),
-          this.get('model.cart').save()
-        ])
-      }
-
     }
 
 
@@ -52,6 +45,14 @@ export default Controller.extend({
   init(){
     //console.log(this.get('model.cart'))
     this.set('tooManyRequest', false)
+    window.$(window).on('beforeunload', () => {
+      if(this.get('model.cart.hasDirtyAttributes')){
+        all([
+          this.get('model.cart.pedidos').invoke('save'),
+          this.get('model.cart').save()
+        ])
+      }
+    });
   },
 
   actions:{

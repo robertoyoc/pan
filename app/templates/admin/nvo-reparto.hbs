@@ -1,1 +1,73 @@
-{{outlet}}
+{{#ember-wormhole to='admin-nav' }}
+  {{#link-to 'admin.inv-produccion' class='breadcrumb' }}Inv. de Producción{{/link-to}}
+  {{#link-to 'admin.nvo-reparto' class='breadcrumb' }}Reparto{{/link-to}}
+{{/ember-wormhole}}
+<center>
+  <h2>Nuevo reparto</h2></center>
+<div class="container">
+  <div class="card">
+    <div class="card-content">
+      <h5>Agregar productos al reparto</h5>
+      <br>
+      <div class="row">
+        {{#power-select options=model.productos selected=selectedProducto onchange=(action (mut selectedProducto)) searchPlaceholder="Escribe para buscar" placeholder="Escribe para buscar" searchField='nombre' as |mprima|}}
+          {{mprima.nombre}}
+        {{/power-select}}
+      </div>
+      <div class="row">
+        {{#m-wrapper query='chip' method='material_chip' class='valign-wrapper' }}
+          {{#if selectedProducto}}
+            <div class="col s12 m4">
+              <div class="chip">
+                {{selectedProducto.nombre}}
+                <i {{action 'changePrima'}} class="close-notclose material-icons">close</i>
+              </div>
+            </div>
+            <div class="input-field col s12 m4">
+              {{input id="cantidad" type="number" class="validate" value=cantidad}}
+              <label for="cantidad">Cantidad</label>
+            </div>
+            <div class="col s12 m4">
+              <h4>{{pluralize selectedProducto.unidad}}</h4>
+            </div>
+          {{/if}}
+        {{/m-wrapper}}
+      </div>
+    </div>
+    <div class="card-action">
+      <center>
+        <a {{action 'agregar' selectedProducto cantidad}} class="waves-effect waves-light btn">Agregar</a>
+      </center>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <h5>Productos del reparto</h5>
+      <br>
+      <div class="row">
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Unidad</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each model.reparto.distribuciones as |distribucion|}}
+              <tr>
+                <td>{{distribucion.producto.nombre}}</td>
+                <td>{{distribucion.cantidad}}</td>
+                <td>{{pluralize distribucion.producto.unidad}}</td>
+                <td><a {{action 'delete' distribucion}} class="btn-floating"><i class="material-icons">delete</i></a></td>
+              </tr>
+            {{else}}
+            	Agrega pedidos
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

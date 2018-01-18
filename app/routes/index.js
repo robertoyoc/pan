@@ -60,6 +60,14 @@ export default Route.extend({
   actions: {
     sessionChanged: function() {
       this.refresh()
+    },
+    willTransition(){
+      if(this.get('model.cart.hasDirtyAttributes')){
+        all([
+          this.get('model.cart.pedidos').invoke('save'),
+          this.get('model.cart').save()
+        ])
+      }
     }
   }
 
