@@ -3,5 +3,4 @@ import Producto from './producto';
 
 
 export default Producto.extend({
-
 });
