@@ -1,3 +1,81 @@
 <center>
 	{{#link-to 'admin.inv-produccion' class="waves-effect waves-light btn"}}Ir a inventario de produccion{{/link-to}}
 </center>
+
+<style type="text/css">
+	body {
+		background: url(https://images.unsplash.com/photo-1413745000559-46fdd2d81cd7?auto=format&fit=crop&w=1334&q=80) no-repeat fixed;
+	}
+
+ 	.img{
+ 	max-width: 100%;
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+ 	}
+
+ 	.img:hover{
+ 		-moz-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+ 	}
+ </style>
+ 
+ <div class="row" style="margin-top: 4%;">
+    {{#link-to "admin.proveedores"}}
+    <div class="col s12 m3 offset img" style="margin-left: 3%;">
+     	<div class="card">
+            <div class="card-image">
+              <img src="https://i.blogs.es/171ec8/27138_fifa-18-ronaldo-cover-art-1920-0-1497119402/400_300.jpg" width="100%">
+              <span class="card-title">Compras</span>
+            </div>
+        </div>
+    </div>{{/link-to}}
+    {{#link-to "admin.historial-compras"}}
+    <div class="col s12 m3 offset-m1 img">
+     	<div class="card">
+            <div class="card-image">
+              <img src="https://i.blogs.es/171ec8/27138_fifa-18-ronaldo-cover-art-1920-0-1497119402/400_300.jpg">
+              <span class="card-title">Inventario de Producción</span>
+            </div>
+        </div>
+    </div>{{/link-to}}
+    {{#link-to "admin.nva-compra"}}
+    <div class="col s12 m3 offset-m1 img">
+     	<div class="card">
+            <div class="card-image">
+              <img src="https://i.blogs.es/171ec8/27138_fifa-18-ronaldo-cover-art-1920-0-1497119402/400_300.jpg" width="100%">
+              <span class="card-title">Productos</span>
+            </div>
+        </div>
+    </div>
+    {{/link-to}}
+    {{#link-to "admin.proveedores"}}
+    <div class="col s12 m3 offset img" style="margin-left: 3%;">
+     	<div class="card">
+            <div class="card-image">
+              <img src="https://i.blogs.es/171ec8/27138_fifa-18-ronaldo-cover-art-1920-0-1497119402/400_300.jpg" width="100%">
+              <span class="card-title">Inventario de Ventas</span>
+            </div>
+        </div>
+    </div>{{/link-to}}
+    {{#link-to "admin.historial-compras"}}
+    <div class="col s12 m3 offset-m1 img">
+     	<div class="card">
+            <div class="card-image">
+              <img src="https://i.blogs.es/171ec8/27138_fifa-18-ronaldo-cover-art-1920-0-1497119402/400_300.jpg">
+              <span class="card-title">Cortes</span>
+            </div>
+        </div>
+    </div>{{/link-to}}
+    {{#link-to "admin.nva-compra"}}
+    <div class="col s12 m3 offset-m1 img">
+     	<div class="card">
+            <div class="card-image">
+              <img src="https://i.blogs.es/171ec8/27138_fifa-18-ronaldo-cover-art-1920-0-1497119402/400_300.jpg" width="100%">
+              <span class="card-title">Producción</span>
+            </div>
+        </div>
+    </div>
+    {{/link-to}}
+</div>
