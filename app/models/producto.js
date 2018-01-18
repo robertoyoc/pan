@@ -5,4 +5,5 @@ export default DS.Model.extend({
   precio: DS.attr('number'),
   categoria: DS.attr('string'),
   unidad: DS.attr('string'),
+  cantidad: DS.attr('number')
 });
