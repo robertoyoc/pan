@@ -15,7 +15,6 @@
           {{mprima.nombre}}
         {{/power-select}}
       </div>
-      {{log this.validations.errors}}
       {{#if selectedProducto}}
       <div class="row">
 
@@ -33,11 +32,11 @@
         </div>
 
         <div class="input-field col m12">
-              {{input id="cantidad" type="number" class="validate" value=cantidad}}
-              <label for="cantidad">Cantidad</label>
+              {{input id="cantidad" type="number" class=valid value=cantidad}}
+              <label for="cantidad" data-error="Contamos solo con {{cantidadMax}} en stock">Cantidad</label>
             </div>
             <div class="col m12">
-              {{pluralize selectedProducto.unidad}} al pedido
+              {{if plural (pluralize selectedProducto.unidad) selectedProducto.unidad}} al reparto
             </div>
       
       </div>
@@ -45,7 +44,7 @@
     </div>
     <div class="card-action">
       <center>
-        <a {{action 'agregar' selectedProducto cantidad}} class="waves-effect waves-light btn {{if disabledAgregar 'disabled'}}">Agregar</a>
+        <a {{action 'agregar' selectedProducto cantidad}} class="waves-effect waves-light btn {{if (or disabledAgregar (v-get this 'cantidad' 'isInvalid')) 'disabled'}}">Agregar</a>
       </center>
     </div>
   </div>
@@ -80,11 +79,12 @@
     </div>
      <div class="card-action">
       <center>
-        <a {{action 'enviar'}} class="waves-effect waves-light btn">Enviar reparto</a>
+        <a {{action 'enviar' model.reparto}} class="waves-effect waves-light btn {{unless disabledEnviar 'disabled'}}">Enviar reparto</a>
       </center>
     </div>
   </div>
+  {{input value=d type='date'}}
+  {{d}}
 
   </div>
-  
 </div>
