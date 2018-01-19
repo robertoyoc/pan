@@ -1,1 +1,27 @@
 {{outlet}}
+<style>
+.form {
+	margin-top: 5%;
+}
+</style>
+<div class="row form">
+    <form class="col s12 m8 offset-m2">
+      <div class="row">
+        <div class="input-field col s12">
+        	<i class="material-icons prefix">account_circle</i>
+          {{input id="first_name" type="text" class="validate"}}
+          <label for="first_name">Nombre</label>
+        </div>
+      </div>
+      <div class="row">
+      	<div class="input-field col s9">
+      		{{#power-select options=model.productos selected=selectedProducto onchange=(action (mut selectedProducto)) searchPlaceholder="Escribe para buscar un producto" placeholder="Escribe para buscar un producto" searchField='nombre' as |mprima|}}
+          {{mprima.nombre}}
+        {{/power-select}}
+      	</div>
+      	<div class="input-field col s3">
+      		<a class="waves-effect waves-light btn"><i class="material-icons left">add</i>Añadir</a>
+      	</div>
+      </div>
+    </form>
+  </div>
