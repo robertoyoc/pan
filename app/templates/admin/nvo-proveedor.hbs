@@ -1,27 +1,56 @@
 {{outlet}}
 <style>
 .form {
-	margin-top: 5%;
+	margin-top: 2%;
+}
+
+.waves-effect{
+	position: fixed;
 }
 </style>
+<h5 class="center-align">Agregar Proveedor</h5>
 <div class="row form">
-    <form class="col s12 m8 offset-m2">
-      <div class="row">
+    <form class="col s12 m4 offset-m1 card" style="margin-right: 10px">
+      <div class="row card-content">
         <div class="input-field col s12">
         	<i class="material-icons prefix">account_circle</i>
           {{input id="first_name" type="text" class="validate"}}
           <label for="first_name">Nombre</label>
         </div>
+
       </div>
-      <div class="row">
+    </form>
+    <div class="col s12 m6 card" style="margin-left: 2%;">
+    	<div class="row card-content">
       	<div class="input-field col s9">
       		{{#power-select options=model.productos selected=selectedProducto onchange=(action (mut selectedProducto)) searchPlaceholder="Escribe para buscar un producto" placeholder="Escribe para buscar un producto" searchField='nombre' as |mprima|}}
           {{mprima.nombre}}
         {{/power-select}}
       	</div>
       	<div class="input-field col s3">
-      		<a class="waves-effect waves-light btn"><i class="material-icons left">add</i>Añadir</a>
+      		<a class="waves-effect waves-light btn">Añadir</a>
       	</div>
       </div>
-    </form>
+    	<div class="col s12">
+      		<table class="centered">
+        <thead>
+          <tr>
+              <th>Producto</th>
+              <th>Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        	{{#each producto}}
+          <tr>
+            <td>{{producto.nombre}}</td>
+            <td><a class="waves-effect waves-light btn"><i class="material-icons left">delete</i>Eliminar</a></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
   </div>
+
+    </div>
+  </div>
+  <a class="waves-effect waves-light btn right" style="margin-right: 5%; bottom: 2%; left: 45%;"><i class="material-icons left">save</i>Guardar</a>
