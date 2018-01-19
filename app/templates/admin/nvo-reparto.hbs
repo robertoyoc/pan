@@ -6,48 +6,59 @@
   <h3>Nuevo reparto</h3></center>
 <div class="">
   <div class="row">
-    <div class="card col m5 offset-m1" style="margin-right: 10px">
-    <div class="card-content">
-      <h5>Agregar productos al nuevo reparto</h5>
-      <br>
-      <div class="row">
-        {{#power-select options=model.productos selected=selectedProducto onchange=(action (mut selectedProducto)) searchPlaceholder="Escribe para buscar" placeholder="Escribe para buscar" searchField='nombre' as |mprima|}}
-          {{mprima.nombre}}
-        {{/power-select}}
+    <div class="col m5 offset-m1">
+      <div class="card" style="margin-right: 10px">
+        <div class="card-content">
+          <h5>Selecciona la sucursal</h5>
+          <br>
+          <div class="row">
+            {{#power-select options=model.sucursales selected=selectedSucursal onchange=(action (mut selectedSucursal)) searchPlaceholder="Escribe para buscar" placeholder="Escribe para buscar" searchField='nombre' as |sucursal|}}
+              {{sucursal.nombre}}
+            {{/power-select}}
+          </div>
+        </div>
       </div>
-      {{#if selectedProducto}}
-      <div class="row">
+      <div class="card" style="margin-right: 10px">
+        <div class="card-content">
+          <h5>Agregar productos al nuevo reparto</h5>
+          <br>
+          <div class="row">
+            {{#power-select options=model.productos selected=selectedProducto onchange=(action (mut selectedProducto)) searchPlaceholder="Escribe para buscar" placeholder="Escribe para buscar" searchField='nombre' as |mprima|}}
+              {{mprima.nombre}}
+            {{/power-select}}
+          </div>
+          {{#if selectedProducto}}
+          <div class="row">
+            <div class="col m12">
+              {{#m-wrapper query='chip' method='material_chip' class='valign-wrapper' }}
+                <div class="chip">
+                  {{selectedProducto.nombre}}
+                  <i {{action 'changePrima'}} class="close-notclose material-icons">close</i>
+                </div>
+              {{/m-wrapper}}
+            </div>
+            <div class="col m12">
+              <h6>Añadir: </h6>
+            </div>
 
-
-        <div class="col m12">
-          {{#m-wrapper query='chip' method='material_chip' class='valign-wrapper' }}
-          <div class="chip">
-                {{selectedProducto.nombre}}
-                <i {{action 'changePrima'}} class="close-notclose material-icons">close</i>
-              </div>
-          {{/m-wrapper}}
-        </div>
-        <div class="col m12">
-          <h6>Añadir: </h6>
-        </div>
-
-        <div class="input-field col m12">
+            <div class="input-field col m12">
               {{input id="cantidad" type="number" class=valid value=cantidad}}
               <label for="cantidad" data-error="Contamos solo con {{cantidadMax}} en stock">Cantidad</label>
             </div>
             <div class="col m12">
               {{if plural (pluralize selectedProducto.unidad) selectedProducto.unidad}} al reparto
             </div>
-      
+        
+          </div>
+          {{/if}}
+        </div>
+        <div class="card-action">
+          <center>
+            <a {{action 'agregar' selectedProducto cantidad}} class="waves-effect waves-light btn {{if (or disabledAgregar (v-get this 'cantidad' 'isInvalid')) 'disabled'}}">Agregar</a>
+          </center>
+        </div>
       </div>
-      {{/if}}
     </div>
-    <div class="card-action">
-      <center>
-        <a {{action 'agregar' selectedProducto cantidad}} class="waves-effect waves-light btn {{if (or disabledAgregar (v-get this 'cantidad' 'isInvalid')) 'disabled'}}">Agregar</a>
-      </center>
-    </div>
-  </div>
   <div class="card col m5" style="margin-left:10px">
     <div class="card-content" style="overflow-y: scroll; max-height: 530px">
       <h5>Productos del reparto</h5>
@@ -83,8 +94,6 @@
       </center>
     </div>
   </div>
-  {{input value=d type='date'}}
-  {{d}}
 
   </div>
 </div>

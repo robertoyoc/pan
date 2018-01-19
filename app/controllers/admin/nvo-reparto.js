@@ -30,7 +30,7 @@ export default Controller.extend(Validations, {
 		return (this.get('validations.attrs.cantidad.isValid')||this.get('disabledAgregar'))?'validate': 'validate invalid';
 	}),
 	disabledEnviar: computed('model.reparto.distribuciones', function() {
-		return this.get('model.reparto.distribuciones.length')>0
+		return this.get('model.reparto.distribuciones.length')>0 && !Ember.isBlank(this.get('selectedSucursal'))
 	}),
 	actions: {
 		foo(){
@@ -51,22 +51,16 @@ export default Controller.extend(Validations, {
 			distribucion.destroyRecord()
 		}, 
 		enviar(reparto){
-			let date = Date.now()
-			let formatDate= Date.parse(date);
-			reparto.set('fecha', date)
-			let day = formatDate.getDate();
-			let month = formatDate.getMonth()+1;
-			let year = formatDate.getFullYear();
+			reparto.set('fecha', Date.now())
+			reparto.set('sucursal', this.get('selectedSucursal'))
 
-			let emberDate= year + month + year;
-
-			// all(reparto.get('distribuciones').invoke('save')).then(()=>{
-			// 	reparto.save();
-			// }).then(()=>{
-			// 	window.swal("Guardado!", "El reparto ha sido enviado!", "success");
-			// }).then(()=>{
-			// 	this.transitionToRoute('admin.inv-produccion')
-			// })
+			all(reparto.get('distribuciones').invoke('save')).then(()=>{
+				reparto.save();
+			}).then(()=>{
+				window.swal("Guardado!", "El reparto ha sido enviado!", "success");
+			}).then(()=>{
+				this.transitionToRoute('admin.inv-produccion')
+			})
 
 		}
 	}

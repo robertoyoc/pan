@@ -1,32 +1,32 @@
+{{#ember-wormhole to='admin-nav' }}
+  {{#link-to 'admin.inv-produccion' class='breadcrumb' }}Inv. de Producción{{/link-to}}
+  {{#link-to 'admin.historial-reparto' class='breadcrumb' }}Repartos{{/link-to}}
+{{/ember-wormhole}}
 <div class="container">
-  <table>
+  <center>
+    <h4>Historial de Repartos</h4>
+  </center>
+  <table style="max-height: 650px">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Item Name</th>
-        <th>Item Price</th>
+        <th>Sucursal</th>
+        <th>Fecha</th>
+        <th>Hora</th>
+        <th>ID</th>
       </tr>
     </thead>
-    {{log model}}
     <tbody>
       {{#each model as |reparto|}}
         <tr>
-          <td>{{reparto.fecha}}</td>
-          <td>Eclair</td>
-          <td>$0.87</td>
+          <td>{{reparto.sucursal.nombre}}</td>
+          <td>{{reparto.dia}}</td>
+          <td>{{reparto.hora}}</td>
+          <td>{{reparto.id}}</td>
+
         </tr>
+        {{else}}
+        Aún no hay repartos
       {{/each}}
-      
-      <tr>
-        <td>Alan</td>
-        <td>Jellybean</td>
-        <td>$3.76</td>
-      </tr>
-      <tr>
-        <td>Jonathan</td>
-        <td>Lollipop</td>
-        <td>$7.00</td>
-      </tr>
     </tbody>
   </table>
 </div>

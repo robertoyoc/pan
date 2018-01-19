@@ -2,13 +2,16 @@ import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
 
 export default Route.extend({
-	// beforeModel(){
-	// 	this.store.createRecord('distribuido', {
-	// 		nombre: "Coca-cola",
-	// 		categoria: "bebidas",
-	// 		unidad: 'unidad'
-	// 	}).save()
-	// },
+	beforeModel(){
+		// this.store.createRecord('distribuido', {
+		// 	nombre: "Coca-cola",
+		// 	categoria: "bebidas",
+		// 	unidad: 'unidad'
+		// }).save()	
+		// this.store.createRecord('sucursal', {
+		// 	nombre: "villita",
+		// }).save()
+	},
 	model(){
 		let productos = [];
 		return this.store.findAll('receta').then((recetas)=>{
@@ -23,7 +26,8 @@ export default Route.extend({
 		}).then(()=>{
 			return hash({
 				productos: productos,
-				reparto: this.store.createRecord('reparto')
+				reparto: this.store.createRecord('reparto'),
+				sucursales: this.store.findAll('sucursal')
 			})
 		})
 
