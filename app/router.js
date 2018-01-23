@@ -53,6 +53,7 @@ Router.map(function() {
   this.route('nva-venta');
   this.route('nvo-especial');
   this.route('register');
+  this.route('en');
 });
 
 export default Router;

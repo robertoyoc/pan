@@ -56,7 +56,9 @@ export default Controller.extend({
   },
 
   actions:{
-
+    gotoAdmin(){
+      this.transitionToRoute('admin')
+    },
     hi(){
       this.set('loginuserError', 'correo incorrecto')
       window.$('#loginuser').removeClass('valid')
