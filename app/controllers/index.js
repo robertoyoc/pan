@@ -126,7 +126,8 @@ export default Controller.extend({
     },
     login(){
       window.$('#login').modal('open'); //debe ser window para que lo busque en toda la ventana
-       window.$('#loginuser').removeClass('invalid');
+      window.$('#loginuser').focus();
+      window.$('#loginuser').removeClass('invalid');
       window.$('#loginpass').removeClass('invalid');
       window.$('#loginpass').removeClass('valid');
       window.$('#loginuser').removeClass('valid');

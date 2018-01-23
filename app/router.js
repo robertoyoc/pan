@@ -54,6 +54,7 @@ Router.map(function() {
   this.route('nvo-especial');
   this.route('register');
   this.route('en');
+  this.route('login');
 });
 
 export default Router;

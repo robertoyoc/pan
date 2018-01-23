@@ -7,9 +7,7 @@ const Validations = buildValidations({
   user: validator('presence', true),
   pass: [
     validator('presence', true),
-    validator('length', {
-      min: 6
-    })
+    validator('presence', true)
   ]
 })
 
@@ -43,37 +41,6 @@ actions:{
             this.send('desactivateError', '#loginpass')
           }
           break;
-          case 'regUser':
-            if(get(this, 'validations.attrs.user.isInvalid')){
-              this.set('regUserError', 'Este campo no puede estar vacío.')
-              this.send('activateError', '#regUser')
-            }
-          break;
-          case 'regPass':
-            if(get(this, 'validations.attrs.pass.isInvalid')){
-              if(get(this, 'validations.attrs.pass.error.type')=='presence')
-                this.set('regPassError', 'Este campo no puede estar vacío.')
-              else
-                this.set('regPassError', 'La contraseña es demasiado corta.')
-              this.send('activateError', '#regPass')
-            }else{
-              this.set('regPassError', null);
-              this.send('desactivateError', '#regPass')
-            }
-
-          break;
-          case 'regNombre':
-            if(get(this, 'validations.attrs.nombre.isInvalid')){
-              this.set('regNombreError', 'Este campo no puede estar vacío.')
-              this.send('activateError', '#regNombre')
-            }
-          break;
-          case 'regApellido':
-            if(get(this, 'validations.attrs.apellido.isInvalid')){
-              this.set('regApellidoError', 'Este campo no puede estar vacío.')
-              this.send('activateError', '#regApellido')
-            }
-          break;
 
         }
 
@@ -82,6 +49,7 @@ actions:{
     },
 
     signIn(){
+      this.set('isWorking', true)
 
       this.validate().then(({validations})=>{
         if(get(this, 'validations.isValid')){
@@ -96,6 +64,7 @@ actions:{
             this.set('user', undefined);
             this.set('pass', undefined);
             window.$('#login').modal('close');
+            this.set('isWorking', false)
 
             this.send('sessionChanged');
 
@@ -103,17 +72,22 @@ actions:{
             switch(error.code){
               case "auth/user-not-found":
               this.set('loginUserError', 'Usuario no encontrado.')
+              this.send('activateError', '#loginuser')
               break;
               case "auth/wrong-password":
               this.set('loginPassError', 'Contraseña incorrecta.')
+              this.send('activateError', '#loginpass')
               break;
               case "auth/too-many-requests":
               this.set('loginPassError', 'Demasiadas peticiones.')
+              this.send('activateError', '#loginpass')
 
             }
-            this.send('activateError', '#loginuser')
+            this.set('isWorking', false)
+            
           });
         }
+      }).catch((error)=>{
       });
 
 
