@@ -5,9 +5,7 @@ export default Mixin.create({
     session: service(),
     beforeModel(transition){
         return this.get('session').fetch().catch(()=>{
-        	
             if(!this.get('session.currentUser.uid')){
-            	
                 transition.abort()
                 this.transitionTo('index')
             }
