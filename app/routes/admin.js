@@ -14,7 +14,7 @@ export default Route.extend(AuthenticatedRoute, {
 					transition.abort()
 					this.transitionTo('index')
 				}
-				debugger
+			
 			})
 		})
 	}
