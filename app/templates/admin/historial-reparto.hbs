@@ -17,11 +17,15 @@
     </thead>
     <tbody>
       {{#each model as |reparto|}}
+      {{log reparto}}
         <tr>
           <td>{{reparto.sucursal.nombre}}</td>
           <td>{{reparto.dia}}</td>
           <td>{{reparto.hora}}</td>
-          <td>{{reparto.id}}</td>
+          <td>{{#m-wrapper query=".tooltipped" method="tooltip" }}
+              <a class="btn-floating waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ver"><i class="material-icons">visibility</i></a>
+              <a class="btn-floating waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Editar"><i class="material-icons">edit</i></a>
+            {{/m-wrapper}}</td>
 
         </tr>
         {{else}}

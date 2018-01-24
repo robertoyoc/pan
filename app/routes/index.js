@@ -31,7 +31,7 @@ export default Route.extend({
               cart: this.get('store').createRecord('cart', {
                 valor: 0,
                 propietario: _account
-              }).save(),
+              }),
               productos: this.get('store').findAll("producto")
             });
           }
@@ -61,14 +61,15 @@ export default Route.extend({
     sessionChanged: function() {
       this.refresh()
     },
-    willTransition(){
-      if(this.get('model.cart.hasDirtyAttributes')){
-        all([
-          this.get('model.cart.pedidos').invoke('save'),
-          this.get('model.cart').save()
-        ])
-      }
-    }
+    // willTransition(){
+    //   if(this.get('model.cart.hasDirtyAttributes')){
+    //     debugger
+    //     all([
+    //       this.get('model.cart.pedidos').invoke('save'),
+    //       this.get('model.cart').save()
+    //     ])
+    //   }
+    // }
   }
 
 });

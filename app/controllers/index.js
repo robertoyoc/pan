@@ -46,7 +46,7 @@ export default Controller.extend({
     //console.log(this.get('model.cart'))
     this.set('tooManyRequest', false)
     window.$(window).on('beforeunload', () => {
-      if(this.get('model.cart.hasDirtyAttributes')){
+      if(this.get('model.cart.hasDirtyAttributes'&&this.get('model.cart.valor')>0)){
         all([
           this.get('model.cart.pedidos').invoke('save'),
           this.get('model.cart').save()
@@ -56,9 +56,7 @@ export default Controller.extend({
   },
 
   actions:{
-    gotoAdmin(){
-      this.transitionToRoute('admin')
-    },
+
     hi(){
       this.set('loginuserError', 'correo incorrecto')
       window.$('#loginuser').removeClass('valid')
@@ -108,9 +106,32 @@ export default Controller.extend({
     },
   
     signOut(){
+      window.swal({
+        title: 'Estás seguro?',
+        text: 'Tu sesión será cerrada',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, salir!',
+        cancelButtonText: 'No',
+        confirmButtonClass: 'confirm-class',
+        cancelButtonClass: 'cancel-class',
+        closeOnConfirm: false,
+        closeOnCancel: false
+      
+      }).then(()=>{
+        this.get('session').close();
+          this.send('sessionChanged')
+          window.swal({
+            type: 'success',
+            title: 'Sesión cerrada!',
+            text: 'Gracias por tu visita.',
+            timer: 500
+          });
+      }).catch(()=>{});
 
-      this.get('session').close();
-      this.send('sessionChanged')
+      
 
     },
     perfil(){
