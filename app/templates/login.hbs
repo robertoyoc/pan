@@ -1,1 +1,19 @@
-{{outlet}}
+<form id="login" class="container" {{action 'signIn' this on="submit"}}>
+    <div class="container">
+      <h4>Iniciar Sesión</h4>
+      <div class="row">
+        <div class="input-field col s12">
+          <i id="usericon" class="material-icons prefix ">account_circle</i>
+          {{input type="text" id="loginuser" value=user class="validate" focus-out=(action 'toogleError' 'user') tabindex=4}}
+          <label for="loginuser" data-error="{{if loginUserError loginUserError 'Revisando...'}}" data-success="Correcto">Usuario</label>
+        </div>
+        <div class="input-field col s12">
+          <i id="passicon" class="material-icons prefix">vpn_key</i>
+          {{input type="password" id="loginpass" value=pass class="validate"
+          focus-out=(action 'toogleError' 'pass') tabindex=5}}
+          <label id="userlabel" for="loginpass" data-error="{{if loginPassError loginPassError 'Revisando...'}}" >Password</label>
+        </div>
+        <button type="submit" class="waves-effect waves-light btn red right {{if (or isWorking (v-get this 'isInvalid')) 'disabled'}}" style="width:150px">{{if isWorking 'Trabajando' 'Entrar'}}</button>
+      </div>
+    </div>
+</form>

@@ -95,14 +95,14 @@ createUser(){
           let apellido = this.get("apellido");
           let pass = this.get("pass");
           this.get('firebase').auth().createUserWithEmailAndPassword(newemail, pass).then((usuario)=>{
-          	debugger
+          	 
             this.get('store').createRecord('account', {
               uid: usuario.uid,
               nombre: nombre,
               apellido: apellido,
               perfil: "cliente"
             }).save().then(()=>{
-            	debugger
+            	 
               window.swal(
               'Guardado!',
               'La información ha sido almacenada',

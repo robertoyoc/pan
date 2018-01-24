@@ -55,6 +55,7 @@ Router.map(function() {
   this.route('register');
   this.route('en');
   this.route('login');
+  this.route('dir');
 });
 
 export default Router;

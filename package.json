@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "bower": "^1.8.2",
+    "ember-responsive": "^2.0.5",
     "firebase": "4.4.0"
   },
   "devDependencies": {

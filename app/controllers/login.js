@@ -1,6 +1,5 @@
+import Controller from '@ember/controller';
 import { get } from '@ember/object';
-import Component from '@ember/component';
-import { inject as service } from '@ember/service';
 import { buildValidations, validator } from 'ember-cp-validations';
 
 const Validations = buildValidations({
@@ -11,11 +10,9 @@ const Validations = buildValidations({
   ]
 })
 
-export default Component.extend(Validations, {
-	session: service(),
-  currentUser: service(),
-  actions:{
-	toogleError(attr){
+export default Controller.extend(Validations, {
+	actions: {
+		toogleError(attr){
       this.validate().then(({validations})=>{
         switch(attr){
           case 'user':
@@ -58,13 +55,11 @@ export default Component.extend(Validations, {
             email: newemail,
             password: pass
           }).then(()=>{
-
+          	
             this.set('user', undefined);
             this.set('pass', undefined);
-            window.$('#login').modal('close');
             this.set('isWorking', false)
-
-            this.send('sessionChanged');
+            this.transitionToRoute('dir')
 
           }).catch((error)=>{
             switch(error.code){
@@ -96,9 +91,5 @@ export default Component.extend(Validations, {
     window.$(id).removeClass('invalid');
     window.$(id).addClass('valid');
   }
-}
+	}
 });
-
-
-
-

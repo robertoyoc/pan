@@ -12,7 +12,7 @@ export default Route.extend(AuthenticatedRoute, {
 			return this.get('currentUser.account').then((account)=>{
 				if(account.get('perfil')!='vendedor'){
 					transition.abort()
-					this.transitionTo('index')
+					return this.transitionTo(account.get('perfil'))
 				}
 			})
 		})
