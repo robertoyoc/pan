@@ -20,8 +20,8 @@
           <li><a href="#register"{{action 'perfil'}}>Mi perfil</a></li>
           <li><a {{action 'signOut'}}>Cerrar Sesión</a></li>
         {{else}}
-          <li><a href="#login" {{action 'login'}} >Iniciar Sesión</a></li>
-          <li><a href="#register"{{action 'register'}}>Registrarse</a></li>
+          <li>{{#link-to 'login'}}Iniciar Sesión{{/link-to}}</li>
+          <li>{{#link-to 'register'}}Registrarse{{/link-to}}</li>
         {{/if}}
 
 

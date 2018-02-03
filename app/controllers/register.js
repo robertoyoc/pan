@@ -1,6 +1,6 @@
 import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
+import Controller from '@ember/controller';
 import { buildValidations, validator } from 'ember-cp-validations';
 
 const Validations = buildValidations({
@@ -15,7 +15,7 @@ const Validations = buildValidations({
   apellido: validator('presence', true)
 })
 
-export default Component.extend(Validations, {
+export default Controller.extend(Validations, {
 	firebase: service('firebaseApp'),
 	store: service(),
 	session: service(),
@@ -112,11 +112,12 @@ createUser(){
                 this.set('nombre', undefined);
                 this.set('apellido', undefined);
                 this.set('pass', undefined);
-                window.$('#register').modal('close');
                 this.get('session').open('firebase', {
                   provider: 'password',
                   email: newemail,
                   password: pass
+                }).then(()=>{
+                  Controller.transitionToRoute('index');
                 })
               })
 
