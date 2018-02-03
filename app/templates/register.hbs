@@ -1,1 +1,68 @@
-{{outlet}}
+<style>
+body {
+  background: url(https://images.unsplash.com/photo-1413745000559-46fdd2d81cd7?auto=format&fit=crop&w=1334&q=80) no-repeat fixed;
+}
+
+.m6{
+  margin-top: 5%;
+} 
+
+.input-field label {
+     color: #FFF !important;
+}
+
+.input-field input[type=text], input[type=password] {
+     border-bottom: 1px solid #FFF !important;
+     box-shadow: 0 1px 0 0 #FFF !important;
+}
+
+body{
+  color: white;
+}
+
+.input-field input[type=text]:focus + label {
+     color: #FFF !important;
+   }
+
+.material-icons{
+  color: white;
+}
+
+.input-field .prefix.active {
+     color: #FFF !important;
+   }
+
+</style>
+
+<div class="row">
+<div class="col s12 m6 offset-m3 z-depth-5">
+<div id="register">
+      <h4>Registrarse</h4>
+      <div class="row">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">perm_identity</i>
+          {{input type="text" id="regNombre" value=nombre  focus-out=(action 'toogleError' 'regNombre') class="validate"}}
+          <label for="regNombre" data-error="{{if regNombreError regNombreError 'Revisando'}}" data-success="Correcto">Nombre</label>
+        </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix">perm_identity</i>
+          {{input type="text" id="regApellido" value=apellido  focus-out=(action 'toogleError' 'regApellido') class="validate"}}
+          <label for="regApellido" data-error="{{if regApellidoError regApellidoError 'Revisando'}}" data-success="Correcto">Apellido</label>
+        </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix">account_circle</i>
+          {{input type="text" id="regUser" value=user  focus-out=(action 'toogleError' 'regUser') class="validate"}}
+          <label for="regUser" data-error="{{if regUserError regUserError 'Revisando'}}" data-success="Correcto">Usuario</label>
+        </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix">vpn_key</i>
+           {{input type="password" id="regPass" value=pass  focus-out=(action 'toogleError' 'regPass') class="validate"}}
+          <label for="regUser" data-error="{{if regPassError regPassError 'Revisando'}}" data-success="Correcto">Contraseña</label>
+        </div>
+
+
+        <a {{action "createUser"}} class="waves-effect waves-light btn red right"><i class="material-icons right">done</i>Registrarse</a>
+      </div>
+    </div>
+</div>
+</div>

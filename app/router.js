@@ -50,7 +50,9 @@ Router.map(function() {
     this.route('grafica');
   });
 
-  this.route('vendedor');
+  this.route('vendedor', function(){
+    this.route('venta');
+  });
   this.route('nva-venta');
   this.route('nvo-especial');
   this.route('register');
