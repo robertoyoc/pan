@@ -1,3 +1,7 @@
+
+
+
+
 {{#ember-wormhole to='admin-nav' }}
   {{#link-to 'admin.inv-produccion' class='breadcrumb' }}Inv. de Producción{{/link-to}}
   {{#link-to 'admin.nvo-reparto' class='breadcrumb' }}Reparto{{/link-to}}
@@ -43,10 +47,10 @@
 
             <div class="input-field col m12">
               {{input id="cantidad" type="number" class=valid value=cantidad}}
-              <label for="cantidad" data-error="Contamos solo con {{cantidadMax}} en stock">Cantidad</label>
+              <label for="cantidad" data-error="Contamos solo con {{cantidadMax}} en stock" style="width:100%">Cantidad</label>
             </div>
             <div class="col m12">
-              {{if plural (pluralize selectedProducto.unidad) selectedProducto.unidad}} al reparto
+              {{pluralize cantidad "unidad" without-count=true}} al reparto
             </div>
         
           </div>
