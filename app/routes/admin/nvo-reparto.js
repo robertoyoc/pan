@@ -3,14 +3,27 @@ import { hash } from 'rsvp';
 
 export default Route.extend({
 	beforeModel(){
-		// this.store.createRecord('distribuido', {
-		// 	nombre: "Coca-cola",
-		// 	categoria: "bebidas",
-		// 	unidad: 'unidad'
-		// }).save()	
-		// this.store.createRecord('sucursal', {
-		// 	nombre: "villita",
-		// }).save()
+		/*
+		this.store.createRecord('sucursal', {
+		 	nombre: "Palmar",
+		 }).save()	
+		*/
+		/*
+		this.store.createRecord('producto', {
+			nombre: "Coca-cola 600ml",
+			precio: 10,
+			categoria: "bebidas",
+			unidad: "botella",
+			cantidad: 10
+		 }).save()
+		 this.store.createRecord('producto', {
+			nombre: "Galletas Marías",
+			precio: 15,
+			categoria: "alimentos",
+			unidad: "paquete",
+			cantidad: 15
+		 }).save()*/
+		
 	},
 	model(){
 		let productos = [];
@@ -31,6 +44,5 @@ export default Route.extend({
 			})
 		})
 
-		
 	}
 });

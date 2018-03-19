@@ -1,0 +1,11 @@
+<div class="card-content">
+    <h5>Selecciona la sucursal</h5>
+    <br>
+    <div class="row">
+        {{#power-select 
+            options=sucursales selected=selectedSucursal
+            onchange = (action (mut selectedSucursal)) searchPlaceholder="Escribe para buscar" placeholder="Escribe para buscar" searchField='nombre'
+            as |sucursal|}} {{sucursal.nombre}}
+        {{/power-select}}
+    </div>
+</div>

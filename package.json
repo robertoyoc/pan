@@ -6,10 +6,12 @@
   "license": "MIT",
   "author": "",
   "directories": {
-    "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://lex_rdz@bitbucket.org/talentics/panlavillita.git"
+  },
   "scripts": {
     "build": "ember build",
     "lint:js": "eslint ./*.js app config lib server tests",
@@ -57,5 +59,7 @@
   },
   "engines": {
     "node": "^4.5 || 6.* || >= 7.*"
-  }
+  },
+  "main": ".eslintrc.js",
+  "homepage": "https://bitbucket.org/talentics/panlavillita#readme"
 }
