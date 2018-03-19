@@ -4,7 +4,6 @@ import { computed } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { alias } from '@ember/object/computed';
 import { validator, buildValidations } from 'ember-cp-validations';
-import { all, reject, resolve } from 'rsvp';
 
 import { singularize, pluralize} from 'ember-inflector';
 import Inflector from 'ember-inflector';
@@ -35,8 +34,26 @@ export default Component.extend(Validations, {
 	},
     
     productos: computed(function() {
-        return this.get('store').findAll('producto');
-      }),   
+		let productosList = [];
+		return this.get('store').findAll('producto').then((productos)=>{
+		
+			return this.get('store').findAll('distribuido').then((distribuidos)=>{
+				return this.get('store').findAll('receta').then((recetas)=>{ 
+					productos.forEach((producto)=>{
+						productosList.pushObject(producto);
+					}) 
+					distribuidos.forEach((distribuido)=>{
+						productosList.pushObject(distribuido)
+					})
+					recetas.forEach((receta)=>{
+						productosList.pushObject(receta)
+					})
+					return productosList;
+				
+				})
+			})
+		})
+    }),   
 
     disabledAgregar: computed('cantidad', function () {
 		return Ember.isBlank(this.get('cantidad'));
@@ -50,9 +67,6 @@ export default Component.extend(Validations, {
 	valid: computed('cantidad', 'cantidadMax', function () {
 		return (this.get('validations.attrs.cantidad.isValid')||this.get('disabledAgregar'))?' ': ' invalid';
 	}),
-	disabledEnviar: computed('myReparto.distribuciones', 'selectedSucursal', function() {
-		return this.get('myReparto.distribuciones.length')>0 && !Ember.isBlank(this.get('selectedSucursal'));
-    }),
 
     actions: {
 

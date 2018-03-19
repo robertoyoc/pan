@@ -16,7 +16,7 @@
       <div class="card" style="margin-right: 10px">
         
         {{!--lista-productos selectedProducto=selectedProducto cantidad=cantidad agregar=(action 'agregar')--}}
-        {{lista-productos myReparto=model.reparto}}
+        {{lista-productos myReparto=model}}
         
       </div>
     </div>
@@ -35,7 +35,7 @@
             </tr>
           </thead>
           <tbody>
-            {{#each model.reparto.distribuciones as |distribucion|}}
+            {{#each model.distribuciones as |distribucion|}}
               <tr>
                 <td>{{distribucion.producto.nombre}}</td>
                 <td>{{distribucion.cantidad}}</td>
@@ -51,7 +51,7 @@
     </div>
      <div class="card-action">
       <center>
-        <a {{action 'enviar' model.reparto}} class="waves-effect waves-light btn {{unless disabledEnviar 'disabled'}}">Enviar reparto</a>
+        <a {{action 'enviar' model}} class="waves-effect waves-light btn {{unless disabledEnviar 'disabled'}}">Enviar reparto</a>
       </center>
     </div>
   </div>

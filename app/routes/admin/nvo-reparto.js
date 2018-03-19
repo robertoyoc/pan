@@ -22,27 +22,26 @@ export default Route.extend({
 			categoria: "alimentos",
 			unidad: "paquete",
 			cantidad: 15
-		 }).save()*/
-		
+		 }).save()
+		 */
+		/*
+		this.store.createRecord('distribuido', {
+			nombre: "pepsi 600ml",
+			precio: 8,
+			categoria: "bebidas",
+			unidad: "botella",
+			cantidad: 20
+		 }).save()
+		 this.store.createRecord('receta', {
+			nombre: "cuernito",
+			precio: 5,
+			categoria: "panes",
+			unidad: "pieza",
+			cantidad: 45
+		 }).save()
+		 */
 	},
 	model(){
-		let productos = [];
-		return this.store.findAll('receta').then((recetas)=>{
-			this.store.findAll('distribuido').then((distribuidos)=>{
-				recetas.forEach((receta)=>{
-					productos.pushObject(receta)
-				})
-				distribuidos.forEach((distribuido)=>{
-					productos.pushObject(distribuido)
-				})
-			})
-		}).then(()=>{
-			return hash({
-				productos: productos,
-				reparto: this.store.createRecord('reparto'),
-				sucursales: this.store.findAll('sucursal')
-			})
-		})
-
+		return this.store.createRecord('reparto');
 	}
 });
