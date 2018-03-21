@@ -51,7 +51,9 @@ Router.map(function() {
   });
 
   this.route('vendedor', function(){
-    this.route('venta');
+    this.route('/')
+    this.route('procesando-venta', {path: "/:idventa"});
+    this.route('venta', {path: "/venta/:idventa"});
   });
   this.route('nva-venta');
   this.route('nvo-especial');

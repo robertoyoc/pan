@@ -12,6 +12,14 @@ export default Controller.extend({
 			if(this.get('cantidad')>1)
 				this.set('cantidad', this.get('cantidad')-1);
 
+		},
+		finalizar(){
+			all(
+				venta.get('pedidos').invoke('save')
+			).then(()=>{
+				venta.save()
+			})
+
 		}
 	}
 
