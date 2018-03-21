@@ -6,6 +6,9 @@ export default Route.extend({
             
         },
     */
+
+    
+
     model(params) {
         this.set('venta_id', params.idventa)
 
