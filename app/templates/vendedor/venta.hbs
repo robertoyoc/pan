@@ -9,8 +9,6 @@ input{
 
 </style>
 
-	{{log venta_id}}
-
 <div class="row main">
 	<div class="col s12">
 		<div class="row">
@@ -32,16 +30,16 @@ input{
 			<div class="col s12 m4">
 				<div class="card center-align">
 					<div class="collection">
-				        {{#each producto}}
+
+				        {{#each productos as |producto|}}
 				        	{{else}}No hay productos en stock.
 				        {{/each}}
 				     </div>
 				</div>
 			</div>
 			<div class="col s12 m5">
-				<div class="card products">
-					{{teclado-numeric}}
-				</div>
+				{{teclado-numeric}}
+
 			</div>
 		</div>
 	</div>

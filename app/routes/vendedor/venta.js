@@ -1,19 +1,15 @@
 import Route from '@ember/routing/route';
 
 export default Route.extend({
-    /*
-        beforeModel() {
-            
-        },
-    */
-
-    
+    beforeModel() {
+       
+    },
 
     model(params) {
         this.set('venta_id', params.idventa)
 
         let myVenta = this.store.peekRecord('venta', params.idventa);
-        console.log(myVenta);
+        
         return myVenta.get('pedidos').createRecord();
 
         /*
