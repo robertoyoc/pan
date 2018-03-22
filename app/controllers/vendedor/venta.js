@@ -3,6 +3,7 @@ import { computed } from "@ember/object";
 import { inject as service } from "@ember/service";
 
 export default Controller.extend({
+	productList: service(),
 	store: service(),
 	
 	init(){
@@ -10,18 +11,11 @@ export default Controller.extend({
 	},
 
     productos: computed(function() {
-        return this.get('store').findAll('producto');
+		debugger
+       return this.get('productList.productos')
       }), 
 
 	actions: {
-		mas(){
-			this.set('cantidad', this.get('cantidad')+1);
-		},
-		menos(){
-			if(this.get('cantidad')>1)
-				this.set('cantidad', this.get('cantidad')-1);
-
-		},
 		finalizar(){
 			all(
 				venta.get('pedidos').invoke('save')

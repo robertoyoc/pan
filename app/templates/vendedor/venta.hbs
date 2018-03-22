@@ -29,9 +29,11 @@ input{
 			</div>
 			<div class="col s12 m4">
 				<div class="card center-align">
+					{{log productList}}
 					<div class="collection">
 
-				        {{#each productos as |producto|}}
+				        {{#each productList.productos as |producto|}}
+						lel
 				        	{{else}}No hay productos en stock.
 				        {{/each}}
 				     </div>

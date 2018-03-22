@@ -1,11 +1,15 @@
 import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 
 export default Route.extend({
+    productList: service(),
+
     beforeModel() {
        
     },
 
     model(params) {
+
         this.set('venta_id', params.idventa)
 
         let myVenta = this.store.peekRecord('venta', params.idventa);

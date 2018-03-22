@@ -3,7 +3,7 @@ import Route from '@ember/routing/route';
 export default Route.extend({
 
     beforeModel(){
-         /*
+         
 		this.store.createRecord('producto', {
 			nombre: "Coca-cola 1l",
 			precio: 15,
@@ -18,7 +18,7 @@ export default Route.extend({
 			unidad: "paquete",
 			cantidad: 16
 		 }).save()
-		 */
+		 
     },
 
     model() {
