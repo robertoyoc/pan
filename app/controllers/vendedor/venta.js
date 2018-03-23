@@ -46,15 +46,9 @@ export default Controller.extend({
 			}
 		},
 
-		finalizar(){
-			all(venta.get('pedidos').invoke('save')).then(()=>{
-				venta.save();
-			})
-		}, 
-		
-		selectNull() {
-            this.set('mySelectedProduct', undefined)
-        }
+		delete(pedido){
+			pedido.destroyRecord()
+		}
 	}
 
 });
