@@ -120,6 +120,6 @@
 	<div class="redondo">
 		<h6 class="center-align">Total: $</h6>
 	</div>
-	<a class="waves-effect waves-light btn right" {{action 'finalizar' myModel}} ><i class="material-icons left">save</i>Vender</a>
+	<a class="waves-effect waves-light btn right {{unless disabledVender 'disabled'}}" {{action 'finalizar' myModel}} ><i class="material-icons left">save</i>Vender</a>
    </div>
 </div>
