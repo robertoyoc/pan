@@ -1,1 +1,56 @@
-{{outlet}}
+{{#ember-wormhole to='admin-nav' }}
+  {{#link-to 'admin.productos' class='breadcrumb' }}Productos{{/link-to}}
+{{/ember-wormhole}}
+
+<style>
+	.row {
+		margin-top: 3%;
+	}
+
+  .file-field .btn, .file-field .btn-large, .file-field .btn-small {
+  float: left;
+  height: 3rem;
+  line-height: 3rem;
+}
+</style>
+
+<div class="row">
+	<div class="col s12 m8 offset-m2">
+	<form class="col s12">
+      <div class="row">
+        <div class="input-field col s8">
+          <i class="material-icons prefix">account_circle</i>
+          {{input type="text" class="validate" value=model.nombre}}
+          <label>Nombre del Producto</label>
+        </div>
+        <div class="input-field col s4">
+          <i class="material-icons prefix">attach_money</i>
+          {{input type="number" class="validate" value=model.precio}}
+          <label>Costo</label>
+        </div>
+        <div class="col s3">
+          <div class="file-field input-field">
+          <div class="btn">
+            <span>Subir Imagen</span>
+            <input type="file">
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text">
+          </div>
+          </div>
+        </div>
+        <div class="col s9">{{#power-select
+            options=categorias
+            placeholder="Selecciona una categoria"
+            selected=selected
+            searchField="name"
+            onchange=(action (mut selected))
+            as |country|
+          }}
+            {{country.name}}
+          {{/power-select}}</div>
+      </div>
+    </form>
+    <a {{action 'guardar' model}} class="waves-effect waves-light btn right"><i class="material-icons left">save</i>Guardar</a>
+  </div>
+</div>
