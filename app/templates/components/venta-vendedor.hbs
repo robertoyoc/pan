@@ -110,7 +110,7 @@
 				    <tr>
 				        <td>{{number-input cantidad=pedido.cantidad}}</td>						
 				        <td>{{pedido.producto.nombre}}</td>
-				        <td><a class="btn-floating waves-effect waves-light red"><i class="material-icons">delete</i></a></td>
+				        <td><a class="btn-floating waves-effect waves-light red" {{action 'delete' pedido}}><i class="material-icons">delete</i></a></td>
 				    </tr>
 				    {{else}}Ningún producto agregado
 				{{/each}}
@@ -120,6 +120,6 @@
 	<div class="redondo">
 		<h6 class="center-align">Total: $</h6>
 	</div>
-	<a class="waves-effect waves-light btn right"><i class="material-icons left">save</i>Vender</a>
+	<a class="waves-effect waves-light btn right {{unless disabledVender 'disabled'}}" {{action 'finalizar' myModel}} ><i class="material-icons left">save</i>Vender</a>
    </div>
 </div>
