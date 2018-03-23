@@ -12,10 +12,7 @@ export default Route.extend({
 
         this.set('venta_id', params.idventa)
 
-        let myVenta = this.store.peekRecord('venta', params.idventa);
-        
-        return myVenta.get('pedidos').createRecord();
-
+        return this.store.peekRecord('venta', params.idventa).get('pedidos').createRecord();   
         /*
             return this.store.peekRecord('venta', params.idventa).then((venta)=>{
                 console.log(venta)

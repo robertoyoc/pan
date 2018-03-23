@@ -1,17 +1,5 @@
-<style type="text/css">
-    .theDark {
-        background-color: black;
-        border-color: black;
-    }
-
-    .theWhite {
-        background-color: white;
-        color: black;
-    }
-</style>
-
 <div class="row">
-    <button class="theDark" {{action 'mas'}}>+</button> 
-    {{input class="theWhite" type="number" value=cantidad readonly=true min=0}}
-    <button class="theDark" {{action 'menos'}}>-</button>
+    <button {{action 'mas'}}>+</button> 
+    {{input type="number" value=cantidad readonly=true min=0}}
+    <button {{action 'menos'}}>-</button>
 </div>

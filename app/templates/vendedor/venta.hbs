@@ -29,18 +29,35 @@ input{
 			</div>
 			<div class="col s12 m4">
 				<div class="card center-align">
-					{{log productList}}
+					{{!-- {{log myProductos}} --}}
 					<div class="collection">
-
-				        {{#each productList.productos as |producto|}}
+						{{!-- {{log myProductos}} --}}
+				        {{!-- {{#each productos as |producto|}}
 						lel
 				        	{{else}}No hay productos en stock.
-				        {{/each}}
+				        {{/each}} --}}
+						{{#power-select 
+							options=myProductos selected=model.producto
+							onchange=(action (mut model.producto)) searchPlaceholder="Escribe
+							para buscar" placeholder="Escribe para buscar" searchField='nombre' as |mProduct|}} {{mProduct.nombre}} 
+						{{/power-select}}
+
+						
+
 				     </div>
+				</div>
+				<div class="card-action">
+    				<center>
+        				<a {{action 'agregarPedido' model}} 
+							class="waves-effect waves-light btn ">
+							{{!-- {{if (or disabledAgregar (v-get this 'cantidad' 'isInvalid')) 'disabled'}}"> --}}
+							Agregar al Pedido
+						</a>
+    				</center>
 				</div>
 			</div>
 			<div class="col s12 m5">
-				{{teclado-numeric}}
+				{{teclado-numeric myCantidad=model.cantidad}}
 
 			</div>
 		</div>
