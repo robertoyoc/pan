@@ -55,6 +55,6 @@ export default Controller.extend({
 		selectNull() {
             this.set('mySelectedProduct', undefined)
         }
-	}
+	},
 
 });

@@ -2,6 +2,7 @@
 	.theDark {
 		background-color: black;
         border-color: black;
+        
 	}
 
  	.theBtn {
@@ -9,6 +10,19 @@
         border-style: solid;
         border-width: 1px;
         border-color: white;
+        width: 60px;
+        height: 60px;
+     }
+
+     .quant{
+        font-size: 2.2em;
+        color: white;
+     }
+
+     i {
+        margin-top: 3%;
+        color: white;
+        font-size: 2.8em !important;
      }
 </style>
 
@@ -21,48 +35,41 @@
         </div>
     </div>
     <div class="row">
-        <div class="col s4 center-align theBtn">
-            <a class="waves-effect waves-light btn theDark" {{action 'concatNumber' 1 }} >1</a>
+        <div class="col s4 center-align theBtn" {{action 'concatNumber' 1 }}>
+           <span class="quant">1</span>
         </div>
-        <div class="col s4 center-align theBtn">
-            <a class="waves-effect waves-light btn theDark" {{action 'concatNumber' 2 }} >2</a>
+        <div class="col s4 center-align theBtn" {{action 'concatNumber' 2 }}>
+           <span class="quant">2</span>
         </div>
-        <div class="col s4 center-align theBtn">
-            <a class="waves-effect waves-light btn theDark" {{action 'concatNumber' 3 }} >3</a>
+        <div class="col s4 center-align theBtn" {{action 'concatNumber' 3 }}>
+           <span class="quant">3</span>
         </div>
-    </div>
-    <div class="row">
-        <div class="col s4 center-align theBtn">
-            <a class="waves-effect waves-light btn theDark" {{action 'concatNumber' 4 }} >4</a>
+        <div class="col s4 center-align theBtn" {{action 'concatNumber' 4 }}>
+           <span class="quant">4</span>
         </div>
-        <div class="col s4 center-align theBtn">
-            <a class="waves-effect waves-light btn theDark" {{action 'concatNumber' 5 }}>5</a>
+        <div class="col s4 center-align theBtn" {{action 'concatNumber' 5 }}>
+           <span class="quant">5</span>
         </div>
-        <div class="col s4 center-align theBtn">
-            <a class="waves-effect waves-light btn theDark" {{action 'concatNumber' 6 }}>6</a>
+        <div class="col s4 center-align theBtn" {{action 'concatNumber' 6 }}>
+           <span class="quant">6</span>
         </div>
-    </div>
-    <div class="row">
-        <div class="col s4 center-align theBtn">
-            <a class="waves-effect waves-light btn theDark" {{action 'concatNumber' 7 }}>7</a>
+        <div class="col s4 center-align theBtn" {{action 'concatNumber' 7 }}>
+           <span class="quant">7</span>
         </div>
-        <div class="col s4 center-align theBtn">
-            <a class="waves-effect waves-light btn theDark" {{action 'concatNumber' 8 }}>8</a>
+        <div class="col s4 center-align theBtn" {{action 'concatNumber' 8 }}>
+           <span class="quant">8</span>
         </div>
-        <div class="col s4 center-align theBtn">
-            <a class="waves-effect waves-light btn theDark" {{action 'concatNumber' 9 }}>9</a>
+        <div class="col s4 center-align theBtn" {{action 'concatNumber' 9 }}>
+           <span class="quant">9</span>
         </div>
-    </div>
-     <div class="row">
-        <div class="col s4 center-align theBtn">
-            <a class="waves-effect waves-light btn theDark" {{action 'reset' }}>C</a>
+        <div class="col s4 center-align theBtn" {{action 'reset' }}>
+          <i class="material-icons">delete_forever</i>
         </div>
-        <div class="col s4 center-align theBtn">
-            <a class="waves-effect waves-light btn theDark" {{action 'concatNumber' 0 }} >0</a>
+        <div class="col s4 center-align theBtn" {{action 'concatNumber' 0 }}>
+           <span class="quant">0</span>
         </div>
-        <div class="col s4 center-align theBtn">
-            <a class="waves-effect waves-light btn theDark" {{action 'substract' }} >DEL</a>
+        <div class="col s4 center-align theBtn" {{action 'substract'}}>
+           <i class="material-icons">backspace</i>
         </div>
     </div>
-    <br>
 </div>
