@@ -1,18 +1,46 @@
 import { hash } from 'rsvp';
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
+import { all } from 'rsvp';
 
 export default Route.extend({
   session: service(),
   store: service(),
   currentUser: service(),
+  usefulQuerys: service(),
 
   beforeModel(){
+    
+
+    // this.get('store').createRecord('pedido', {
+    //   cantidad: 10
+    // }).save({
+    //   adapterOptions: { path: 'sucursals/-L88RKW9sV0BENxKIzcG/pedidos' }
+    // })
     return this.get('session').fetch().catch(function() {
     })
   },
 
   model(){
+
+    var productoaborrar;
+
+    this.get('currentUser.account').then((account)=>{
+      return account.get('sucursal').then((sucursal)=>{
+        return this.get('usefulQuerys').findAllWithPath('producto').then((productos)=>{
+          productos.forEach((producto)=>{
+            console.log(producto)
+            productoaborrar= producto
+          })
+        })
+      })
+    }).then(()=>{
+      productoaborrar.deleteRecord()
+      productoaborrar.saveWithPath()
+    })
+    
+
+
     if(this.get('session.currentUser.uid')){
       return this.get('store').query('account', {
         orderBy: 'uid',

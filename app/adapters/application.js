@@ -1,4 +1,10 @@
-import FirebaseAdapter from 'emberfire/adapters/firebase';
+import FirebaseFlexAdapter from 'emberfire-utils/adapters/firebase-flex';
 
-export default FirebaseAdapter.extend({
+export default FirebaseFlexAdapter.extend({
+	findWithPath(sucursal){
+		debugger
+	}
+
+
+
 });
