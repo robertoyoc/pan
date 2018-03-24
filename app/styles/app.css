@@ -74,3 +74,6 @@ footer.page-footer {
 .s-28{
   font-size: 28px;
 }
+.white-text > label {
+  color: white!important;
+}
