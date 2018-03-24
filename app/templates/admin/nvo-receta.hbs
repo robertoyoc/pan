@@ -1,5 +1,6 @@
 {{#ember-wormhole to='admin-nav' }}
   {{#link-to 'admin.productos' class='breadcrumb' }}Productos{{/link-to}}
+  {{#link-to 'admin.nvo-receta' class='breadcrumb' }}Receta{{/link-to}}
 {{/ember-wormhole}}
 
 <style>
@@ -39,16 +40,19 @@
           </div>
           </div>
         </div>
-        <div class="col s9">{{#power-select
-            options=categorias
+        {{log myCategorias}}
+        <div class="col s9">
+          {{#power-select
+            options=myCategorias
             placeholder="Selecciona una categoria"
-            selected=selected
+            selected=model.categoria
             searchField="name"
-            onchange=(action (mut selected))
-            as |country|
-          }}
-            {{country.name}}
-          {{/power-select}}</div>
+            onchange=(action (mut model.categoria))
+            as |category|
+            }}
+            {{category.nombre}}
+          {{/power-select}}
+        </div>
       </div>
     </form>
     <a {{action 'guardar' model}} class="waves-effect waves-light btn right"><i class="material-icons left">save</i>Guardar</a>

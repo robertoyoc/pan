@@ -3,7 +3,7 @@ import DS from 'ember-data';
 export default DS.Model.extend({
   nombre: DS.attr('string'),
   precio: DS.attr('number'),
-  categoria: DS.attr('string'),
+  categoria: DS.belongsTo('categoria'),
   unidad: DS.attr('string'),
   cantidad: DS.attr('number')
 });

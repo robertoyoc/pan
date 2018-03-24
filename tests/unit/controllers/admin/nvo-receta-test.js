@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('controller:nvo-receta', 'Unit | Controller | nvo receta', {
+moduleFor('controller:admin/nvo-receta', 'Unit | Controller | admin/nvo receta', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });
