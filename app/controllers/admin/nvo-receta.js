@@ -6,7 +6,6 @@ export default Controller.extend({
 	store: service(),
 	
 	myCategorias: computed(function() {
-		debugger
 		return this.get('store').findAll('categoria')
     }),
 

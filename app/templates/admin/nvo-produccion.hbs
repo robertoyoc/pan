@@ -7,7 +7,7 @@
 
 
 <center>
-  <h3>Nuevo reparto</h3></center>
+  <h3>Nueva Produccion</h3></center>
 <div class="">
   <div class="row">
     <div class="col m4 offset-m1">
@@ -20,7 +20,7 @@
     </div>
   <div class="card col m6" style="margin-left:10px">
     <div class="card-content" style="overflow-y: scroll; max-height: 530px">
-      <h5>Productos del reparto</h5>
+      <h5>Recetas de la produccion</h5>
       <br>
       <div class="row" >
         <table>
@@ -41,7 +41,7 @@
                 <td><a {{action 'delete' distribucion}} class="btn-floating"><i class="material-icons">delete</i></a></td>
               </tr>
             {{else}}
-              Agrega pedidos
+              Agregar recetas
             {{/each}}
           </tbody>
         </table>
@@ -49,7 +49,7 @@
     </div>
      <div class="card-action">
       <center>
-        <a {{action 'enviar' model}} class="waves-effect waves-light btn {{unless disabledEnviar 'disabled'}}">Enviar reparto</a>
+        <a {{action 'enviar' model}} class="waves-effect waves-light btn {{unless disabledEnviar 'disabled'}}">Enviar produccion</a>
       </center>
     </div>
   </div>
