@@ -15,9 +15,10 @@ export default Component.extend({
 
         finalizar(venta){
 			all(venta.get('pedidos').invoke('save')).then(()=>{
-				venta.save();
-                this.sendAction('nuevaVenta');
-			})
+				venta.save().then(()=>{
+                    this.sendAction('nuevaVenta');
+                })
+            })
 		}, 
     }
 });

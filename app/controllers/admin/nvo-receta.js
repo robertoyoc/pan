@@ -16,7 +16,12 @@ export default Controller.extend({
 			}).then(()=>{
 				this.transitionToRoute('admin.productos');
 			})	
-		}
+		}, 
+		
+        nuevoProducto(){
+            this.transitionToRoute('admin.productos');
+        }
+
 	}
 
 });
