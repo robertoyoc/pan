@@ -1,1 +1,58 @@
 {{outlet}}
+<style type="text/css">
+	.main{
+		margin-top: 3%;
+	}
+</style>
+
+
+<center>
+  <h3>Nuevo reparto</h3></center>
+<div class="">
+  <div class="row">
+    <div class="col m4 offset-m1">
+      <div class="card" style="margin-right: 10px">
+        
+        {{!--lista-productos selectedProducto=selectedProducto cantidad=cantidad agregar=(action 'agregar')--}}
+        {{lista-recetas myReparto=model}}
+        
+      </div>
+    </div>
+  <div class="card col m6" style="margin-left:10px">
+    <div class="card-content" style="overflow-y: scroll; max-height: 530px">
+      <h5>Productos del reparto</h5>
+      <br>
+      <div class="row" >
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Unidad</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each model.distribuciones as |distribucion|}}
+              <tr>
+                <td>{{distribucion.producto.nombre}}</td>
+                <td>{{distribucion.cantidad}}</td>
+                <td>{{pluralize distribucion.producto.unidad}}</td>
+                <td><a {{action 'delete' distribucion}} class="btn-floating"><i class="material-icons">delete</i></a></td>
+              </tr>
+            {{else}}
+              Agrega pedidos
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+     <div class="card-action">
+      <center>
+        <a {{action 'enviar' model}} class="waves-effect waves-light btn {{unless disabledEnviar 'disabled'}}">Enviar reparto</a>
+      </center>
+    </div>
+  </div>
+
+  </div>
+</div>

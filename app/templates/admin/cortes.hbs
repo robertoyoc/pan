@@ -1,3 +1,46 @@
 {{#ember-wormhole to='admin-nav' }}
   {{#link-to 'admin.cortes' class='breadcrumb' }}Cortes{{/link-to}}
 {{/ember-wormhole}}
+
+<style>
+	.main{
+		margin-top: 3%;
+	}
+
+	.butt{
+		margin-right: 3%;
+	}
+</style>
+
+<div class="row main">
+	<div class="col s10 offset-s2">
+		<div class="row">
+			<div class="col s5">
+					 <label>Selecciona la fecha:</label>
+					 {{#m-wrapper query=".datepicker" method="pickadate"}}
+					 	 <input type="text" class="datepicker" placeholder="introduce la fecha">
+					 {{/m-wrapper}}
+			</div>
+			<div class="col s5">
+				<label>Turno</label>
+				{{#m-wrapper query="select" method="material_select"}}
+			    <select>
+			      <option value="" disabled selected>Selecciona el Turno</option>
+			      <option value="1">Matutino</option>
+			      <option value="2">Vespertino</option>
+			    </select>
+			    {{/m-wrapper}}
+			</div>
+		</div>
+		<a class="waves-effect waves-light btn right butt">Obtener el corte</a>
+	</div>
+	<form class="col s10 offset-s2 main">
+      <div class="row">
+        <div class="input-field col s10">
+          <i class="material-icons prefix">attach_money</i>
+          <input id="corte" type="text" disabled>
+          <label for="corte">Corte</label>
+        </div>
+      </div>
+    </form>
+</div>
