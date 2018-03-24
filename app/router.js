@@ -34,6 +34,7 @@ Router.map(function() {
     this.route('sucursales');
     this.route('nvo-sucursal');
     this.route('reparto', {path: "/admin/reparto/:idreparto"});
+    this.route('historial-produccion');
   });
 
   this.route('cliente', function() {

@@ -1,5 +1,57 @@
-{{#ember-wormhole to='admin-nav' }}
+p{{#ember-wormhole to='admin-nav' }}
   {{#link-to 'admin.produccion' class='breadcrumb' }}Producción{{/link-to}}
 {{/ember-wormhole}}
 
+<style>
+	.menu{
+		font-size: 3em;
+	}
 
+	.card{
+		height: 160px;
+	}
+
+	.main{
+		margin-top: 5%;
+	}
+
+	body {
+		background: url(https://images.unsplash.com/photo-1413745000559-46fdd2d81cd7?auto=format&fit=crop&w=1334&q=80);
+	}
+</style>
+
+
+<div class="row main">
+	{{#link-to "admin.lista-minimos"}}<div class="col s12">
+		<div class="row">
+			<div class="col s3 offset-s5">
+				<div class="card center-align hoverable">
+					<br><br><span class="menu">Minimos</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{/link-to}}
+	{{#link-to "admin.nvo-produccion"}}
+	<div class="col s12">
+		<div class="row">
+			<div class="col s3 offset-s5">
+				<div class="card center-align hoverable">
+					<br><br><span class="menu">Produccion</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{/link-to}}
+	{{#link-to "admin.historial-produccion"}}
+	<div class="col s12">
+		<div class="row">
+			<div class="col s3 offset-s5">
+				<div class="card center-align hoverable">
+					<br><br><span class="menu">Historial</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{/link-to}}
+</div>
