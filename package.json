@@ -20,7 +20,9 @@
   },
   "dependencies": {
     "bower": "^1.8.2",
-    "firebase": "4.4.0"
+    "express": "^4.16.3",
+    "firebase": "4.4.0",
+    "firebase-tools": "^3.17.7"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",

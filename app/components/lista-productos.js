@@ -71,12 +71,14 @@ export default Component.extend(Validations, {
     actions: {
 
         agregar(producto, cantidad){
+        	
 			this.get('myReparto.distribuciones').createRecord({
 				producto: producto,
-				cantidad: cantidad
+				cantidad: cantidad,
+				tipo: producto.get('constructor.modelName')
 			})
 			this.set('cantidad', 1)
-			producto.set('cantidad', producto.get('cantidad')-cantidad)
+			// producto.set('cantidad', producto.get('cantidad')-cantidad)
 		},
         // agregar(selectedProducto, cantidad) {  this.sendAction('agregar', selectedProducto, cantidad); },
 

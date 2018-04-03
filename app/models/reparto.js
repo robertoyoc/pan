@@ -7,6 +7,7 @@ const dias = ['Domingo','Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'S
 
 export default DS.Model.extend({
 	sucursal: DS.belongsTo('sucursal'),
+	origin: DS.belongsTo('sucursal'),
 	distribuciones: DS.hasMany('distribucion'),
 	fecha: DS.attr('string'),
 	dia: computed('fecha', function(){

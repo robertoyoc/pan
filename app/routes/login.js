@@ -5,6 +5,7 @@ export default Route.extend({
 	session: service(),
 	currentUser: service(),
 	beforeModel(transition){
+        
         return this.get('session').fetch().catch(()=>{
             if(this.get('session.currentUser.uid')){
             	return this.get('currentUser.account').then((account)=>{

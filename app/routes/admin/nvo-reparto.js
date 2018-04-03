@@ -1,7 +1,9 @@
 import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
+import {inject as service} from "@ember/service";
 
 export default Route.extend({
+	currentUser: service(),
 	beforeModel(){
 		/*
 		this.store.createRecord('sucursal', {
@@ -42,6 +44,12 @@ export default Route.extend({
 		 */
 	},
 	model(){
-		return this.store.createRecord('reparto');
+		return this.get('currentUser.account').then((account)=>{
+
+			let reparto = this.store.createRecord('reparto');
+			reparto.set('origin', account.get('sucursal'))
+			return reparto;
+		})
+		
 	}
 });

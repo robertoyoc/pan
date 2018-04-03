@@ -1,16 +1,25 @@
 import Controller from '@ember/controller';
 import { get } from '@ember/object';
 import { buildValidations, validator } from 'ember-cp-validations';
+import {computed} from "@ember/object";
+import {inject as service} from "@ember/service";
 
 const Validations = buildValidations({
   user: validator('presence', true),
   pass: [
     validator('presence', true),
     validator('presence', true)
-  ]
+  ],
+  sucursal: validator('presence', true)
 })
 
 export default Controller.extend(Validations, {
+  currentUser: service(),
+  sucursales: computed(function(){
+    return this.store.findAll('sucursal')
+
+  }),
+
 	actions: {
 		toogleError(attr){
       this.validate().then(({validations})=>{
@@ -47,6 +56,12 @@ export default Controller.extend(Validations, {
       this.set('isWorking', true)
 
       this.validate().then(({validations})=>{
+
+        if(get(this, 'validations.attrs.sucursal.isInvalid')){
+          window.Materialize.toast('Selecciona usa sucursal', 1000)
+          return false
+        }
+
         if(get(this, 'validations.isValid')){
           let newemail = this.get("user") + "@panlavillita.mx";
           let pass = this.get("pass");
@@ -55,7 +70,12 @@ export default Controller.extend(Validations, {
             email: newemail,
             password: pass
           }).then(()=>{
-          	
+            this.get('currentUser.account').then((account)=>{
+              account.set('sucursal', this.get('sucursal'))
+              account.save()
+            })
+
+
             this.set('user', undefined);
             this.set('pass', undefined);
             this.set('isWorking', false)

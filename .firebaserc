@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "panlavillitamx"
+    "default": "panlavillitamx",
+    "development": "panlavillita-dev"
   }
 }

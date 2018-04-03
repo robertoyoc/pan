@@ -48,8 +48,22 @@ body{
           focus-out=(action 'toogleError' 'pass') tabindex=5}}
           <label id="userlabel" for="loginpass" data-error="{{if loginPassError loginPassError 'Revisando...'}}" >Password</label>
         </div>
+         <label>Selecciona la sucursal</label>
+        <div class="input-field col s12" style="color:black">
+
+          {{#power-select
+            selected=sucursal
+            options=sucursales
+            onchange=(action (mut sucursal))
+            as |sucursalOption|
+          }}
+            {{sucursalOption.nombre}}
+          {{/power-select}}
+        </div>
+       
       </div>
       <button type="submit" class="waves-effect waves-light btn red right {{if (or isWorking (v-get this 'isInvalid')) 'disabled'}}" style="width:150px">{{if isWorking 'Trabajando' 'Entrar'}}</button>
     </div>
     
 </form>
+
