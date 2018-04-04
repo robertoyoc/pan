@@ -34,7 +34,7 @@ exports.processReparto = functions.database.ref('/repartos/{repartoId}').onCreat
 					let cantidad = distribucion.cantidad
 					let producto_id = distribucion.producto
 					let path = null;
-					switch(path){
+					switch(tipo){
 						case "receta":
 							path = "receta"
 							break;
@@ -42,7 +42,12 @@ exports.processReparto = functions.database.ref('/repartos/{repartoId}').onCreat
 							path = "distribuidos"
 							break;
 					}
-					return db.ref(`/${path}/${producto_id}`)
+					console.log(`path: /${path}/${producto_id}`)
+					db.ref(`/${path}/${producto_id}`).once('value').then((productoSnap)=>{
+						let producto = productoSnap.val()
+						console.log(producto)
+					})
+					// return db.ref(`/${path}/${producto_id}`)
 
 					return distribucion
 				})
@@ -50,7 +55,7 @@ exports.processReparto = functions.database.ref('/repartos/{repartoId}').onCreat
 		}
 
 		Promise.all(promises).then((result)=>{
-			console.log(result)
+			console.log("Resultado" ,result)
 		})
 	})
 	// console.log(event.data.val())
