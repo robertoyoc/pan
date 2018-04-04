@@ -42,7 +42,7 @@
           </tr>
         </thead>
         <tbody>
-          {{log myRecetas}}
+          
           {{#each myRecetas as |receta|}}
             {{#if receta.nombre}}
             <tr>
@@ -53,7 +53,7 @@
                 {{receta.precio}}
               </td>
               <td>
-                <a class="btn-floating"><i class="material-icons">edit</i></a>
+                <a class="btn-floating"><i class="material-icons" {{action 'editProduct' receta}}>edit</i></a>
                 <a class="btn-floating"><i class="material-icons" {{action 'delete' receta}} >delete</i></a>
               </td>
             </tr>
