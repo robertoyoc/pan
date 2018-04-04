@@ -24,8 +24,8 @@ export default Controller.extend({
 				cancelButtonText: 'No',
 				confirmButtonClass: 'confirm-class',
 				cancelButtonClass: 'cancel-class',
-				//closeOnConfirm: false,
-				//closeOnCancel: false
+				// closeOnConfirm: false,
+				// closeOnCancel: false
 			}).then(()=>{
 				proveedor.destroyRecord();
 			}).catch(()=>{});

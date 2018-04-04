@@ -28,31 +28,31 @@
         <div class="col s12 m6">
               
           <p>
-            {{input type="checkbox" id="lunes"}}
+            {{input type="checkbox" id="lunes" checked=lunes}}
             <label for="lunes">Lunes</label>
           </p>
           <p>
-            {{input type="checkbox" id="martes" }}
+            {{input type="checkbox" id="martes" checked=martes}}
             <label for="martes">Martes</label>
           </p>
           <p>
-            {{input type="checkbox" id="miercoles" }}
+            {{input type="checkbox" id="miercoles" checked=miercoles}}
             <label for="miercoles">Miercoles</label>
           </p>
           <p>
-            {{input type="checkbox" id="jueves"}}
+            {{input type="checkbox" id="jueves" checked=jueves}}
             <label for="jueves">Jueves</label>
           </p>
           <p>
-            {{input type="checkbox" id="viernes" }}
+            {{input type="checkbox" id="viernes" checked=viernes}}
             <label for="viernes">Viernes</label>
           </p>
           <p>
-            {{input type="checkbox" id="sabado"}}
+            {{input type="checkbox" id="sabado" checked=sabado}}
             <label for="sabado">Sabado</label>
           </p>
           <p>
-            {{input type="checkbox" id="domingo" }}
+            {{input type="checkbox" id="domingo" checked=domingo}}
             <label for="domingo">Domingo</label>
           </p>
         </div>
@@ -71,10 +71,10 @@
           </p>
           <p>
             {{input type="radio" id="mensual" name="materialize" focus-in=(action 'mutRadio' 'mensual')}}
-            <label for="mensual">Mensual</label>
+            <label for="mensual">mensual</label>
           </p>
           <p>
-            {{input type="radio" id="otro" name="materialize" focus-in=(action 'mutRadio' 'otro')}}
+            {{input type="radio" id="otro" name="materialize" focus-in=(action 'mutRadio' 'otro')}} 
             <label for="otro">Otro</label>
           </p>
           Cada {{input type="number" min="0" max="6" disabled=disabledInput}} dias
