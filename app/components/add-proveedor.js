@@ -17,30 +17,28 @@ export default Component.extend({
     
     listaProductos: computed(function() {
 		let productosList = [];
-		return this.get('store').findAll('producto').then((productos)=>{
 		
 			return this.get('store').findAll('distribuido').then((distribuidos)=>{
-				return this.get('store').findAll('receta').then((recetas)=>{ 
-					productos.forEach((producto)=>{
-						productosList.pushObject(producto);
-					}) 
 					distribuidos.forEach((distribuido)=>{
 						productosList.pushObject(distribuido)
 					})
-					recetas.forEach((receta)=>{
-						productosList.pushObject(receta)
-					})
 					return productosList;
-				
-				})
 			})
-		})
     }),   
 
 	actions: {
+		addProducto(producto) {
+			this.get('myModel.productos').pushObject(producto);
+		},
+
+		deleteProducto(producto){
+			producto.destroyRecord();
+		},
+
 		mutRadio(texto){
 			this.set('radioSelect', texto)
 		},
+
 		guardar(proveedor){
 			proveedor.save().then(()=>{
                 this.sendAction('nuevoProveedor');

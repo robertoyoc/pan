@@ -6,4 +6,10 @@ export default Controller.extend({
     myProveedores: computed(function() {
 		return this.get('store').findAll('proveedor')
     }),
+
+    actions: {
+    	editProveedor(proveedor) {
+    		this.transitionToRoute('admin.edit-proveedor', proveedor.get('id'));
+    	}
+    }
 });

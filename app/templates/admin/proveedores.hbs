@@ -43,10 +43,12 @@
               {{!-- <td>{{proveedor.fecha-visita}}</td> --}}
               <td>Inserte fecha de visita</td>
               <td>
-                {{#m-wrapper}}
+                {{!--#m-wrapper}}
                   <a class="btn-floating waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Editar"><i class="material-icons">visibility</i></a>
                   <a class="btn-floating waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ver"><i class="material-icons">edit</i></a>
-                {{/m-wrapper}}
+                {{/m-wrapper--}}
+                 <a class="btn-floating"><i class="material-icons" {{action 'editProveedor' proveedor}}>edit</i></a>
+                <a class="btn-floating"><i class="material-icons" {{action 'deleteProveedor' proveedor}} >delete</i></a>
               </td>
             </tr>
           {{/if}}

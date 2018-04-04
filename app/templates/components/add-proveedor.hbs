@@ -97,7 +97,7 @@
             {{/power-select}}
       	</div>
       	<div class="input-field col s3">
-      		<a class="waves-effect waves-light btn">Añadir</a>
+      		<a class="waves-effect waves-light btn" {{action 'addProducto' selectedProducto}}>Añadir</a>
       	</div>
       </div>
     	<div class="col s12">
@@ -110,11 +110,17 @@
         </thead>
 
         <tbody>
-        	{{#each myModel.producto}}
-          <tr>
-            <td>{{producto.nombre}}</td>
-            <td><a class="waves-effect waves-light btn"><i class="material-icons left">delete</i>Eliminar</a></td>
-          </tr>
+        	{{#each myModel.productos as |producto|}}
+            {{#if producto.nombre}}
+              <tr>
+                <td>{{producto.nombre}}</td>
+                <td>
+                  <a class="waves-effect waves-light btn" {{action 'deleteProducto' producto}} ><i class="material-icons">delete</i></a>
+                </td>
+              </tr>
+            {{/if}}
+            {{else}}
+              <h5>Agrega productos.</h5>
           {{/each}}
         </tbody>
       </table>
