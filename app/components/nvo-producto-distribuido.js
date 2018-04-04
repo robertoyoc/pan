@@ -4,22 +4,22 @@ import { computed } from '@ember/object';
 
 export default Component.extend({
     store: service(),
-    firebaseApp: service(),
+	firebaseApp: service(),
 	
 	myCategorias: computed(function() {
 		return this.get('store').findAll('categoria')
     }),
 
 	actions: {
-        guardar(producto) {
+		guardar(producto) {
 			producto.save().then(()=>{
-                window.swal("Guardado!", "El producto ha sido guardado!", "success");
-            }).then(()=>{
-                this.sendAction('nuevoProducto');
-            })
+				window.swal("Guardado!", "El producto ha sido guardado!", "success");
+			}).then(()=>{
+				this.sendAction('nuevoProducto');
+			})	
         },
-
-        didSelectImage(files){
+        
+		didSelectImage(files){
 			let ctrl = this;
 			let reader = new FileReader();
 			reader.onloadend = Ember.run.bind(this, function(){
@@ -56,5 +56,5 @@ export default Component.extend({
  			console.log(this.get('file'))
 			
  		}
-    }
+	}
 });
