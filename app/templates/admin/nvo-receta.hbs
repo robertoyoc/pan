@@ -3,4 +3,4 @@
   {{#link-to 'admin.nvo-receta' class='breadcrumb' }}Receta{{/link-to}}
 {{/ember-wormhole}}
 
-{{nvo-producto-receta myModel=model}}
+{{nvo-producto-receta myModel=model nuevoProducto = (action 'nuevoProducto')}}

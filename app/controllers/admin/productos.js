@@ -17,6 +17,15 @@ export default Controller.extend({
 		// guardar(producto){
 		// 	producto.save()
 		// }
+
+		editReceta(producto) {
+			this.transitionToRoute('admin.edit-receta', producto.get('id'))
+		},
+
+		editDistribuido(producto) {
+			this.transitionToRoute('admin.edit-distribuido', producto.get('id'))
+		},
+
 		delete(producto) {
 			window.swal({
 				title: 'Estás seguro?',
