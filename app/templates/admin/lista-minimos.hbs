@@ -1,4 +1,5 @@
-{{outlet}}
+{{log model}}
+
 <style>
 	.main{
 		margin-top: 3%;
@@ -19,18 +20,22 @@
 			<table class="centered">
 				<thead>
 					<tr>
-						<th>Receta</th>
+						<th>Producto</th>
 						<th>Minimo</th>
 						<th>Acciones</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>Asasas</td>
-						<td>151</td>
-						<td><a class="btn-floating"><i class="material-icons">edit</i></a>
-						<a class="btn-floating"><i class="material-icons">delete</i></a></td>
-					</tr>
+					{{#each model as |existencia|}}
+						<tr>
+							<td>{{existencia.producto.nombre}}</td>
+							<td>{{existencia.limite}}</td>
+							<td><a class="btn-floating"><i class="material-icons">edit</i></a>
+							<a class="btn-floating"><i class="material-icons">delete</i></a></td>
+						</tr>
+
+					{{/each}}
+					
 				</tbody>
 			</table>
 		</div>

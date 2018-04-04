@@ -6,5 +6,5 @@ export default DS.Model.extend({
   categoria: DS.belongsTo('categoria'),
   unidad: DS.attr('string'),
   cantidad: DS.attr('number'),
-  existencias: DS.hasMany('existence', {inverse:'producto'})
+  existencias: DS.hasMany('existence')
 });
