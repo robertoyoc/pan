@@ -10,7 +10,8 @@ export default Route.extend({
 	afterModel(model){
 		return this.get('currentUser.account').then((account)=>{
 			return this.set('existencia', this.store.createRecord('existence',{
-				producto: model,
+				productoId: model.get('id'),
+				tipo: model.get('constructor.modelName'),
 				sucursal: account.get('sucursal'),
 			}))
 		})
