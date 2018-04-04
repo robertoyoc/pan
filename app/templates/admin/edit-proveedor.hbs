@@ -1,1 +1,8 @@
 {{outlet}}
+{{#ember-wormhole to='admin-nav' }}
+  {{#link-to 'admin.compras' class='breadcrumb' }}Compras{{/link-to}}
+  {{#link-to 'admin.proveedores' class='breadcrumb' }}Proveedores{{/link-to}}
+  {{#link-to 'admin.nvo-proveedor' class='breadcrumb' }}Nuevo Proveedor{{/link-to}}
+{{/ember-wormhole}}
+
+{{add-proveedor myModel=model nuevoProveedor = (action 'nuevoProveedor')}}

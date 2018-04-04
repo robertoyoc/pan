@@ -37,7 +37,7 @@ Router.map(function() {
     this.route('historial-produccion');
     this.route('edit-receta', {path: "/receta/:id"});
     this.route('edit-distribuido', {path: "/distribuido/:id"});
-    this.route('edit-proveedor');
+    this.route('edit-proveedor', {path: "/proveedor/:id"});
   });
 
   this.route('cliente', function() {
