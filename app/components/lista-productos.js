@@ -80,7 +80,6 @@ export default Component.extend(Validations, {
 			this.set('cantidad', 1)
 			// producto.set('cantidad', producto.get('cantidad')-cantidad)
 		},
-        // agregar(selectedProducto, cantidad) {  this.sendAction('agregar', selectedProducto, cantidad); },
 
         changePrima() {
             this.set('selectedProducto', undefined)

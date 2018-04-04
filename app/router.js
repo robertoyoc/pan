@@ -64,6 +64,7 @@ Router.map(function() {
   this.route('en');
   this.route('login');
   this.route('dir');
+  this.route('edit-proveedor');
 });
 
 export default Router;
