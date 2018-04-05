@@ -38,6 +38,7 @@ Router.map(function() {
     this.route('edit-receta', {path: "/receta/:id"});
     this.route('edit-distribuido', {path: "/distribuido/:id"});
     this.route('edit-proveedor', {path: "/proveedor/:id"});
+    this.route('edit-mprima', {path: "/m-prima/:id"});
   });
 
   this.route('cliente', function() {

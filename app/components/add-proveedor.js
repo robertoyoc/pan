@@ -36,7 +36,8 @@ export default Component.extend({
 		},
 
 		mutRadio(texto){
-			this.set('radioSelect', texto)
+			this.set('radioSelect', texto);
+			//myModel.get('diasVisita')
 		},
 
 		guardar(proveedor){
