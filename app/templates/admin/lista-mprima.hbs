@@ -42,8 +42,8 @@
           <td>{{existencia.producto.nombre}}</td>
           <td>{{existencia.cantidad}}</td>
           <td>{{existencia.producto.unidad}}</td>
-          <td><a class="btn-floating waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Editar"><i class="material-icons">edit</i></a>
-              <a {{action 'delete' prima}} class="btn-floating waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Eliminar"><i class="material-icons">delete</i></a></td>
+          <td><a class="btn-floating waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Editar" {{action 'editExistencia' existencia.producto}} ><i class="material-icons">edit</i></a>
+              <a {{action 'delete' existencia}} class="btn-floating waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Eliminar"><i class="material-icons">delete</i></a></td>
         </tr>
         {{else}}
           Aún no hay materia prima registrada.

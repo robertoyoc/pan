@@ -34,8 +34,10 @@ export default Component.extend({
 		deleteProducto(producto){
 			producto.destroyRecord();
 		},
+
 		setRadioSelect(texto){
 			this.set('radioSelect', texto)
+
 		},
 
 		guardar(proveedor){
