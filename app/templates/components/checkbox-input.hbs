@@ -1,0 +1,13 @@
+<p>
+    {{#if checked}}
+      <input type="checkbox" id="{{cbId}}"
+        checked="as" 
+        onclick={{action "mutCheckbox" 'd' value="target.checked"}}/>
+    <label for="{{cbId}}">{{label}}</label>  
+    {{else}}
+    <input type="checkbox" id="{{cbId}}"
+        onclick={{action "mutCheckbox" 'd' value="target.checked"}}/>
+    <label for="{{cbId}}">{{label}}</label>  
+
+    {{/if}}
+</p>

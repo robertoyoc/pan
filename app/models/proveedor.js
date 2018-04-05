@@ -6,10 +6,11 @@ export default DS.Model.extend({
 	productos: DS.hasMany('producto'),
 	diasVisita: DS.attr({
 		defaultValue: function(){
-			return [];
+			return ["lune"];
 		}
-	})
-	,
-	//periodVisita: DS.attr('number'),
+	}),
+
+	periodoVisita: DS.attr('string'),
+	customDias: DS.attr('number')
 
 });

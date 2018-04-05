@@ -26,58 +26,49 @@
       <h6 class="center-align">Periodo de Visita</h6>
       <div class="row card-content">
         <div class="col s12 m6">
+          {{log myModel.diasVisita}}
+          {{log (array-contains myModel.diasVisita 'lunes')}}
+          {{checkbox-input label="Lunes" cbId="lunes" checked=(array-contains myModel.diasVisita 'lunes') isChecked=(action 'addDay') isNotChecked=(action 'removeDay')}}
               
-          <p>
-            {{input type="checkbox" id="lunes" checked=lunes}}
-            <label for="lunes">Lunes</label>
+          {{!-- <p>
+            <input type="checkbox" id="lunes"
+                checked="as" 
+                onclick={{action "mutDays" 'd' value="target.checked"}}/>
+            <label for="lunes">Lunes</label>  
           </p>
           <p>
-            {{input type="checkbox" id="martes" checked=martes}}
-            <label for="martes">Martes</label>
-          </p>
-          <p>
-            {{input type="checkbox" id="miercoles" checked=miercoles}}
-            <label for="miercoles">Miercoles</label>
-          </p>
-          <p>
-            {{input type="checkbox" id="jueves" checked=jueves}}
-            <label for="jueves">Jueves</label>
-          </p>
-          <p>
-            {{input type="checkbox" id="viernes" checked=viernes}}
-            <label for="viernes">Viernes</label>
-          </p>
-          <p>
-            {{input type="checkbox" id="sabado" checked=sabado}}
-            <label for="sabado">Sabado</label>
-          </p>
-          <p>
-            {{input type="checkbox" id="domingo" checked=domingo}}
-            <label for="domingo">Domingo</label>
-          </p>
+            <input type="checkbox" id="Martes"
+                checked="as" 
+                onclick={{action "mutDays" 'd' value="target.checked"}}/>
+            <label for="lunes">Lunes</label>  
+          </p> --}}
         </div>
         <div class="col s12 m6">
-          <p>
-            {{input type="radio" id="diario" name="materialize" focus-in=(action 'mutRadio' 'diario')}}
-            <label for="diario">Diario</label>
-          </p>
-          <p>
-            {{input type="radio" id="semanal" name="materialize" focus-in=(action 'mutRadio' 'semanal')}}
+
+          {{radio-input myModel = myModel radioId = "diario" label = "Diario" setRadioSelect=(action 'setRadioSelect')}}
+          {{radio-input myModel = myModel radioId = "semanal" label = "Semanal" setRadioSelect=(action 'setRadioSelect')}}
+          {{radio-input myModel = myModel radioId = "quincenal" label = "Quincenal" setRadioSelect=(action 'setRadioSelect')}}
+          {{radio-input myModel = myModel radioId = "mensual" label = "Mensual" setRadioSelect=(action 'setRadioSelect')}}
+          {{radio-input myModel = myModel radioId = "otro" label = "Otro" setRadioSelect=(action 'setRadioSelect')}}
+          Cada {{input type="number" min="0" max="6" disabled=disabledInput value=myModel.customDias}} días
+
+          {{!-- <p>
+            {{input type="checkbox" id="semanal" name="materialize" checked=(eq myModel.periodoVisita 'semanal') focus-in=(action 'mutRadio' 'semanal')}}
             <label for="semanal">Semanal</label>
           </p>
           <p>
-            {{input type="radio" id="quincenal" name="materialize" focus-in=(action 'mutRadio' 'quincenal')}}
+            {{input type="checkbox" id="quincenal" name="materialize" checked=(eq myModel.periodoVisita 'quincenal') focus-in=(action 'mutRadio' 'quincenal')}}
             <label for="quincenal">Quincenal</label>
           </p>
           <p>
-            {{input type="radio" id="mensual" name="materialize" focus-in=(action 'mutRadio' 'mensual')}}
-            <label for="mensual">mensual</label>
+            {{input type="checkbox" id="mensual" name="materialize" checked=(eq myModel.periodoVisita 'mensual') focus-in=(action 'mutRadio' 'mensual')}}
+            <label for="mensual">Mensual</label>
           </p>
           <p>
-            {{input type="radio" id="otro" name="materialize" focus-in=(action 'mutRadio' 'otro')}} 
+            {{input type="checkbox" id="otro" name="materialize" checked=(eq myModel.periodoVisita 'otro') focus-in=(action 'mutRadio' 'otro')}} 
             <label for="otro">Otro</label>
           </p>
-          Cada {{input type="number" min="0" max="6" disabled=disabledInput}} dias
+          Cada {{input type="number" min="0" max="6" disabled=disabledInput}} dias --}}
         </div>
       </div>
     </form>

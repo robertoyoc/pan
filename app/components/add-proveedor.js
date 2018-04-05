@@ -34,8 +34,7 @@ export default Component.extend({
 		deleteProducto(producto){
 			producto.destroyRecord();
 		},
-
-		mutRadio(texto){
+		setRadioSelect(texto){
 			this.set('radioSelect', texto)
 		},
 
@@ -43,7 +42,20 @@ export default Component.extend({
 			proveedor.save().then(()=>{
                 this.sendAction('nuevoProveedor');
             })
-        }, 
+        },
+        addDay(day){
+        	debugger
+        	let dias = this.get('myModel.diasVisita');
+        	dias.push(day)
+        	console.log(dias)
+        	console.log(day)
+        },	
+        removeDay(day){
+        	debugger
+        	console.log(day)
+        },
+
+
           // agregar(selectedProducto, cantidad) {  this.sendAction('agregar', selectedProducto, cantidad); },
  
 		debug(){

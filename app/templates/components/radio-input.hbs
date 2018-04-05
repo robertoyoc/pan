@@ -1,0 +1,13 @@
+<p>
+    {{#if (eq myModel.periodoVisita radioId)}}
+      <input type="checkbox" id="{{radioId}}"
+        checked="as" 
+        onclick={{action "mutRadio" 'd' value="target.checked"}}/>
+    <label for="{{radioId}}">{{label}}</label>  
+    {{else}}
+    <input type="checkbox" id="{{radioId}}"
+        onclick={{action "mutRadio" 'd' value="target.checked"}}/>
+    <label for="{{radioId}}">{{label}}</label>  
+
+    {{/if}}
+</p>
