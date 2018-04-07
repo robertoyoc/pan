@@ -27,6 +27,7 @@ export default Controller.extend({
 				closeOnCancel: false
 			}).then(()=>{
 				existencia.set('cantidad', 0);
+				existencia.save();
 				window.swal("Guardado", "Se han eliminado las existencias", "success")
 			}).catch((error)=>{
 				console.log(error)
