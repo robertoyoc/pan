@@ -3,7 +3,7 @@ import {hash} from 'rsvp';
 import {inject as service} from "@ember/service";
 
 export default Route.extend({
-    currentUser: service(),
+	currentUser: service(),
 	model(params){
 		return this.store.findRecord('mprima', params.id)
 	},

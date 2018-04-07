@@ -26,12 +26,11 @@ export default Controller.extend({
 				closeOnConfirm: false,
 				closeOnCancel: false
 			}).then(()=>{
-				existencia.set('cantidad', 0).then(()=>{			
-						existencia.save();
-				}).then(()=>{
-					window.swal("Guardado", "Se han eliminado las existencias", "success")
-				})
-			}).catch(()=>{});
+				existencia.set('cantidad', 0);
+				window.swal("Guardado", "Se han eliminado las existencias", "success")
+			}).catch((error)=>{
+				console.log(error)
+			});
 		}
 	}
 });
