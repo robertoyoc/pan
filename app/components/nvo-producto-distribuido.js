@@ -10,12 +10,32 @@ export default Component.extend({
 		return this.get('store').findAll('categoria')
     }),
 
+// mprima.get('existencias').pushObject(existencia)
+// 		    existencia.save().then(()=>{
+// 		        mprima.save().then(()=>{
+// 		 	        window.swal(
+// 	  		            'Materia Prima Añadida',
+// 			            'Añadiste nueva materia prima',
+// 			            'success'
+// 			        ).then(()=>{
+// 					    this.sendAction('nuevoMprima')
+// 				    })
+// 			    })
+//             })	
+
+
 	actions: {
-		guardar(producto) {
-			producto.save().then(()=>{
-				window.swal("Guardado!", "El producto ha sido guardado!", "success");
-			}).then(()=>{
-				this.sendAction('nuevoProducto');
+		guardar(producto, existencia) {
+			existencia.save().then(()=>{
+				producto.save().then(()=>{
+					window.swal(
+ 	  		            'Distribuido Guardado',
+		            	'Guardaste un producto distribuido',
+			            'success'
+		        	).then(()=>{
+						this.sendAction('nuevoProducto');
+					})
+				})
 			})	
         },
         
@@ -51,8 +71,6 @@ export default Component.extend({
 			})
 			//debugger;
 			reader.readAsDataURL(files[0]);
-			
-			
  			console.log(this.get('file'))
 			
  		}

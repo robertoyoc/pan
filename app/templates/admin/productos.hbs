@@ -77,8 +77,9 @@
           </tr>
         </thead>
         <tbody>
-          {{#each myDistribuidos as |distribuido|}}
-            {{#if distribuido.nombre}}
+          {{log myDistribuidos}}
+          {{#each myDistribuidos as |exisDistribuido|}}
+            {{#if exisDistribuido.producto.nombre}}
               <tr>
                 <td>
                   {{distribuido.nombre}}
@@ -92,8 +93,8 @@
                 </td>
               </tr>
             {{/if}}
-          {{else}}
-          <h4> Aún no tienes distribuidos.</h4>
+            {{else}}
+              <h4> Aún no tienes distribuidos.</h4>
           {{/each}}
         </tbody>
       </table>

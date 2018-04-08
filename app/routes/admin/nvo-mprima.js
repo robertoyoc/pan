@@ -12,7 +12,8 @@ export default Route.extend({
 			return this.set('existencia', this.store.createRecord('existence',{
 				productoId: model.get('id'),
 				tipo: model.get('constructor.modelName'),
-				sucursal: account.get('sucursal'),
+				//sucursal: account.get('sucursal'),
+				sucursalId: account.get('sucursal.id')
 			}))
 		})
 	},

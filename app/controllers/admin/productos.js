@@ -3,14 +3,40 @@ import { inject as service } from "@ember/service";
 import { computed } from '@ember/object';
 
 export default Controller.extend({
+	currentUser: service(),
 	store: service(),
 	
 	myDistribuidos: computed(function() {
-		return this.get('store').findAll('distribuido')
+		//return this.get('store').findAll('distribuido')
+		let existenciasList = [];
+		return this.get('currentUser.account').then((account)=>{
+			let sucursal = account.get('sucursal')
+			return this.store.query('existence', {
+					orderBy: 'sucursal',
+					equalTo: sucursal.get('id')
+			}).then((existencias)=>{
+				 existencias.forEach((existencia)=>{
+                    if(existencia.get('tipo')=='distribuido')
+                        existenciasList.pushObject(existencia)
+				})
+				
+			})
+
+		})
 	}),
 	
 	myRecetas: computed(function() {
-		return this.get('store').findAll('receta')
+		return this.get('currentUser.account').then((account)=>{
+			let sucursal = account.get('sucursal')
+			return this.store.query('existence', {
+				filter: {
+					tipo: 'receta',
+					orderBy: 'sucursal',
+					equalTo: sucursal.get('id')
+				}
+			})
+
+		})
     }),
 
 	actions: {
