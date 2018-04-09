@@ -8,7 +8,7 @@ export default Component.extend({
 		        mprima.save().then(()=>{
 		 	        window.swal(
 	  		            'Materia Prima Añadida',
-			            'Añadiste nueva materia prima',
+			            'Guardaste materia prima',
 			            'success'
 			        ).then(()=>{
 					    this.sendAction('nuevoMprima')

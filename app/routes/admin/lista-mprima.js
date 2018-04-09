@@ -9,24 +9,15 @@ export default Route.extend(FindQuery, {
 	model(){
 		return this.get('currentUser.account').then((account)=>{
 			let sucursal = account.get('sucursal')
-			// return this.store.query('existence', {		
-			// 	orderBy: 'sucursal',
-			// 	equalTo: sucursal.get('id')
-			// })
 			
 			let context = this;
-			
 			return new Promise(function (resolve, reject){
-
 				context.filterEqual(context.store, 'existence', { 'tipo': 'mprima', 'sucursalId': sucursal.get('id')}, function(mprimas){
-					console.log(mprimas)
-					debugger
+					// console.log(mprimas)
 					return resolve(mprimas)
-					
 				})
-				debugger
+				//debugger
 				//return resolve()
-
 			})
 		})
 	}
