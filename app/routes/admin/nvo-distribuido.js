@@ -17,17 +17,17 @@ export default Route.extend({
     },
 
     model(){
-		return this.store.createRecord('distribuido');
+		  return this.store.createRecord('distribuido');
     },
 
     afterModel(model){
-		return this.get('currentUser.account').then((account)=>{
-			return this.set('existencia', this.store.createRecord('existence',{
-				productoId: model.get('id'),
-				tipo: model.get('constructor.modelName'),
-				sucursal: account.get('sucursal'),
-			}))
-		})
+		  return this.get('currentUser.account').then((account)=>{
+			  return this.set('existencia', this.store.createRecord('existence',{
+				  productoId: model.get('id'),
+				  tipo: model.get('constructor.modelName'),
+				  sucursalId: account.get('sucursal.id'),
+		  	}))
+		  })
     },
     
     setupController(controller){

@@ -28,6 +28,14 @@
           {{input type="number" class="validate" value=myModel.precio}}
           <label>Costo</label>
         </div>
+
+        {{!-- <h4>Existencia</h4> --}}
+        <div class="input-field col s12">
+          <i class="material-icons prefix">exposure_plus_1</i>
+          {{input type="number" class="validate" min="1" value=myExistencia.cantidad}}
+          <label>Cantidad</label>
+        </div>
+
         <h4>Categoría</h4>
         <div class="col s12">
           {{#power-select
@@ -56,6 +64,6 @@
         
       </div>
     </form>
-    <a {{action 'guardar' myModel}} class="waves-effect waves-light btn right"><i class="material-icons left">save</i>Guardar</a>
+    <a {{action 'guardar' myModel myExistencia}} class="waves-effect waves-light btn right"><i class="material-icons left">save</i>Guardar</a>
   </div>
 </div>

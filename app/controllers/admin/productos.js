@@ -1,49 +1,13 @@
 import Controller from '@ember/controller';
 import { inject as service } from "@ember/service";
 import { computed } from '@ember/object';
+import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
 
-export default Controller.extend({
+export default Controller.extend(FindQuery,{
 	currentUser: service(),
 	store: service(),
-	
-	myDistribuidos: computed(function() {
-		//return this.get('store').findAll('distribuido')
-		let existenciasList = [];
-		return this.get('currentUser.account').then((account)=>{
-			let sucursal = account.get('sucursal')
-			return this.store.query('existence', {
-					orderBy: 'sucursal',
-					equalTo: sucursal.get('id')
-			}).then((existencias)=>{
-				 existencias.forEach((existencia)=>{
-                    if(existencia.get('tipo')=='distribuido')
-                        existenciasList.pushObject(existencia)
-				})
-				
-			})
-
-		})
-	}),
-	
-	myRecetas: computed(function() {
-		return this.get('currentUser.account').then((account)=>{
-			let sucursal = account.get('sucursal')
-			return this.store.query('existence', {
-				filter: {
-					tipo: 'receta',
-					orderBy: 'sucursal',
-					equalTo: sucursal.get('id')
-				}
-			})
-
-		})
-    }),
 
 	actions: {
-		// guardar(producto){
-		// 	producto.save()
-		// }
-
 		editReceta(producto) {
 			this.transitionToRoute('admin.edit-receta', producto.get('id'))
 		},
@@ -52,10 +16,10 @@ export default Controller.extend({
 			this.transitionToRoute('admin.edit-distribuido', producto.get('id'))
 		},
 
-		delete(producto) {
+		delete(existencia) {
 			window.swal({
 				title: 'Estás seguro?',
-				text: 'El producto será eliminado',
+				text: 'Las existencias serán eliminadas',
 				type: 'warning',
 				showCancelButton: true,
 				confirmButtonColor: '#3085d6',
@@ -67,8 +31,12 @@ export default Controller.extend({
 				closeOnConfirm: false,
 				closeOnCancel: false
 			}).then(()=>{
-				producto.destroyRecord();
-			}).catch(()=>{});
+				existencia.set('cantidad', 0);
+				existencia.save();
+				window.swal("Guardado", "Se han eliminado las existencias", "success")
+			}).catch((error)=>{
+				console.log(error)
+			});
 		}
 	}
 });

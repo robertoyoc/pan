@@ -37,30 +37,32 @@
         <thead>`
           <tr>
             <th>Nombre</th>
+            <th>Cantidad</th>
             <th>Precio</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          
-          {{#each myRecetas as |receta|}}
-            {{#if receta.nombre}}
+          {{#each model.recetas as |existencia|}}
+            {{#if existencia.productoId}}
             <tr>
               <td>
-                {{receta.nombre}}
+                {{existencia.producto.nombre}}
               </td>
               <td>
-                {{receta.precio}}
+                {{existencia.cantidad}}
               </td>
               <td>
-                <a class="btn-floating"><i class="material-icons" {{action 'editReceta' receta}}>edit</i></a>
-                <a class="btn-floating"><i class="material-icons" {{action 'delete' receta}} >delete</i></a>
+                {{existencia.producto.precio}}
+              </td>
+              <td>
+                <a class="btn-floating"><i class="material-icons" {{action 'editReceta' existencia.producto}}>edit</i></a>
+                <a class="btn-floating"><i class="material-icons" {{action 'delete' existencia}} >delete</i></a>
               </td>
             </tr>
             {{/if}}
-
-          {{else}}
-          <h4> Aún no tienes recetas.</h4>
+            {{else}}
+              <h5> Aún no tienes recetas.</h5>
           {{/each}}
         </tbody>
       </table>
@@ -72,29 +74,32 @@
         <thead>
           <tr>
             <th>Nombre</th>
+            <th>Cantidad</th>
             <th>Precio</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {{log myDistribuidos}}
-          {{#each myDistribuidos as |exisDistribuido|}}
-            {{#if exisDistribuido.producto.nombre}}
+          {{#each model.distribuidos as |existencia|}}
+            {{#if existencia.productoId}}
               <tr>
                 <td>
-                  {{distribuido.nombre}}
+                  {{existencia.producto.nombre}}
                 </td>
                 <td>
-                  {{distribuido.precio}}
+                  {{existencia.cantidad}}
                 </td>
                 <td>
-                  <a class="btn-floating"><i class="material-icons" {{action 'editDistribuido' distribuido}}>edit</i></a>
-                  <a class="btn-floating"><i class="material-icons" {{action 'delete' distribuido}} >delete</i></a>
+                  {{existencia.producto.precio}}
+                </td>
+                <td>
+                  <a class="btn-floating"><i class="material-icons" {{action 'editDistribuido' existencia.producto}}>edit</i></a>
+                  <a class="btn-floating"><i class="material-icons" {{action 'delete' existencia}} >delete</i></a>
                 </td>
               </tr>
             {{/if}}
             {{else}}
-              <h4> Aún no tienes distribuidos.</h4>
+              <h5> Aún no tienes distribuidos.</h5>
           {{/each}}
         </tbody>
       </table>
