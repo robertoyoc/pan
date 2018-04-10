@@ -19,7 +19,7 @@ const db = require('./config/admin').db;
 //	General triggers
 
 exports.processReparto = functions.database.ref('/repartos/{repartoId}').onCreate(function (event) {
-	db.ref(`/repartos/${event.params.repartoId}`).once('value').then((repartoSnap)=>{
+	return db.ref(`/repartos/${event.params.repartoId}`).once('value').then((repartoSnap)=>{
 		let promises = []
 		let reparto = repartoSnap.val()
 
@@ -42,25 +42,63 @@ exports.processReparto = functions.database.ref('/repartos/{repartoId}').onCreat
 							path = "distribuidos"
 							break;
 					}
-					console.log(`path: /${path}/${producto_id}`)
-					db.ref(`/${path}/${producto_id}`).once('value').then((productoSnap)=>{
-						let producto = productoSnap.val()
-						console.log(producto)
-					})
-					// return db.ref(`/${path}/${producto_id}`)
+					return db.ref(`/existences`).orderByChild('productoId').equalTo(producto_id).once('value').then((existencesSnap)=>{
 
+						let existencias = existencesSnap.val()
+
+						let originRef = null;
+						let sucursalRef = null;
+
+						for(var existencia_id in existencias){
+
+							switch(existencias[existencia_id].sucursalId){
+								case sucursal:
+									sucursalRef = existencia_id
+									break;
+								case origin: 
+									originRef = existencia_id
+									break
+							}
+								
+						}
+						let existencesPromises = []
+
+						existencesPromises.push(
+							db.ref(`/existences/${originRef}`).transaction(function(existencia){
+								if(existencia){
+									existencia.cantidad = existencia.cantidad -cantidad
+								}
+
+								return existencia
+							})
+						)
+						existencesPromises.push(
+							db.ref(`/existences/${sucursalRef}`).transaction(function(existencia){
+
+								if(existencia){
+									existencia.cantidad = existencia.cantidad +cantidad
+								}
+
+								return existencia
+							})
+						)
+
+
+						return Promise.all(existencesPromises)
+
+
+					})
 					return distribucion
 				})
 			)
 		}
 
-		Promise.all(promises).then((result)=>{
-			console.log("Resultado" ,result)
+		return Promise.all(promises).then((result)=>{
+
+			console.log("Reparto procesado")
+			return true
 		})
 	})
-	// console.log(event.data.val())
-	// console.log(event.params)
-	return db.ref(`/facturas/${event.params.repartoId}`).set({ path: `asdasdssad` });
 });
 // if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'processReparto') {
 	

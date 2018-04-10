@@ -8,6 +8,12 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import { singularize, pluralize} from 'ember-inflector';
 import Inflector from 'ember-inflector';
 
+import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
+
+import {Promise, resolve} from "rsvp";
+import DS from "ember-data";
+
+
 const inflector = Inflector.inflector;
 
     inflector.irregular('unidad', 'unidades');
@@ -25,8 +31,9 @@ const Validations = buildValidations({
 	]
 })
 
-export default Component.extend(Validations, {
+export default Component.extend(Validations, FindQuery,{
     store: service(),
+    currentUser: service(),
     
     init(){
         this._super(...arguments);
@@ -35,12 +42,12 @@ export default Component.extend(Validations, {
     
     productos: computed(function() {
 		let productosList = [];
-		return this.get('store').findAll('producto').then((productos)=>{
+		return this.get('store').findAll('mprima').then((mprimas)=>{
 		
 			return this.get('store').findAll('distribuido').then((distribuidos)=>{
 				return this.get('store').findAll('receta').then((recetas)=>{ 
-					productos.forEach((producto)=>{
-						productosList.pushObject(producto);
+					mprimas.forEach((mprima)=>{
+						productosList.pushObject(mprima);
 					}) 
 					distribuidos.forEach((distribuido)=>{
 						productosList.pushObject(distribuido)
@@ -58,8 +65,34 @@ export default Component.extend(Validations, {
     disabledAgregar: computed('cantidad', function () {
 		return Ember.isBlank(this.get('cantidad'));
 	}),
-	cantidadMax: computed('selectedProducto', 'selectedProducto.cantidad', function(){
-		return this.get('selectedProducto.cantidad');
+	cantidadMax: computed('selectedProducto', 'selectedExistencia.cantidad', function(){
+		return this.get('selectedExistencia.cantidad');
+	}),
+	selectedExistenciaPr: computed('selectedProducto', function(){
+		let tipo = this.get('selectedProducto.constructor.modelName')	
+		let productoId = this.get('selectedProducto.id')
+		debugger
+		if(!productoId)
+			return null
+
+		let context = this;
+
+		return DS.PromiseObject.create({
+			promise: this.get('currentUser.account').then((account)=>{
+				let sucursal = account.get('sucursal')
+
+			
+				return new Promise(function (resolve, reject){
+					context.filterEqual(context.get('store'), 'existence', { 'tipo': tipo, 'productoId': productoId,'sucursalId': sucursal.get('id')}, function(existencia){
+						//console.log(mprima[0])
+						return resolve(existencia[0])
+					})
+				})
+			})
+		})	
+	}),
+	selectedExistencia: computed('selectedExistenciaPr.content',function(){
+		return this.get('selectedExistenciaPr.content')
 	}),
 	plural: computed('cantidad', function(){
 		return this.get('cantidad') > 1;
