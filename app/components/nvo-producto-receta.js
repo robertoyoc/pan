@@ -7,17 +7,24 @@ export default Component.extend({
     firebaseApp: service(),
 	
 	myCategorias: computed(function() {
+		
 		return this.get('store').findAll('categoria')
-    }),
+	}),
 
 	actions: {
-        guardar(producto) {
-			producto.save().then(()=>{
-                window.swal("Guardado!", "El producto ha sido guardado!", "success");
-            }).then(()=>{
-                this.sendAction('nuevoProducto');
-            })
-        },
+       guardar(producto, existencia) {
+			existencia.save().then(()=>{
+				producto.save().then(()=>{
+					window.swal(
+ 	  		            'Receta Añadida',
+		            	'Guardaste receta',
+			            'success'
+		        	).then(()=>{
+						this.sendAction('nuevoProducto');
+					})
+				})
+			})	
+		},
 
         didSelectImage(files){
 			let ctrl = this;
@@ -50,11 +57,8 @@ export default Component.extend({
 	 			});
 			})
 			//debugger;
-			reader.readAsDataURL(files[0]);
-			
-			
+			reader.readAsDataURL(files[0]);	
  			console.log(this.get('file'))
-			
  		}
     }
 });

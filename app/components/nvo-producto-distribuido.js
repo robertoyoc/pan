@@ -10,27 +10,13 @@ export default Component.extend({
 		return this.get('store').findAll('categoria')
     }),
 
-// mprima.get('existencias').pushObject(existencia)
-// 		    existencia.save().then(()=>{
-// 		        mprima.save().then(()=>{
-// 		 	        window.swal(
-// 	  		            'Materia Prima Añadida',
-// 			            'Añadiste nueva materia prima',
-// 			            'success'
-// 			        ).then(()=>{
-// 					    this.sendAction('nuevoMprima')
-// 				    })
-// 			    })
-//             })	
-
-
 	actions: {
 		guardar(producto, existencia) {
 			existencia.save().then(()=>{
 				producto.save().then(()=>{
 					window.swal(
- 	  		            'Distribuido Guardado',
-		            	'Guardaste un producto distribuido',
+ 	  		            'Distribuido Añadido',
+		            	'Guardaste producto distribuido',
 			            'success'
 		        	).then(()=>{
 						this.sendAction('nuevoProducto');

@@ -50,11 +50,12 @@
           {{/power-select}}
         </div>
         <h4>Vista</h4>
+        {{log myModel.imageUrl}}
         <div class="col s12">
           <div class="form-group">
             <label class="col-sm-2 control-label">Imagen PNG<br>(200x200)</label>
             <div class="col-sm-10"> 
-              <img id="output" height=”200" width=”200" hidden={{shouldHideImage}}>
+              <img id="output" src=myModel.imageUrl height=”200" width=”200" hidden={{shouldHideImage}}>
               <p></p>
               {{x-file-input class="btn white-text" multiple=false name="files" action=(action "didSelectImage") accept="image/*" alt="Upload Image"}}
             </div> 

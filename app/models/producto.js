@@ -6,5 +6,6 @@ export default DS.Model.extend({
   categoria: DS.belongsTo('categoria'),
   unidad: DS.attr('string'),
   cantidad: DS.attr('number'),
-  existencias: DS.hasMany('existence')
+  existencias: DS.hasMany('existence'),
+  imageUrl: DS.attr('string')
 });
