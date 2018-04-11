@@ -1,18 +1,18 @@
 import Route from '@ember/routing/route';
 import {inject as service} from "@ember/service";
+import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
 
-export default Route.extend({
+export default Route.extend(FindQuery, {
 	currentUser: service(),
 	model(){
-
 		return this.get('currentUser.account').then((account)=>{
-
 			let sucursal_id = account.get('sucursal.id');
-			return this.store.query('reparto', {
-				orderBy: 'origin',
-		      	equalTo: sucursal_id
-		    });
+			let context = this;
+			return new Promise(function (resolve, reject){
+				context.filterEqual(context.store, 'reparto', { 'sucursal.id': sucursal_id}, function(repartos){
+					return resolve(repartos)
+				})
+			})
 		})
-		
 	}
 });
