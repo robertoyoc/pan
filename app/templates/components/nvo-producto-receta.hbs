@@ -11,12 +11,15 @@
 </style>
 
 <div class="row">
+  	<div class="col s12 m8 offset-m2">
+      <h2>Nuevo producto (Receta)</h2>
+    </div>
+</div>
 
-	<div class="col s12 m8 offset-m2">
-  <h2>Nuevo producto receta</h2>
- 
-	<form class="col s12">
-      <div class="row">
+<div class="row" >
+<div style="max-height: 450px; overflow-y: scroll;">
+	<form class="col s12 m8 offset-m2">
+      <div class="row" >
         <h4>Datos generales</h4>
         <div class="input-field col s8">
           <i class="material-icons prefix">account_circle</i>
@@ -68,6 +71,11 @@
            
       </div>
     </form>
-    <a {{action 'guardar' myModel myExistencia}} class="waves-effect waves-light btn right"><i class="material-icons left">save</i>Guardar</a>
-  </div>
+</div>
+</div>
+
+<div class="row">
+  	<div class="col s12 m8 offset-m2">
+      <a {{action 'guardar' myModel myExistencia}} class="waves-effect waves-light btn right"><i class="material-icons left">save</i>Guardar</a>
+    </div>
 </div>
