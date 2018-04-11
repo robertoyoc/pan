@@ -38,7 +38,7 @@ export default Component.extend({
 	 				contentType: 'image/png'
 	 			};
 				var storageRef = this.get('firebaseApp').storage().ref();
-	 			var path = 'images/distribuidos/' + this.get('model.id') + '.png';
+	 			var path = 'images/distribuidos/' + this.get('myModel.id') + '.png';
 	 			var uploadTask = storageRef.child(path).put(this.get('file'), metadata);
 	 			uploadTask.on('state_changed', function(snapshot){
 				var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;

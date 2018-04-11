@@ -37,23 +37,23 @@ export default Component.extend({
 	 				contentType: 'image/png'
 	 			};
 				var storageRef = this.get('firebaseApp').storage().ref();
-	 			var path = 'images/distribuidos/' + this.get('model.id') + '.png';
+	 			var path = 'images/distribuidos/' + this.get('myModel.id') + '.png';
 	 			var uploadTask = storageRef.child(path).put(this.get('file'), metadata);
 	 			uploadTask.on('state_changed', function(snapshot){
 				var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 					console.log('Upload is ' + progress + '% done');
 					console.log(snapshot.state);
 				}, function(error) {
-				}, function() {
-	 				var downloadURL = uploadTask.snapshot.downloadURL;
-	 				ctrl.get('myModel').set('imageUrl', downloadURL);
-	 				ctrl.get('myModel').save()
-	 				ctrl.set('file', '');
-	 				ctrl.set('selectedCategory', '');
-	 				ctrl.set(document.getElementById('output').src, '');
-	 				ctrl.set('days', '');
-	 				ctrl.set('isDisabled', true);
-	 			});
+					}, function() {
+						var downloadURL = uploadTask.snapshot.downloadURL;
+						ctrl.get('myModel').set('imageUrl', downloadURL);
+						ctrl.get('myModel').save()
+						ctrl.set('file', '');
+						ctrl.set('selectedCategory', '');
+						// ctrl.set(document.getElementById('output').src, '');
+						ctrl.set('days', '');
+						ctrl.set('isDisabled', true);
+	 				});
 			})
 			//debugger;
 			reader.readAsDataURL(files[0]);
