@@ -4,6 +4,20 @@ import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
 
 export default Route.extend(FindQuery, {
 	currentUser: service(),
+	
+	queryParams: {
+		day: {
+			refreshModel: true
+		},
+		month: {
+			refreshModel: true
+		},
+		year: {
+			refreshModel: true
+		},
+	},
+
+
 	model(){
 		return this.get('currentUser.account').then((account)=>{
 			let sucursal_id = account.get('sucursal.id');

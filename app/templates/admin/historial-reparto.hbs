@@ -6,7 +6,9 @@
   <center>
     <h4>Historial de Repartos</h4>
   </center>
-  <table style="max-height: 650px">
+  {{filtro-reparto}}
+
+  <table style="max-height: 650px; overflow-y: scroll;">
     <thead>
       <tr>
         <th>Sucursal</th>
@@ -17,6 +19,7 @@
     </thead>
     <tbody>
       {{#each model as |reparto|}}
+      {{log reparto.fecha}}
         <tr>
           <td>{{reparto.sucursal.nombre}}</td>
           <td>{{reparto.dia}}</td>
@@ -24,7 +27,6 @@
           <td>
            {{!--  {{#m-wrapper query=".tooltipped" method="tooltip" }} --}}
             {{#link-to "admin.reparto" reparto.id class="btn-floating waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ver"}}<i class="material-icons">visibility</i>{{/link-to}}
-              
             {{!-- {{/m-wrapper} --}}
           </td>
 
@@ -34,4 +36,5 @@
       {{/each}}
     </tbody>
   </table>
+
 </div>
