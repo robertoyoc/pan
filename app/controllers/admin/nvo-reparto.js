@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
-
+import moment from 'moment';
 import { all, reject, resolve } from 'rsvp';
 
 export default Controller.extend({
@@ -9,16 +9,15 @@ export default Controller.extend({
     }),
 
 	actions: {
-		foo(){
-			
-		},
-
 		delete(distribucion){
 			distribucion.destroyRecord()
 		}, 
+		
 		enviar(reparto){
 			let error =false;
-			reparto.set('fecha', Date.now())
+			
+			//reparto.set('fecha', Date.now())
+			reparto.set('fecha', moment().format())
 			reparto.set('sucursal', this.get('selectedSucursal'))
 
 			all(reparto.get('distribuciones').map((distribucion)=>{

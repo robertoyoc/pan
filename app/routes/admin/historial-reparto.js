@@ -17,16 +17,42 @@ export default Route.extend(FindQuery, {
 		},
 	},
 
+	datefromParams(params) {
+		let month = params.month == "-1" ? null : Number(params.month);
+		let day = params.day == "-1" ? null : Number(params.day);
+		return moment([Number(params.year) || 2018, (month || 1) - 1, day || 1]);
+	},
 
-	model(){
-		return this.get('currentUser.account').then((account)=>{
-			let sucursal_id = account.get('sucursal.id');
-			let context = this;
-			return new Promise(function (resolve, reject){
-				context.filterEqual(context.store, 'reparto', { 'sucursal.id': sucursal_id}, function(repartos){
-					return resolve(repartos)
-				})
-			})
-		})
+	model(params){
+		let dateFromParams = this.dateFromParams(params),
+			endDate;
+
+		if(Number(params.month) == -1){
+			endDate = dateFromParams.clone().endOf('year').utc();
+		} else if (Number(params.day) == -1){
+			endDate = dateFromParams.clone().endOf('month').utc();
+		} else{
+			endDate = dateFromParams.clone().endOf('day').utc();
+		}
+
+		// return this.get('currentUser.account').then((account)=>{
+		// 	let sucursal_id = account.get('sucursal.id');
+		// 	let context = this;
+		// 	return new Promise(function (resolve, reject){
+		// 		context.filterEqual(context.store, 'reparto', { 'sucursal.id': sucursal_id}, function(repartos){
+		// 			return resolve(repartos)
+		// 		})
+		// 	})
+		// })
+
+		// Agregar Findquery 
+		return this.store.query("reparto", {
+			orderBy: 'fechaUnix',
+			startAt: dateFromParams.clone().startOf('day').utc().unix(),
+			endAt: endDate.unix()
+		}).then((arr)=>{
+				let sucursal_id = account.get('sucursal.id');
+				return arr;
+		});
 	}
 });
