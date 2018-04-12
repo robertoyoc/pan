@@ -17,10 +17,14 @@ export default Route.extend(FindQuery, {
 		},
 	},
 
-	datefromParams(params) {
+	dateFromParams(params) {
 		let month = params.month == "-1" ? null : Number(params.month);
 		let day = params.day == "-1" ? null : Number(params.day);
 		return moment([Number(params.year) || 2018, (month || 1) - 1, day || 1]);
+	},
+
+	beforeModel()
+	{
 	},
 
 	model(params){
@@ -35,17 +39,21 @@ export default Route.extend(FindQuery, {
 			endDate = dateFromParams.clone().endOf('day').utc();
 		}
 
-		// return this.get('currentUser.account').then((account)=>{
-		// 	let sucursal_id = account.get('sucursal.id');
-		// 	let context = this;
-		// 	return new Promise(function (resolve, reject){
-		// 		context.filterEqual(context.store, 'reparto', { 'sucursal.id': sucursal_id}, function(repartos){
-		// 			return resolve(repartos)
-		// 		})
-		// 	})
-		// })
-
-		// Agregar Findquery 
+		// Find-query 
+		return this.get('currentUser.account').then((account)=>{
+			let sucursal_id = account.get('sucursal.id');
+				let context = this;
+				return new Promise(function (resolve, reject){
+					context.filterCustom(context.store, 'reparto', {
+						'sucursalId': ['==', sucursal_id],
+						'fechaUnix': ['>=', dateFromParams.clone().startOf('day').utc().unix()],
+						'fechaUnix': ['<=', endDate.unix()]
+					}, function(repartos){
+						return resolve(repartos)
+				})
+			})
+		})
+		/*
 		return this.store.query("reparto", {
 			orderBy: 'fechaUnix',
 			startAt: dateFromParams.clone().startOf('day').utc().unix(),
@@ -53,6 +61,6 @@ export default Route.extend(FindQuery, {
 		}).then((arr)=>{
 				let sucursal_id = account.get('sucursal.id');
 				return arr;
-		});
+		});*/
 	}
 });
