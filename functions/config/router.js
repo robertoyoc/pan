@@ -2,6 +2,13 @@ module.exports = function () {
   let express = require("express")
   let app = express()
 
+	app.get('/recargas', function(req, res){
+		console.log(req)
+
+		res.header("Access-Control-Allow-Origin", "*");
+		res.send("Hola")
+	})
+
 
 
   // let exportablesController = require('../controllers/exportables')

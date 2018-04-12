@@ -6,8 +6,12 @@ export default Route.extend({
   session: service(),
   store: service(),
   currentUser: service(),
+  ajax: service(),
 
   beforeModel(){
+    // this.get('ajax').request('/recargas').then(()=>{
+    //   debugger
+    // })
     return this.get('session').fetch().catch(function() {
     })
   },

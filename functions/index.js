@@ -6,9 +6,11 @@ const config = functions.config();
 
 const db = require('./config/admin').db;
 
+exports.api = functions.https.onRequest(require('./config/router'));
+
 //	Router para API
 // if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'api') {
-//   exports.api = functions.https.onRequest(require('./config/router'));
+//   
 // }
 
 
