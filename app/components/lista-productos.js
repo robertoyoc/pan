@@ -71,7 +71,7 @@ export default Component.extend(Validations, FindQuery,{
 	selectedExistenciaPr: computed('selectedProducto', function(){
 		let tipo = this.get('selectedProducto.constructor.modelName')	
 		let productoId = this.get('selectedProducto.id')
-		debugger
+		//debugger
 		if(!productoId)
 			return null
 

@@ -1,67 +1,116 @@
+{{#m-wrapper query=".dropdown-button" method="dropdown"}}
+    <a class='dropdown-button btn brown lighten-1' href='#' data-activates='dropdown1'>Año</a>
+
+    <ul id="dropdown1" class="dropdown-content">
+    <li>
+        {{#link-to 'admin.historial-reparto' (query-params year=2018)}} 
+                2018
+        {{/link-to}}
+    </li>
+    <li class="divider"></li>
+    <li>
+        {{#link-to 'admin.historial-reparto' (query-params year=2019)}} 
+                2019
+        {{/link-to}}
+    </li>
+    <li class="divider"></li>
+    <li>
+        {{#link-to 'admin.historial-reparto' (query-params year=2020)}} 
+                2020
+        {{/link-to}}
+    </li>
+    </ul>
+{{/m-wrapper}}
 <nav class="nav-extended">
-    <div class="nav-content  brown lighten-1">
+    <div class="nav-content brown lighten-1" style="overflow-x: scroll;">
       <ul class="tabs tabs-transparent">
         <li class="tab">
-            {{#link-to 'admin.historial-reparto'}} 
-                En
+            {{#link-to 'admin.historial-reparto' (query-params month=-1 day=null)}} 
+                All
             {{/link-to}}
         </li>
         <li class="tab">
-            {{#link-to 'admin.historial-reparto'}} 
-                Fe
+            {{#link-to 'admin.historial-reparto' (query-params month='1') }}
+                Ene
             {{/link-to}}
         </li>
         <li class="tab">
-            {{#link-to 'admin.historial-reparto'}} 
-                Mz
+            {{#link-to 'admin.historial-reparto' (query-params month='2') }}
+                Feb
             {{/link-to}}
         </li>
         <li class="tab">
-            {{#link-to 'admin.historial-reparto'}} 
-                Ab
+            {{#link-to 'admin.historial-reparto' (query-params month='3') }}
+                Mar
             {{/link-to}}
         </li>
         <li class="tab">
-            {{#link-to 'admin.historial-reparto'}} 
-                My
+            {{#link-to 'admin.historial-reparto' (query-params month='4') }}
+                Abr
             {{/link-to}}
         </li>
         <li class="tab">
-            {{#link-to 'admin.historial-reparto'}} 
-                Jn
+            {{#link-to 'admin.historial-reparto' (query-params month='5') }}
+                May
             {{/link-to}}
         </li>
         <li class="tab">
-            {{#link-to 'admin.historial-reparto'}} 
-                Jl
+            {{#link-to 'admin.historial-reparto' (query-params month='6') }}
+                Jun
             {{/link-to}}
         </li>
         <li class="tab">
-            {{#link-to 'admin.historial-reparto'}} 
-                Ag
+            {{#link-to 'admin.historial-reparto' (query-params month='7') }}
+                Jul
             {{/link-to}}
         </li>
         <li class="tab">
-            {{#link-to 'admin.historial-reparto'}} 
-                St
+            {{#link-to 'admin.historial-reparto' (query-params month='8') }}
+                Ago
             {{/link-to}}
         </li>
         <li class="tab">
-            {{#link-to 'admin.historial-reparto'}} 
-                Oc
+            {{#link-to 'admin.historial-reparto' (query-params month='9') }}
+                Sep
             {{/link-to}}
         </li>
         <li class="tab">
-            {{#link-to 'admin.historial-reparto'}} 
-                Nv
+            {{#link-to 'admin.historial-reparto' (query-params month='10') }}
+                Oct
             {{/link-to}}
         </li>
         <li class="tab">
-            {{#link-to 'admin.historial-reparto'}} 
-                Dc
+            {{#link-to 'admin.historial-reparto' (query-params month='11') }}
+                Nov
+            {{/link-to}}
+        </li>
+        <li class="tab">
+            {{#link-to 'admin.historial-reparto' (query-params month='12') }}
+                Dic
             {{/link-to}}
         </li>
       </ul>
     </div>
   </nav>
 
+{{#if (and month (not (eq month '-1')))}}
+	<nav class="nav-extended">
+        <div class="nav-content  brown lighten-1" style="overflow-x: scroll;">
+            <ul class="tabs tabs-transparent">
+                <li class="tab">
+                    {{#link-to 'admin.historial-reparto' (query-params day=-1)}} 
+                        Mes
+                    {{/link-to}}
+                </li>
+
+                {{#each daysInMonth as |day|}}
+                    <li class="tab">
+                        {{#link-to 'admin.historial-reparto' (query-params day=day)}} 
+                            {{day}}
+                        {{/link-to}}
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+    </nav>
+{{/if}}

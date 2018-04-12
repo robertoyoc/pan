@@ -6,12 +6,14 @@
   <center>
     <h4>Historial de Repartos</h4>
   </center>
-  {{filtro-reparto}}
+  
+  {{filtro-reparto month=month year=year day=day}}
 
   <table style="max-height: 650px; overflow-y: scroll;">
     <thead>
       <tr>
         <th>Sucursal</th>
+        <th>Fecha BD</th>
         <th>Fecha</th>
         <th>Hora</th>
         <th>Acciones</th>
@@ -19,9 +21,9 @@
     </thead>
     <tbody>
       {{#each model as |reparto|}}
-      {{log reparto.fecha}}
         <tr>
           <td>{{reparto.sucursal.nombre}}</td>
+          <td>{{reparto.fecha}}</td>
           <td>{{reparto.dia}}</td>
           <td>{{reparto.hora}}</td>
           <td>
