@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import moment from 'moment';
 import { inject as service } from "@ember/service";
 import { all } from 'rsvp';
 
@@ -14,9 +15,10 @@ export default Component.extend({
         }, 
 
         finalizar(venta){
+            venta.set('fecha', moment().format())
 			all(venta.get('pedidos').invoke('save')).then(()=>{
 				venta.save().then(()=>{
-                    this.sendAction('nuevaVenta');
+                    this.sendAction('nuevaVenta', venta);
                 })
             })
 		}, 

@@ -112,14 +112,26 @@
 				        <td>{{pedido.producto.nombre}}</td>
 				        <td><a class="btn-floating waves-effect waves-light red" {{action 'delete' pedido}}><i class="material-icons">delete</i></a></td>
 				    </tr>
-				    {{else}}Ningún producto agregado
+				    {{else}} Ningún producto agregado
 				{{/each}}
 			</tbody>
 		</table>
 	</div>
 	<div class="redondo">
-		<h6 class="center-align">Total: $</h6>
+		<h6> Total: ${{myModel.importeTotal}}</h6>
 	</div>
 	<a class="waves-effect waves-light btn right {{unless disabledVender 'disabled'}}" {{action 'finalizar' myModel}} ><i class="material-icons left">save</i>Vender</a>
    </div>
 </div>
+
+{{#unless disabledVender}}
+	<div>
+		{{#link-to "vendedor.historial-venta" (query-params year=2018 month='4' day=12)  class="waves-effect waves-light btn right"}}
+			<i class="material-icons">history</i>
+			Ventas de hoy
+		{{/link-to}} 
+	</div>
+{{/unless}}
+
+
+

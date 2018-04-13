@@ -59,6 +59,7 @@ Router.map(function() {
     this.route('/')
     this.route('procesando-venta', {path: "/:idventa"});
     this.route('venta', {path: "/venta/:idventa"});
+    this.route('historial-venta');
   });
   this.route('nva-venta');
   this.route('nvo-especial');
