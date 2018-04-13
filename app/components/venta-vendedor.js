@@ -15,6 +15,7 @@ export default Component.extend({
         }, 
 
         finalizar(venta){
+            console.log(moment().format())
             venta.set('fecha', moment().format())
 			all(venta.get('pedidos').invoke('save')).then(()=>{
 				venta.save().then(()=>{
