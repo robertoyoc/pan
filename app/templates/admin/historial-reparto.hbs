@@ -13,9 +13,7 @@
     <thead>
       <tr>
         <th>Sucursal</th>
-        <th>Fecha BD</th>
-        <th>Fecha</th>
-        <th>Hora</th>
+        <th>Fecha y Hora</th>
         <th>Acciones</th>
       </tr>
     </thead>
@@ -23,9 +21,13 @@
       {{#each model as |reparto|}}
         <tr>
           <td>{{reparto.sucursal.nombre}}</td>
-          <td>{{reparto.fecha}}</td>
-          <td>{{reparto.dia}}</td>
-          <td>{{reparto.hora}}</td>
+          <td>
+            {{#if (eq month '-1')}}
+              {{moment-format reparto.fechaUnix 'MMM DD, HH:mm' 'X' utc=true}}
+            {{else}}
+              {{moment-format reparto.fechaUnix 'ddd DD, HH:mm' 'X' utc=true}}
+            {{/if}}
+          </td>
           <td>
            {{!--  {{#m-wrapper query=".tooltipped" method="tooltip" }} --}}
             {{#link-to "admin.reparto" reparto.id class="btn-floating waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ver"}}<i class="material-icons">visibility</i>{{/link-to}}

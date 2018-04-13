@@ -41,26 +41,22 @@ export default Route.extend(FindQuery, {
 
 		// Find-query 
 		return this.get('currentUser.account').then((account)=>{
-			let sucursal_id = account.get('sucursal.id');
+			let sucursal_id = account.get('sucursal.id');		
 				let context = this;
 				return new Promise(function (resolve, reject){
 					context.filterCustom(context.store, 'reparto', {
-						'sucursalId': ['==', sucursal_id],
+						'sucursal.id': ['==', sucursal_id],
 						'fechaUnix': ['>=', dateFromParams.clone().startOf('day').utc().unix()],
-						'fechaUnix': ['<=', endDate.unix()]
 					}, function(repartos){
-						return resolve(repartos)
+						let repartosList = [];
+						repartos.forEach(function(reparto){
+							if (reparto.get('fechaUnix') <= endDate.unix()) {
+								repartosList.pushObject(reparto);
+							}
+						})
+						return resolve(repartosList)
 				})
 			})
 		})
-		/*
-		return this.store.query("reparto", {
-			orderBy: 'fechaUnix',
-			startAt: dateFromParams.clone().startOf('day').utc().unix(),
-			endAt: endDate.unix()
-		}).then((arr)=>{
-				let sucursal_id = account.get('sucursal.id');
-				return arr;
-		});*/
 	}
 });
