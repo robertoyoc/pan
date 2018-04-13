@@ -106,9 +106,9 @@ export default Component.extend(Validations, FindQuery,{
         agregar(producto, cantidad){
         	
 			this.get('myReparto.distribuciones').createRecord({
-				producto: producto,
+				tipo: producto.get('constructor.modelName'),
+				productoId: producto.get('id'),
 				cantidad: cantidad,
-				tipo: producto.get('constructor.modelName')
 			})
 			this.set('cantidad', 1)
 			// producto.set('cantidad', producto.get('cantidad')-cantidad)

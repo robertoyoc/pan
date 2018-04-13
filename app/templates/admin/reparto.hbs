@@ -4,3 +4,45 @@
   {{#link-to 'admin.reparto' model.id class='breadcrumb' }}Ver{{/link-to}}
 {{/ember-wormhole}}
 
+<div class="col m8 offset-m2" style="margin-left:10px">
+    <div class="card-content" style="overflow-y: scroll; max-height: 530px">
+      <h5>Productos del reparto</h5>
+      <br>
+      <div class="row" >
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Tipo</th>
+              <th>Cantidad</th>
+              <th>Unidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {{#each model.distribuciones as |distribucion|}}
+              {{log distribucion.productoId}}
+              <tr>
+                <td>Suaj</td>
+                {{!-- <td>{{distribucion.producto}}</td> --}}
+                <td>{{distribucion.tipo}}</td>
+                <td>{{distribucion.cantidad}}</td>
+                <td>Suaj</td>
+                {{!-- <td>{{pluralize distribucion.producto.unidad}}</td> --}}
+              </tr>
+            {{else}}
+              No contiene productos.
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+     <div class="card-action">
+      <center>
+        {{#link-to 'admin.historial-reparto' class="waves-effect waves-light btn"}}
+          Aceptar
+        {{/link-to}}
+      </center>
+    </div>
+</div>
+

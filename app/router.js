@@ -33,7 +33,7 @@ Router.map(function() {
     this.route('cortes');
     this.route('sucursales');
     this.route('nvo-sucursal');
-    this.route('reparto', {path: "/reparto/:idreparto"});
+    this.route('reparto', {path: "/reparto/:id"});
     this.route('historial-produccion');
     this.route('edit-receta', {path: "/receta/:id"});
     this.route('edit-distribuido', {path: "/distribuido/:id"});
