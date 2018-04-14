@@ -107,11 +107,13 @@
 			</thead>
 			<tbody>
 				{{#each myModel.pedidos as |pedido|}}
-				    <tr>
-				        <td>{{number-input cantidad=pedido.cantidad}}</td>						
-				        <td>{{pedido.producto.nombre}}</td>
-				        <td><a class="btn-floating waves-effect waves-light red" {{action 'delete' pedido}}><i class="material-icons">delete</i></a></td>
-				    </tr>
+				    {{#unless pedido.isNew}}
+					    <tr>
+					        <td>{{number-input cantidad=pedido.cantidad}}</td>						
+					        <td>{{pedido.producto.nombre}}</td>
+					        <td><a class="btn-floating waves-effect waves-light red" {{action 'delete' pedido}}><i class="material-icons">delete</i></a></td>
+					    </tr>
+				    {{/unless}}
 				    {{else}} Ningún producto agregado
 				{{/each}}
 			</tbody>
@@ -126,7 +128,7 @@
 
 {{#unless disabledVender}}
 	<div>
-		{{#link-to "vendedor.historial-venta" (query-params year=2018 month='4' day=12)  class="waves-effect waves-light btn right"}}
+		{{#link-to "vendedor.historial-venta" (query-params year=year month=month day=day)  class="waves-effect waves-light btn right"}}
 			<i class="material-icons">history</i>
 			Ventas de hoy
 		{{/link-to}} 

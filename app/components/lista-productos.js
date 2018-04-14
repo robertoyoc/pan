@@ -43,7 +43,6 @@ export default Component.extend(Validations, FindQuery,{
     productos: computed(function() {
 		let productosList = [];
 		return this.get('store').findAll('mprima').then((mprimas)=>{
-		
 			return this.get('store').findAll('distribuido').then((distribuidos)=>{
 				return this.get('store').findAll('receta').then((recetas)=>{ 
 					mprimas.forEach((mprima)=>{
@@ -71,7 +70,6 @@ export default Component.extend(Validations, FindQuery,{
 	selectedExistenciaPr: computed('selectedProducto', function(){
 		let tipo = this.get('selectedProducto.constructor.modelName')	
 		let productoId = this.get('selectedProducto.id')
-		//debugger
 		if(!productoId)
 			return null
 
@@ -80,8 +78,6 @@ export default Component.extend(Validations, FindQuery,{
 		return DS.PromiseObject.create({
 			promise: this.get('currentUser.account').then((account)=>{
 				let sucursal = account.get('sucursal')
-
-			
 				return new Promise(function (resolve, reject){
 					context.filterEqual(context.get('store'), 'existence', { 'tipo': tipo, 'productoId': productoId,'sucursalId': sucursal.get('id')}, function(existencia){
 						//console.log(mprima[0])

@@ -27,22 +27,18 @@ export default Route.extend(FindQuery, {
         let dateFromParams = this.dateFromParams(params)
 
         return this.get('currentUser.account').then((account)=>{
-            let sucursal_id = account.get('sucursal.id');		
+            let sucursal_id = account.get('sucursal.id');	
             
-            console.log(dateFromParams.clone().startOf('day').utc().unix())
-            console.log(dateFromParams.clone().endOf('day').utc().unix())
-
             let context = this;
 			return new Promise(function (resolve, reject){
 				context.filterCustom(context.store, 'venta', {
 					// 'sucursal.id': ['==', sucursal_id],
 					'fechaUnix': ['>', dateFromParams.clone().startOf('day').utc().unix()],
 				}, function(ventas){
-                    
 					let ventasList = [];
-						ventas.forEach(function(reparto){
-							if (reparto.get('fechaUnix') < dateFromParams.clone().endOf('day').utc().unix()) {
-								ventasList.pushObject(reparto);
+						ventas.forEach(function(venta){
+							if (venta.get('fechaUnix') < dateFromParams.clone().endOf('day').utc().unix()) {
+								ventasList.pushObject(venta);
 							}
 						})
 						return resolve(ventasList)

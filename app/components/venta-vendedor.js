@@ -5,6 +5,10 @@ import { inject as service } from "@ember/service";
 import { all } from 'rsvp';
 
 export default Component.extend({
+    month: moment().format('MM'),
+    day: moment().format('DD'),
+    year: moment().format('YYYY'),
+
     disabledVender: computed('myModel', function() {
 		return this.get('myModel.pedidos.length') > 0;
     }),
@@ -15,7 +19,6 @@ export default Component.extend({
         }, 
 
         finalizar(venta){
-            console.log(moment().format())
             venta.set('fecha', moment().format())
 			all(venta.get('pedidos').invoke('save')).then(()=>{
 				venta.save().then(()=>{

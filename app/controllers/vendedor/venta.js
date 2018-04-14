@@ -36,17 +36,26 @@ export default Controller.extend({
 		})
     }),
 
-	actions: {
+	tipoProducto: computed('selectedProducto', function(){
+		return this.get('selectedProducto.constructor.modelName')	
+	}),
 
+	actions: {
 		agregarPedido(model){
 			if (model.get('cantidad') > 0){
-				this.transitionToRoute('vendedor.procesando-venta', this.get('venta_id'))
+				if (this.get('selectedProducto.id') != null) {
+					model.set('productoId', this.get('selectedProducto.id'));
+					model.set('tipo', this.get('selectedProducto.constructor.modelName'));
+					model.save().then(()=>{
+						this.transitionToRoute('vendedor.procesando-venta', this.get('venta_id'))
+					})
+				} else {
+					window.Materialize.toast('Selecciona un producto', 4000)
+				}
 			} else {
 				window.Materialize.toast('La cantidad no puede ser 0', 4000)
 			}
 		},
-
-
 
 		delete(pedido){
 			pedido.destroyRecord()

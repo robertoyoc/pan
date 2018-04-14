@@ -45,9 +45,12 @@ input{
 				        	{{else}}No hay productos en stock.
 				        {{/each}} --}}
 						{{#power-select 
-							options=myProductos selected=model.producto
-							onchange=(action (mut model.producto)) searchPlaceholder="Escribe
-							para buscar" placeholder="Escribe para buscar" searchField='nombre' as |mProduct|}} 
+							options=myProductos 
+							selected=selectedProducto
+							onchange=(action (mut selectedProducto)) 
+							searchPlaceholder="Escribe para buscar" 
+							placeholder="Escribe para buscar" 
+							searchField='nombre' as |mProduct|}} 
 							<div class="row">
 							<div class="col s3">
 								<img class="img circle" src="http://3.bp.blogspot.com/-Tk4n8JQzTaw/U6ayLnFuO7I/AAAAAAAAB-s/dyRCtYH85dc/s200/Evitar+el+Pan+Antes+de+Comer.png">

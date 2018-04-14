@@ -13,11 +13,11 @@ export default DS.Model.extend({
     
   importeTotal: computed('pedidos,@each.total', function() {
     let sum = 0;
-    this.get('pedidos').forEach(pedido => {
+    this.get('pedidos').forEach((pedido) => {
       sum += parseInt(pedido.get('total'));
     });
     return sum;
-  }),
+  }).meta({ serialize: true }),
 
   propietario: DS.belongsTo('account')
 });

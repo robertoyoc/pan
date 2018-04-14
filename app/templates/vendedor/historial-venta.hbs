@@ -12,24 +12,19 @@
       </tr>
     </thead>
 
-    {{log model}}
-
     <tbody>
       {{#each model as |venta|}}
-        <tr>
-          <td>{{venta.propietario.nombre}}</td>
-          <td>
-            {{!-- {{#if (eq month '-1')}}
-              {{moment-format reparto.fechaUnix 'MMM DD, HH:mm' 'X' utc=true}}
-            {{else}}
-              {{moment-format reparto.fechaUnix 'ddd DD, HH:mm' 'X' utc=true}}
-            {{/if}} --}}
-            {{moment-format venta.fechaUnix 'MMM DD, HH:mm' 'X' utc=true}}
-          </td>
-          <td>
-            <td>{{venta.propietario.importeTotal}}</td>
-          </td>
-        </tr>
+          {{#unless venta.isNew}}
+            <tr>
+              <td>{{venta.propietario.nombre}}</td>
+              <td>
+                {{moment-format venta.fechaUnix 'MMM DD, HH:mm' 'X' utc=true}}
+              </td>
+              <td>
+                <td>{{venta.propietario.importeTotal}}</td>
+              </td>
+            </tr>
+          {{/unless}}
         {{else}}
           <h5>Aún no hay ventas</h5>
       {{/each}}
