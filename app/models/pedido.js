@@ -6,7 +6,7 @@ export default DS.Model.extend({
   	cart: DS.belongsTo('cart'),
   	cantidad: DS.attr('number'),
 
-  	total: computed('cantidad', function () {
+  	total: computed('producto.precio', 'cantidad', function () {
     	return this.get('producto.precio')* this.get('cantidad')
   	}).meta({ serialize: true }),
   	

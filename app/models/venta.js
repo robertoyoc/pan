@@ -11,7 +11,7 @@ export default DS.Model.extend({
     	return (!isBlank(this.get('fecha'))) ? moment.utc(this.get('fecha')).unix() : 0;
   }).meta({ serialize: true }),
     
-  importeTotal: computed('pedidos,@each.total', function() {
+  importeTotal: computed('pedidos.@each.total', function() {
     let sum = 0;
     this.get('pedidos').forEach((pedido) => {
       sum += parseInt(pedido.get('total'));
