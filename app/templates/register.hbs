@@ -60,8 +60,7 @@ body{
           <label for="regUser" data-error="{{if regPassError regPassError 'Revisando'}}" data-success="Correcto">Contraseña</label>
         </div>
 
-
-        <a {{action "createUser"}} class="waves-effect waves-light btn red right"><i class="material-icons right">done</i>Registrarse</a>
+        <a {{action "createUser"}} class="waves-effect waves-light btn red right {{if isWorking 'disabled'}}"><i class="material-icons right">done</i>Registrarse</a>
       </div>
     </div>
 </div>

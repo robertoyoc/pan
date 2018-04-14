@@ -85,9 +85,26 @@ export default Controller.extend(Validations, {
     },
 
 
-createUser(){
+    createUser(){
 
-      let Controller = this;
+
+
+      function lookForUser(uid, context){
+        return context.store.findRecord('account', uid).then((usuario)=>{
+          return usuario
+        }).catch(()=>{
+          return lookForUser(uid, context)
+        })
+
+      }
+
+
+
+
+
+
+      this.set('isWorking', true)
+      let controller = this;
       this.validate().then(()=>{
         if(get(this, 'validations.isValid')){
           let newemail = this.get("user") + "@panlavillita.mx";
@@ -95,33 +112,57 @@ createUser(){
           let apellido = this.get("apellido");
           let pass = this.get("pass");
           this.get('firebase').auth().createUserWithEmailAndPassword(newemail, pass).then((usuario)=>{
-          	 
-            this.get('store').createRecord('account', {
-              uid: usuario.uid,
-              nombre: nombre,
-              apellido: apellido,
-              perfil: "cliente"
-            }).save().then(()=>{
-            	 
-              window.swal(
-              'Guardado!',
-              'La información ha sido almacenada',
-              'success'
-              ).then(()=>{
-                this.set('user', undefined);
-                this.set('nombre', undefined);
-                this.set('apellido', undefined);
-                this.set('pass', undefined);
-                this.get('session').open('firebase', {
-                  provider: 'password',
-                  email: newemail,
-                  password: pass
-                }).then(()=>{
-                  Controller.transitionToRoute('index');
+            let context = this
+            lookForUser(usuario.uid, this).then((createdUsuario)=>{
+              createdUsuario.set('apellido', apellido)
+              createdUsuario.set('nombre', nombre)
+              createdUsuario.save().then(()=>{
+                window.swal(
+                  'Guardado!',
+                  'La información ha sido almacenada',
+                  'success'
+                ).then(()=>{
+                  this.set('user', undefined);
+                  this.set('nombre', undefined);
+                  this.set('apellido', undefined);
+                  this.set('pass', undefined);
+                  this.get('session').open('firebase', {
+                    provider: 'password',
+                    email: newemail,
+                    password: pass
+                  }).then(()=>{
+                    context.set('isWorking', false)
+                    controller.transitionToRoute('index');
+                  })
                 })
-              })
 
-            });
+              })
+            })
+            
+            // setTimeout(function(){
+            //   let createdUsuario = context.store.findRecord('account', usuario.uid).then(()=>{})
+            //   if(createdUsuario){
+            //     createdUsuario.set('apellido', apellido)
+            //     createdUsuario.set('nombre', nombre)
+            //     createdUsuario.save().then(()=>{
+            //       context.set('isWorking', false)
+            //     })
+            //   }
+              
+
+            // }, 2000);
+
+            // this.get('store').createRecord('account', {
+            //   uid: usuario.uid,
+            //   nombre: nombre,
+            //   apellido: apellido,
+            //   perfil: "cliente"
+            // }).save().then(()=>{
+            	 
+              
+              // })
+
+            // });
           }).catch(function(error) {
               // Handle Errors here.
             // var errorCode = error.code;
@@ -130,10 +171,11 @@ createUser(){
             // ...
             switch(error.code){
               case "auth/email-already-in-use":
-              Controller.set("regUserError", "Usuario ya se encuentra registrado.")
-              Controller.send('activateError', "#regUser")
+              controller.set("regUserError", "Usuario ya se encuentra registrado.")
+              controller.send('activateError', "#regUser")
+              controller.set('isWorking', false)
             }
-          });
+          })
         }
 
 
