@@ -14,6 +14,7 @@ export default Route.extend({
     // })
     return this.get('session').fetch().catch(function() {
     })
+
   },
 
   model(){
@@ -23,7 +24,9 @@ export default Route.extend({
         equalTo: this.get('session.currentUser.uid'),
         limitToLast: 1
       }).then((account) => {
+
         let _account = account.get('firstObject');
+
         return this.get('store').query('cart', {
           orderBy: 'propietario',
           equalTo: _account.get('id'),
