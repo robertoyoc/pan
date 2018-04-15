@@ -23,15 +23,9 @@ input{
 			<div class="col s12 m3">
 				<div class="card center-align">
 					<div class="collection">
-				        <a class="collection-item">Pan Sal</a>
-				        <a class="collection-item">Pan Dulce</a>
-				        <a class="collection-item">Pasteles</a>
-				        <a class="collection-item">Charcuteria</a>
-				        <a class="collection-item">Feité</a>
-				        <a class="collection-item">Panqué</a>
-				        <a class="collection-item">Galletas</a>
-				        <a class="collection-item">Bocadillos</a>
-				        <a class="collection-item">Lacteos</a>
+						{{#each myCategorias as |categoria|}}
+					        <a class="collection-item" {{action 'changeCategoria' categoria.nombre}} >{{categoria.nombre}}</a>
+				        {{/each}}
 				     </div>
 				</div>
 			</div>
