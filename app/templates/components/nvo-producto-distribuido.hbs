@@ -36,7 +36,7 @@
         {{!-- <h4>Existencia</h4> --}}
         <div class="input-field col s12">
           <i class="material-icons prefix">exposure_plus_1</i>
-          {{input type="number" class="validate" min="1" value=myExistencia.cantidad}}
+            {{input disabled=(not (not myExistencia.cantidad)) type="text" min="1" class="validate" value=myExistencia.cantidad}}
           <label>Cantidad</label>
         </div>
 

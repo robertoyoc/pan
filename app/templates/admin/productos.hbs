@@ -44,7 +44,7 @@
         </thead>
         <tbody>
           {{#each model.recetas as |existencia|}}
-            {{#if existencia.productoId}}
+            {{#unless existencia.isNew}}
             <tr>
               <td>
                 {{existencia.producto.nombre}}
@@ -60,7 +60,7 @@
                 <a class="btn-floating"><i class="material-icons" {{action 'delete' existencia}} >delete</i></a>
               </td>
             </tr>
-            {{/if}}
+            {{/unless}}
             {{else}}
               <h5> Aún no tienes recetas.</h5>
           {{/each}}
@@ -81,7 +81,7 @@
         </thead>
         <tbody>
           {{#each model.distribuidos as |existencia|}}
-            {{#if existencia.productoId}}
+            {{#unless existencia.isNew}}
               <tr>
                 <td>
                   {{existencia.producto.nombre}}
@@ -97,7 +97,7 @@
                   <a class="btn-floating"><i class="material-icons" {{action 'delete' existencia}} >delete</i></a>
                 </td>
               </tr>
-            {{/if}}
+            {{/unless}}
             {{else}}
               <h5> Aún no tienes distribuidos.</h5>
           {{/each}}
