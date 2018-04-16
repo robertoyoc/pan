@@ -21,14 +21,29 @@
     </li>
     </ul>
 {{/m-wrapper}}
-<nav class="nav-extended">
-    <div class="nav-content brown lighten-1" style="overflow-x: scroll;">
+<style type="text/css">
+.tab a.active {
+    font-weight: bold;
+    color: black!important;
+}
+</style>
+
+<nav style="overflow-x:hidden; height:96px">
+    <div class="nav-content brown lighten-1 row"  style="margin-bottom:0">
+      <div class="col s2">
+
+
       <ul class="tabs tabs-transparent">
         <li class="tab">
             {{#link-to 'admin.historial-reparto' (query-params month=-1 day=null)}} 
-                All
+                TODOS
             {{/link-to}}
         </li>
+      </ul>
+      </div>
+      <div class="col s10">
+      <ul class="tabs tabs-transparent">
+        <div style="overflow-x: scroll; width: 900px;">        
         <li class="tab">
             {{#link-to 'admin.historial-reparto' (query-params month='1') }}
                 Ene
@@ -89,20 +104,27 @@
                 Dic
             {{/link-to}}
         </li>
+        </div>
       </ul>
+      </div>
     </div>
-  </nav>
+    {{#if (and month (not (eq month '-1')))}}
+        <div class=" brown lighten-1 row" style="overflow-x: scroll;">
 
-{{#if (and month (not (eq month '-1')))}}
-	<nav class="nav-extended">
-        <div class="nav-content  brown lighten-1" style="overflow-x: scroll;">
+          <div class="col s2">
             <ul class="tabs tabs-transparent">
                 <li class="tab">
                     {{#link-to 'admin.historial-reparto' (query-params day=-1)}} 
                         Mes
                     {{/link-to}}
                 </li>
+            </ul>
+          </div>
+          <div class="col s10">
 
+          
+            <ul class="tabs tabs-transparent">
+                <div style="width:1950px; overflow-x:scroll">
                 {{#each daysInMonth as |day|}}
                     <li class="tab">
                         {{#link-to 'admin.historial-reparto' (query-params day=day)}} 
@@ -110,7 +132,15 @@
                         {{/link-to}}
                     </li>
                 {{/each}}
+                </div>
             </ul>
+            </div>
         </div>
-    </nav>
-{{/if}}
+    {{/if}}
+
+
+
+
+
+  </nav>
+
