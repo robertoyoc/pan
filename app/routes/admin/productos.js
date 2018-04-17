@@ -5,7 +5,26 @@ import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
 
 export default Route.extend(FindQuery, {
 	currentUser: service(),
+	beforeModel(){
+		return this.get('currentUser.account').then((account)=>{
+			this.set('fixR', this.store.createRecord('existence', {
+				tipo:'receta',
+				sucursal: account.get('sucursal.id')
+
+			}))
+
+			this.set('fixD', this.store.createRecord('existence', {
+				tipo:'distribuido',
+				sucursal: account.get('sucursal.id')
+
+			}))
+
+		})
+		
+
+	},
 	model(){
+		
 		return hash({
 			recetas: this.get('currentUser.account').then((account)=>{
 				let sucursal = account.get('sucursal');
@@ -13,20 +32,17 @@ export default Route.extend(FindQuery, {
 
 				let context = this;
 				return new Promise(function (resolve, reject){
-					debugger
 
 					context.filterEqual(context.store, 'existence', { 'tipo': 'receta', 'sucursalId': sucursal.get('id')}, function(recetas){
 						recetasG = recetas
 						return resolve(recetas)
-						debugger
+
 					}).then(()=>{
-						debugger
+
 					})
 				}).then((recetas)=>{
-					debugger
 					console.log(recetas)
 				}).catch((error)=>{
-					debugger
 				})
 			}),
 			distribuidos: this.get('currentUser.account').then((account)=>{
@@ -34,12 +50,15 @@ export default Route.extend(FindQuery, {
 
 				let context = this;
 				return new Promise(function (resolve, reject){
-					debugger
 					return context.filterEqual(context.store, 'existence', { 'tipo': 'distribuido', 'sucursalId': sucursal.get('id')}, function(distribuidos){
 						return resolve(distribuidos)
 					})
 				})
 			}),
 		})	
+	},
+	afterModel(){
+		this.get('fixR').destroyRecord()
+		this.get('fixD').destroyRecord()
 	}
 });
