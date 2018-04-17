@@ -40,6 +40,7 @@ export default Component.extend({
 						})
 					})
 				})
+			})
         },
         
 		didSelectImage(files){
