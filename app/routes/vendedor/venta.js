@@ -3,8 +3,35 @@ import { inject as service } from '@ember/service';
 
 export default Route.extend({
     //productList: service(),
-
-    beforeModel() { 
+ 
+    beforeModel() {
+        // this.store.createRecord('categoria', {
+        //     nombre: 'Bocadillos'
+        // }).save()
+        // this.store.createRecord('categoria', {
+        //     nombre: 'Charcuteria'
+        // }).save()
+        // this.store.createRecord('categoria', {
+        //     nombre: 'Feité' 
+        // }).save()
+        // this.store.createRecord('categoria', {
+        //     nombre: 'Galletas'
+        // }).save()
+        // this.store.createRecord('categoria', {
+        //     nombre: 'Lácteos'
+        // }).save()
+        // this.store.createRecord('categoria', {
+        //     nombre: 'Pan Dulce'
+        // }).save()
+        // this.store.createRecord('categoria', {
+        //     nombre: 'Pan Sal'
+        // }).save()
+        // this.store.createRecord('categoria', {
+        //     nombre: 'Panqué'
+        // }).save()
+        // this.store.createRecord('categoria', {
+        //     nombre: 'Pasteles'
+        // }).save()
     },
 
     model(params) {

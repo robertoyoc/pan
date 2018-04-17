@@ -21,6 +21,10 @@ export default Controller.extend({
 		return this.store.peekRecord('venta', this.get('venta_id'))
 	}),
 
+	myCategorias: computed(function() {
+		return this.get('store').findAll('categoria')
+    }),
+
 	myProductos: computed(function() {
 		let productosList = [];
 		return this.get('store').findAll('distribuido').then((distribuidos)=>{

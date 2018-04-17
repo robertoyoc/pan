@@ -11,15 +11,23 @@ export default Component.extend({
     }),
 
 	actions: {
-		guardar(producto, existencia) {
-			existencia.save().then(()=>{
-				producto.save().then(()=>{
-					window.swal(
- 	  		            'Distribuido Añadido',
-		            	'Guardaste producto distribuido',
-			            'success'
-		        	).then(()=>{
-						this.sendAction('nuevoProducto');
+		guardar(producto, existencia, categoria) {
+			let productId = {
+				id: producto.id,
+				tipo: producto.get('constructor.modelName')
+			}
+
+			categoria.get('productosId').pushObject(productId);
+			categoria.save.then(()=>{
+				existencia.save().then(()=>{
+					producto.save().then(()=>{
+						window.swal(
+ 	  		            	'Distribuido Añadido',
+		            		'Guardaste producto distribuido',
+			            	'success'
+		        		).then(()=>{
+							this.sendAction('nuevoProducto');
+						})
 					})
 				})
 			})	
