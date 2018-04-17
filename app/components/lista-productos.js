@@ -107,7 +107,7 @@ export default Component.extend(Validations, FindQuery,{
 				cantidad: cantidad,
 			})
 			this.set('cantidad', 1)
-			// producto.set('cantidad', producto.get('cantidad')-cantidad)
+			this.set('selectedExistencia.cantidad', this.get('selectedExistencia.cantidad')-cantidad)
 		},
 
         changePrima() {

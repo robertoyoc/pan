@@ -2,15 +2,31 @@ import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import moment from 'moment';
 import { all, reject, resolve } from 'rsvp';
+import {inject as service} from '@ember/service'
+import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
 
-export default Controller.extend({
+export default Controller.extend(FindQuery, {
+	currentUser: service(),
 	disabledEnviar: computed('model.distribuciones', 'selectedSucursal', function() {
 		return this.get('model.distribuciones.length')>0 && !Ember.isBlank(this.get('selectedSucursal'));
     }),
 
 	actions: {
 		delete(distribucion){
-			distribucion.destroyRecord()
+			let context =this
+			this.get('currentUser.account').then((account)=>{
+				let sucursal = account.get('sucursal')
+				return new Promise(function (resolve, reject){
+					context.filterEqual(context.get('store'), 'existence', { 'tipo': distribucion.get('tipo'), 'productoId': distribucion.get('productoId'),'sucursalId': sucursal.get('id')}, function(existencia){
+						//console.log(mprima[0])
+						return resolve(existencia[0])
+					})
+				}).then((existencia)=>{
+					existencia.set('cantidad', parseInt(existencia.get('cantidad'))+parseInt(distribucion.get('cantidad')))
+					distribucion.destroyRecord()
+				})
+			})
+			
 		}, 
 		
 		enviar(reparto){
