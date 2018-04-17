@@ -8,6 +8,10 @@ const db = require('./config/admin').db;
 
 exports.api = functions.https.onRequest(require('./config/router'));
 
+
+let exportablesController = require('./controllers/exportables')
+
+
 //	Router para API
 // if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'api') {
 //   
@@ -104,9 +108,57 @@ exports.processReparto = functions.database.ref('/repartos/{repartoId}').onCreat
 });
 
 exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(function (event) {
+	let ventaSnapGeneral = null
 	return db.ref(`/venta/${event.params.ventaId}`).once('value').then((ventaSnap)=>{
-		console.log('ventaSnap', ventaSnap.val())
-		return true
+		let venta = ventaSnap.val()
+		ventaSnapGeneral =ventaSnap
+		let promises = []
+
+		let sucursal = venta.sucursal;
+
+		for(var pedido_id in venta.pedidos){
+			promises.push(
+				db.ref(`pedidos/${pedido_id}`).once('value').then((pedidoSnap)=>{
+					let pedido = pedidoSnap.val()
+					let producto = pedido.productoId
+					let cantidad = pedido.cantidad
+					return db.ref(`existences`).orderByChild(producto).once('value').then((existencesSnap)=>{
+						let existencias = existencesSnap.val()
+						let existenciaRef = null
+						for(var existencia_id in existencias){
+							
+							if(existencias[existencia_id].sucursalId==sucursal){
+
+								existenciaRef = existencia_id
+							}
+								
+						}
+						return db.ref(`existences/${existenciaRef}`).transaction((existencia)=>{
+							if(existencia){
+								existencia.cantidad = existencia.cantidad - cantidad
+
+
+							}
+							return existencia
+
+						})
+
+
+
+					})
+				})
+
+			)
+		}
+		return Promise.all(promises).then(()=>{
+
+			console.log("Venta procesada")
+			return exportablesController.generateTicket(ventaSnapGeneral).then(()=>{
+				console.log("Ticket Generado")
+			}).catch((error)=> {
+				console.log(error)
+			})
+		})
 	})
 });
 

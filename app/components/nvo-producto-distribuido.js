@@ -16,10 +16,7 @@ export default Component.extend({
 				id: producto.id,
 				tipo: producto.get('constructor.modelName')
 			}
-
-			categoria.get('productosId').pushObject(productId);
-			categoria.save.then(()=>{
-				existencia.save().then(()=>{
+			existencia.save().then(()=>{
 					producto.save().then(()=>{
 						window.swal(
  	  		            	'Distribuido Añadido',
@@ -30,7 +27,6 @@ export default Component.extend({
 						})
 					})
 				})
-			})	
         },
         
 		didSelectImage(files){
