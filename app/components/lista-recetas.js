@@ -20,7 +20,7 @@ const Validations = buildValidations({
 		    allowString: true,
 		    integer: true,
 		    gt: 0,
-		    lte: alias('model.cantidadMax')
+		    // lte: alias('model.cantidadMax')
 		})
 	]
 })
@@ -33,53 +33,38 @@ export default Component.extend(Validations, {
 		this.set('cantidad', 1);
 	},
     
-    productos: computed(function() {
-		let productosList = [];
-		return this.get('store').findAll('producto').then((productos)=>{
-		
-			return this.get('store').findAll('distribuido').then((distribuidos)=>{
-				return this.get('store').findAll('receta').then((recetas)=>{ 
-					productos.forEach((producto)=>{
-						productosList.pushObject(producto);
-					}) 
-					distribuidos.forEach((distribuido)=>{
-						productosList.pushObject(distribuido)
-					})
-					recetas.forEach((receta)=>{
-						productosList.pushObject(receta)
-					})
-					return productosList;
-				
+    listRecetas: computed(function() {
+		let recetasList = [];
+			return this.get('store').findAll('receta').then((recetas)=>{ 
+				recetas.forEach((receta)=>{
+					recetasList.pushObject(receta)
 				})
-			})
+				return recetasList;
 		})
     }),   
 
     disabledAgregar: computed('cantidad', function () {
 		return Ember.isBlank(this.get('cantidad'));
 	}),
-	cantidadMax: computed('selectedProducto', 'selectedProducto.cantidad', function(){
-		return this.get('selectedProducto.cantidad');
-	}),
+
 	plural: computed('cantidad', function(){
 		return this.get('cantidad') > 1;
 	}),
-	valid: computed('cantidad', 'cantidadMax', function () {
+
+	valid: computed('cantidad', function () {
 		return (this.get('validations.attrs.cantidad.isValid')||this.get('disabledAgregar'))?' ': ' invalid';
 	}),
 
     actions: {
-
         agregar(producto, cantidad){
-			this.get('myReparto.distribuciones').createRecord({
+			this.get('produccion.maquilas').createRecord({
 				producto: producto,
 				cantidad: cantidad
 			})
 			this.set('cantidad', 1)
-			producto.set('cantidad', producto.get('cantidad')-cantidad)
+			// producto.set('cantidad', producto.get('cantidad')-cantidad)
 		},
-        // agregar(selectedProducto, cantidad) {  this.sendAction('agregar', selectedProducto, cantidad); },
-
+ 
         changePrima() {
             this.set('selectedProducto', undefined)
         }

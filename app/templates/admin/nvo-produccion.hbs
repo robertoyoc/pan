@@ -13,8 +13,7 @@
     <div class="col m4 offset-m1">
       <div class="card" style="margin-right: 10px">
         
-        {{!--lista-productos selectedProducto=selectedProducto cantidad=cantidad agregar=(action 'agregar')--}}
-        {{lista-recetas myReparto=model}}
+        {{lista-recetas produccion=model}}
         
       </div>
     </div>
@@ -33,15 +32,15 @@
             </tr>
           </thead>
           <tbody>
-            {{#each model.distribuciones as |distribucion|}}
+            {{#each model.maquilas as |maquila|}}
               <tr>
-                <td>{{distribucion.producto.nombre}}</td>
-                <td>{{distribucion.cantidad}}</td>
-                <td>{{pluralize distribucion.producto.unidad}}</td>
-                <td><a {{action 'delete' distribucion}} class="btn-floating"><i class="material-icons">delete</i></a></td>
+                <td>{{maquila.producto.nombre}}</td>
+                <td>{{maquila.cantidad}}</td>
+                <td>{{pluralize 'unidad'}}</td>
+                <td><a {{action 'delete' maquila}} class="btn-floating"><i class="material-icons">delete</i></a></td>
               </tr>
             {{else}}
-              Agregar recetas
+              <h6>Agrega pedidos</h6>
             {{/each}}
           </tbody>
         </table>

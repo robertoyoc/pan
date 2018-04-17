@@ -10,16 +10,28 @@ export default Component.extend({
 		return this.get('store').findAll('categoria')
     }),
 
+    cantExistencia: computed(function(){
+    	if (this.get('myExistencia.cantidad') > 0) {
+    		return this.get('myExistencia.cantidad')
+    	} else {
+    		return 1;
+   		}	
+    }),
+
 	actions: {
 		guardar(producto, existencia, categoria) {
-			let productId = {
-				id: producto.id,
-				tipo: producto.get('constructor.modelName')
-			}
-
-			categoria.get('productosId').pushObject(productId);
-			categoria.save.then(()=>{
+			// let productId = {
+			// 	id: producto.id,
+			// 	tipo: producto.get('constructor.modelName')
+			// }
+			// console.log(categoria.get('productosId'))
+			// categoria.get('productosId').pushObject(productId);
+			// debugger
+			
+			// categoria.save().then(()=>{
+				existencia.set('cantidad', this.get('cantExistencia'))
 				existencia.save().then(()=>{
+					producto.set('categoria', categoria)
 					producto.save().then(()=>{
 						window.swal(
  	  		            	'Distribuido Añadido',
@@ -30,7 +42,7 @@ export default Component.extend({
 						})
 					})
 				})
-			})	
+			// })	
         },
         
 		didSelectImage(files){
@@ -39,7 +51,7 @@ export default Component.extend({
 			reader.onloadend = Ember.run.bind(this, function(){
 				var dataURL = reader.result;
 				var output = document.getElementById('output');
-				output.src = dataURL;
+				// output.src = dataURL;
 				this.set('file', files[0]);
 				var metadata = {
 	 				contentType: 'image/png'

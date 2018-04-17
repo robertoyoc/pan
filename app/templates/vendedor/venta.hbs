@@ -24,7 +24,9 @@ input{
 				<div class="card center-align">
 					<div class="collection">
 						{{#each myCategorias as |categoria|}}
-					        <a class="collection-item" {{action 'changeCategoria' categoria.nombre}} >{{categoria.nombre}}</a>
+					        <a class="collection-item" {{!--action 'changeCategoria' categoria.nombre--}}>
+					        	{{categoria.nombre}}
+					        </a>
 				        {{/each}}
 				     </div>
 				</div>

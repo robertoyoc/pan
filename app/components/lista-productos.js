@@ -74,7 +74,6 @@ export default Component.extend(Validations, FindQuery,{
 			return null
 
 		let context = this;
-
 		return DS.PromiseObject.create({
 			promise: this.get('currentUser.account').then((account)=>{
 				let sucursal = account.get('sucursal')
@@ -107,7 +106,6 @@ export default Component.extend(Validations, FindQuery,{
 				cantidad: cantidad,
 			})
 			this.set('cantidad', 1)
-			// producto.set('cantidad', producto.get('cantidad')-cantidad)
 		},
 
         changePrima() {

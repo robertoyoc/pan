@@ -1,29 +1,61 @@
 import Component from '@ember/component';
 import { inject as service } from "@ember/service";
 import { computed } from '@ember/object';
+import { all } from 'rsvp';
+
+import { singularize, pluralize} from 'ember-inflector';
+import Inflector from 'ember-inflector';
+
+const inflector = Inflector.inflector;
+
+    inflector.irregular('unidad', 'unidades');
+    inflector.irregular('costal', 'costales');
 
 export default Component.extend({
     store: service(),
     firebaseApp: service(),
 	
 	myCategorias: computed(function() {
-		
 		return this.get('store').findAll('categoria')
 	}),
 
+	listMprimas: computed(function() {
+		return this.get('store').findAll('mprima')
+    }),   
+
+	cantExistencia: computed(function(){
+    	if (this.get('myExistencia.cantidad') > 0) {
+    		return this.get('myExistencia.cantidad')
+    	} else {
+    		return 1;
+   		}	
+    }),
+
 	actions: {
-       guardar(producto, existencia) {
-			existencia.save().then(()=>{
-				producto.save().then(()=>{
-					window.swal(
- 	  		            'Receta Añadida',
-		            	'Guardaste receta',
-			            'success'
-		        	).then(()=>{
-						this.sendAction('nuevoProducto');
+        guardar(producto, existencia, categoria) {
+   			// let productId = {
+			// 	id: producto.id,
+			// 	tipo: producto.get('constructor.modelName')
+			// }
+			// console.log(categoria.get('productosId'))
+			// categoria.get('productosId').pushObject(productId);
+			// debugger
+
+			// categoria.save().then(()=>{
+				existencia.set('cantidad', this.get('cantExistencia'))
+				existencia.save().then(()=>{
+					producto.set('categoria', categoria)
+					producto.save().then(()=>{
+						window.swal(
+ 	  		            	'Receta Añadida',
+		            		'Guardaste receta',
+			            	'success'
+		        		).then(()=>{
+							this.sendAction('nuevoProducto');
+						})
 					})
 				})
-			})	
+			// })	
 		},
 
         didSelectImage(files){
@@ -32,7 +64,7 @@ export default Component.extend({
 			reader.onloadend = Ember.run.bind(this, function(){
 				var dataURL = reader.result;
 				var output = document.getElementById('output');
-				output.src = dataURL;
+				// output.src = dataURL;
 				this.set('file', files[0]);
 				var metadata = {
 	 				contentType: 'image/png'
@@ -51,7 +83,7 @@ export default Component.extend({
 	 				ctrl.get('myModel').save()
 	 				ctrl.set('file', '');
 	 				ctrl.set('selectedCategory', '');
-	 				ctrl.set(document.getElementById('output').src, '');
+	 				// ctrl.set(document.getElementById('output').src, '');
 	 				ctrl.set('days', '');
 	 				ctrl.set('isDisabled', true);
 	 			});
@@ -59,6 +91,21 @@ export default Component.extend({
 			//debugger;
 			reader.readAsDataURL(files[0]);	
  			console.log(this.get('file'))
- 		}
+ 		},
+
+ 		changePrima() {
+            this.set('selectedProducto', undefined)
+        },
+
+        agregar(mprima){
+			this.get('myModel.ingredientes').pushObject(mprima)
+			all(this.get('myModel.ingredientes').invoke('save'))
+			this.sendAction('changePrima')
+		}, 
+
+		delete(mprima){
+			mprima.destroyRecord()
+		},
+
     }
 });

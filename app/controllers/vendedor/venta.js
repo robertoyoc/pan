@@ -63,7 +63,11 @@ export default Controller.extend({
 
 		delete(pedido){
 			pedido.destroyRecord()
-		}
+		},
+
+		// changeCategoria(nomCategoria){
+
+		// }
 	}
 
 });
