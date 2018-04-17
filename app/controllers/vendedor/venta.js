@@ -2,15 +2,19 @@ import Controller from '@ember/controller';
 import { computed } from "@ember/object";
 import { inject as service } from "@ember/service";
 
-export default Controller.extend({
-	//productList: service(),
+import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
+
+export default Controller.extend(FindQuery, {
 	/*
-		 productos: computed(function() {
-		debugger
-       return this.get('productList.productos')
-      }), 
+		//productList: service(),
+		productos: computed(function() {
+			debugger
+       	return this.get('productList.productos')
+      	}), 
 	*/
  	
+	selectedCategoria: "all",
+
 	store: service(),
 	
 	init(){
@@ -25,19 +29,35 @@ export default Controller.extend({
 		return this.get('store').findAll('categoria')
     }),
 
-	myProductos: computed(function() {
-		let productosList = [];
-		return this.get('store').findAll('distribuido').then((distribuidos)=>{
-			return this.get('store').findAll('receta').then((recetas)=>{ 
-				distribuidos.forEach((distribuido)=>{
-					productosList.pushObject(distribuido)
+	myProductos: computed('selectedCategoria', function() {
+		if (this.get('selectedCategoria')=="all"){
+			let productosList = [];
+			return this.get('store').findAll('distribuido').then((distribuidos)=>{
+				return this.get('store').findAll('receta').then((recetas)=>{ 
+					distribuidos.forEach((distribuido)=>{
+						productosList.pushObject(distribuido)
+					})
+					recetas.forEach((receta)=>{
+						productosList.pushObject(receta)
 				})
-				recetas.forEach((receta)=>{
-					productosList.pushObject(receta)
+					return productosList;
+				})
 			})
-				return productosList;
-			})
-		})
+		} else {
+			let context = this;
+			return new Promise(function (resolve, reject){
+				context.filterEqual(context.get('store'), 'categoria', { 'nombre': context.get('selectedCategoria')}, function(categoria){
+					let idProductos = categoria[0].get('productosId')
+					let productList = [];
+					idProductos.forEach((producto)=>{
+						productList.pushObject(context.store.findRecord(producto.tipo, producto.id))
+					})
+					return resolve(productList)
+				})
+			
+			})	
+		}
+		
     }),
 
 	tipoProducto: computed('selectedProducto', function(){
@@ -65,9 +85,9 @@ export default Controller.extend({
 			pedido.destroyRecord()
 		},
 
-		// changeCategoria(nomCategoria){
-
-		// }
+		changeCategoria(nomCategoria){
+			this.set('selectedCategoria', nomCategoria);
+		}
 	}
 
 });

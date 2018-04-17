@@ -20,15 +20,12 @@ export default Component.extend({
 
 	actions: {
 		guardar(producto, existencia, categoria) {
-			// let productId = {
-			// 	id: producto.id,
-			// 	tipo: producto.get('constructor.modelName')
-			// }
-			// console.log(categoria.get('productosId'))
-			// categoria.get('productosId').pushObject(productId);
-			// debugger
-			
-			// categoria.save().then(()=>{
+			let productId = {
+				id: producto.id,
+				tipo: producto.get('constructor.modelName')
+			}
+			categoria.get('productosId').pushObject(productId);
+			categoria.save().then(()=>{
 				existencia.set('cantidad', this.get('cantExistencia'))
 				existencia.save().then(()=>{
 					producto.set('categoria', categoria)
@@ -42,7 +39,7 @@ export default Component.extend({
 						})
 					})
 				})
-			// })	
+			})	
         },
         
 		didSelectImage(files){

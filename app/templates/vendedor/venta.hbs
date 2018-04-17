@@ -23,8 +23,11 @@ input{
 			<div class="col s12 m3">
 				<div class="card center-align">
 					<div class="collection">
+						<a class="collection-item" {{action 'changeCategoria' 'all'}}>
+					        	Todos
+					    </a>
 						{{#each myCategorias as |categoria|}}
-					        <a class="collection-item" {{!--action 'changeCategoria' categoria.nombre--}}>
+					        <a class="collection-item" {{action 'changeCategoria' categoria.nombre}}>
 					        	{{categoria.nombre}}
 					        </a>
 				        {{/each}}
@@ -33,13 +36,7 @@ input{
 			</div>
 			<div class="col s12 m4">
 				<div class="card center-align">
-					{{!-- {{log myProductos}} --}}
 					<div class="collection">
-						{{!-- {{log myProductos}} --}}
-				        {{!-- {{#each productos as |producto|}}
-						lel
-				        	{{else}}No hay productos en stock.
-				        {{/each}} --}}
 						{{#power-select 
 							options=myProductos 
 							selected=selectedProducto
@@ -62,9 +59,10 @@ input{
 			</div>
 			<div class="col s12 m5">
 				{{teclado-numeric myCantidad=model.cantidad}}
-					<a {{action 'agregarPedido' model}} class="waves-effect waves-light btn right">{{!-- {{if (or disabledAgregar (v-get this 'cantidad' 'isInvalid')) 'disabled'}}"> --}}
-			Agregar al Pedido
-		</a>
+					<a {{action 'agregarPedido' model}} class="waves-effect waves-light btn right">
+						{{!-- {{if (or disabledAgregar (v-get this 'cantidad' 'isInvalid')) 'disabled'}}"> --}}
+						Agregar al Pedido
+					</a>
 			</div>
 		</div>
 		
