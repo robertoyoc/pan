@@ -1,7 +1,7 @@
 {{#ember-wormhole to='admin-nav'}}
-  {{#link-to 'admin.inv-produccion' class='breadcrumb'}}Inv. de Producción{{/link-to}}
-  {{#link-to 'admin.lista-mprima' class='breadcrumb'}}Lista{{/link-to}}
-  {{#link-to 'admin.nvo-mprima' class='breadcrumb'}}Agregar Materia Prima{{/link-to}}
+	{{#link-to 'admin.inv-produccion' class='breadcrumb'}}Inv. de Producción{{/link-to}}
+  	{{#link-to 'admin.lista-mprima' class='breadcrumb'}}Materia Prima{{/link-to}}
+  	{{#link-to 'admin.nvo-mprima' class='breadcrumb'}}Agregar{{/link-to}}
 {{/ember-wormhole}}
 
 {{add-mprima myModel=model myExistencia=existencia nuevoMprima = (action 'nuevoMprima')}}

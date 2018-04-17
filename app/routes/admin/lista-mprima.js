@@ -5,6 +5,17 @@ import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
 
 export default Route.extend(FindQuery, {
 	currentUser: service(),
+	beforeModel(){
+		return this.get('currentUser.account').then((account)=>{
+			this.set('fixM', this.store.createRecord('existence', {
+				tipo:'mprima',
+				sucursal: account.get('sucursal.id')
+
+			}))
+
+		})
+
+	},
 
 	model(){
 		return this.get('currentUser.account').then((account)=>{
@@ -20,5 +31,8 @@ export default Route.extend(FindQuery, {
 				//return resolve()
 			})
 		})
+	},
+	afterModel(){
+		this.get('fixM').destroyRecord()
 	}
 });

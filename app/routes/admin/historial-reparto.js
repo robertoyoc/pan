@@ -23,8 +23,16 @@ export default Route.extend(FindQuery, {
 		return moment([Number(params.year) || 2018, (month || 1) - 1, day || 1]);
 	},
 
-	beforeModel()
-	{
+	beforeModel(){
+		return this.get('currentUser.account').then((account)=>{
+			this.set('fixR', this.store.createRecord('reparto', {
+				fechaUnix: 4080089937,
+				sucursal: account.get('sucursal')
+
+			}))
+
+		})
+
 	},
 
 	model(params){
@@ -58,5 +66,8 @@ export default Route.extend(FindQuery, {
 				})
 			})
 		})
+	},
+	afterModel(){
+		this.get('fixR').destroyRecord()
 	}
 });
