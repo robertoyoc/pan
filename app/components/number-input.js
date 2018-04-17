@@ -8,10 +8,12 @@ export default Component.extend({
 	},
 	actions: {
 		mas(){
-			this.set('cantidad', this.get('cantidad')+1);
+			let cantidad = this.get('cantidad')
+			cantidad = (typeof(cantidad)=='string')? parseInt(cantidad): cantidad;
+			this.set('cantidad', cantidad+1);
 		},
 		menos(){
-			if(this.get('cantidad')>=1)
+			if(this.get('cantidad')>1)
 				this.set('cantidad', this.get('cantidad')-1);
 		}
 	}
