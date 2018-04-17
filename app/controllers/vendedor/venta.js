@@ -86,6 +86,7 @@ export default Controller.extend(FindQuery, {
 					model.set('productoId', this.get('selectedProducto.id'));
 					model.set('tipo', this.get('selectedProducto.constructor.modelName'));
 					model.save().then(()=>{
+						this.send('changeProducto')
 						this.transitionToRoute('vendedor.procesando-venta', this.get('venta_id'))
 					})
 				} else {
@@ -102,6 +103,11 @@ export default Controller.extend(FindQuery, {
 
 		changeCategoria(nomCategoria){
 			this.set('selectedCategoria', nomCategoria);
+			this.send('changeProducto')
+		},
+
+		changeProducto(){
+			this.set('selectedProducto', undefined)
 		}
 	}
 

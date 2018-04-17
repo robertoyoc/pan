@@ -13,9 +13,9 @@ export default Route.extend(FindQuery, {
 
 				let context = this;
 				return new Promise(function (resolve, reject){
-					debugger
+					// debugger
 					context.filterEqual(context.store, 'existence', { 'tipo': 'receta', 'sucursalId': sucursal.get('id')}, function(recetas){
-						console.log(recetas)
+						// console.log(recetas)
 						return resolve(recetas)
 
 					})

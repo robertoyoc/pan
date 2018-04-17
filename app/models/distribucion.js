@@ -5,6 +5,9 @@ export default DS.Model.extend({
 	tipo: DS.attr('string'),
 	productoId: DS.attr('string'),
 	producto: computed('tipo', 'productoId', function(){
+		if (!this.get('tipo'))
+			return null
+
 		return this.store.findRecord(this.get('tipo'), this.get('productoId'))
 	}), 
 	cantidad: DS.attr('number', { defaultValue: 1})

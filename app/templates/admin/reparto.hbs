@@ -12,23 +12,25 @@
         <table>
           <thead>
             <tr>
+              <th>Origen</th>
+              <th>Destino</th>
               <th>Producto</th>
               <th>Tipo</th>
               <th>Cantidad</th>
-              <th>Unidad</th>
+              {{!-- <th>Unidad</th> --}}
             </tr>
           </thead>
           <tbody>
             
             {{#each model.distribuciones as |distribucion|}}
-              {{log distribucion.productoId}}
+              {{log distribucion.producto}}
               <tr>
-                <td>Suaj</td>
-                {{!-- <td>{{distribucion.producto}}</td> --}}
+                <td>{{model.origin.nombre}}</td>
+                <td>{{model.sucursal.nombre}}</td>
+                <td>{{distribucion.producto.nombre}}</td>
                 <td>{{distribucion.tipo}}</td>
                 <td>{{distribucion.cantidad}}</td>
-                <td>Suaj</td>
-                {{!-- <td>{{pluralize distribucion.producto.unidad}}</td> --}}
+                {{!-- <td>{{distribucion.producto.unidad}}</td> --}}
               </tr>
             {{else}}
               No contiene productos.

@@ -5,8 +5,8 @@ module.exports = function(environment) {
   let ENV = {
     modulePrefix: 'panlavillita',
     environment,
-    rootURL: '/',
-    locationType: 'auto',
+    rootURL: '',
+    locationType: 'hash',
     
     torii: {
       sessionServiceName: 'session'
