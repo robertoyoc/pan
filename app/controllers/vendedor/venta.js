@@ -64,6 +64,21 @@ export default Controller.extend(FindQuery, {
 		return this.get('selectedProducto.constructor.modelName')	
 	}),
 
+	existenceProm: computed('selectedProducto', function(){
+		let context = this;
+		return DS.PromiseObject.create({
+			promise: new Promise(function (resolve, reject){
+				context.filterEqual(context.get('store'), 'existence', { 'productoId': context.get('selectedProducto.id')}, function(existence){
+					return resolve(existence[0])
+			})
+		})	
+		})
+	}),
+
+	existenceProducto: computed('existenceProm.content', function(){
+		return this.get('existenceProm.content')
+	}), 
+
 	actions: {
 		agregarPedido(model){
 			if (model.get('cantidad') > 0){

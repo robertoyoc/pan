@@ -57,8 +57,9 @@ input{
 				     </div>
 				</div>
 			</div>
+
 			<div class="col s12 m5">
-				{{teclado-numeric myCantidad=model.cantidad}}
+				{{teclado-numeric myCantidad=model.cantidad maxValue=existenceProducto.cantidad}}
 					<a {{action 'agregarPedido' model}} class="waves-effect waves-light btn right">
 						{{!-- {{if (or disabledAgregar (v-get this 'cantidad' 'isInvalid')) 'disabled'}}"> --}}
 						Agregar al Pedido
