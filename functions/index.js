@@ -102,6 +102,14 @@ exports.processReparto = functions.database.ref('/repartos/{repartoId}').onCreat
 		})
 	})
 });
+
+exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(function (event) {
+	return db.ref(`/venta/${event.params.ventaId}`).once('value').then((ventaSnap)=>{
+		console.log('ventaSnap', ventaSnap.val())
+		return true
+	})
+});
+
 // if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'processReparto') {
 	
 // }
