@@ -5,10 +5,6 @@ export default DS.Model.extend({
 	//producto: DS.belongsTo('producto'),
   	cart: DS.belongsTo('cart'),
   	cantidad: DS.attr('number'),
-
-  	total: computed('producto.precio', 'cantidad', function () {
-    	return this.get('producto.precio')* this.get('cantidad')
-  	}).meta({ serialize: true }),
   	
   	tipo: DS.attr('string'),
 	  productoId: DS.attr('string'),
@@ -17,5 +13,9 @@ export default DS.Model.extend({
 		    return this.store.findRecord(this.get('tipo'), this.get('productoId'))
       else return null
 	  }),
+
+    total: computed('producto.precio', 'cantidad', function () {
+      return this.get('producto.precio') * this.get('cantidad')
+    }).meta({ serialize: true }),
 
 });

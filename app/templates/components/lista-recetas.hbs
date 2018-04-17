@@ -3,7 +3,7 @@
     <br>
     <div class="row">
         {{#power-select 
-            options=productos selected=selectedProducto 
+            options=listRecetas selected=selectedProducto 
             onchange=(action (mut selectedProducto)) searchPlaceholder="Escribe
             para buscar" placeholder="Escribe para buscar" searchField='nombre' as |receta|}} {{receta.nombre}} 
         {{/power-select}}
@@ -24,12 +24,23 @@
             <div class="col m12">
             <h6>Añadir: </h6>
             </div>
+
+            <div class="input-field col m12">
+                {{input id="cantidad" type="number" class=valid value=cantidad}}
+                <label for="cantidad" style="width:100%">Cantidad</label>
+            </div>
+            <div class="col m12">
+                {{pluralize cantidad "unidad" without-count=true}} a la maquila
+            </div>
+
         </div>
     {{/if}}
     
 </div>
 <div class="card-action">
     <center>
-        <a {{action 'agregar' selectedProducto cantidad}} class="waves-effect waves-light btn {{if (or disabledAgregar (v-get this 'cantidad' 'isInvalid')) 'disabled'}}">Agregar</a>
+        <a {{action 'agregar' selectedProducto cantidad}} class="waves-effect waves-light btn {{if (or disabledAgregar (v-get this 'cantidad' 'isInvalid')) 'disabled'}}">
+            Agregar
+        </a>
     </center>
 </div>

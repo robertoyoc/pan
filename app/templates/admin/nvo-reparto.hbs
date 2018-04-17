@@ -34,7 +34,6 @@
             </tr>
           </thead>
           <tbody>
-            
             {{#each model.distribuciones as |distribucion|}}
               <tr>
                 <td>{{distribucion.producto.nombre}}</td>
@@ -43,7 +42,7 @@
                 <td><a {{action 'delete' distribucion}} class="btn-floating"><i class="material-icons">delete</i></a></td>
               </tr>
             {{else}}
-              Agrega pedidos
+              <h5>Agrega pedidos</h5>
             {{/each}}
           </tbody>
         </table>

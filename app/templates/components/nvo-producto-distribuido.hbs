@@ -36,7 +36,11 @@
         {{!-- <h4>Existencia</h4> --}}
         <div class="input-field col s12">
           <i class="material-icons prefix">exposure_plus_1</i>
-            {{input disabled=(not (not myExistencia.cantidad)) type="text" min="1" class="validate" value=myExistencia.cantidad}}
+            {{!-- {{#if myExistencia.cantidad}}
+              {{input disabled=(not (not myExistencia.cantidad)) type="text" min="1" class="validate" value=myExistencia.cantidad}}
+            {{else}} --}}
+              {{input disabled=(not (not myExistencia.cantidad)) type="text" min="1" class="validate" value=cantExistencia}}
+            {{!--  {{/if}} --}}
           <label>Cantidad</label>
         </div>
 
@@ -45,9 +49,9 @@
           {{#power-select
             options=myCategorias
             placeholder="Selecciona una categoria"
-            selected=myModel.categoria
+            selected=selectedCat
             searchField="name"
-            onchange=(action (mut myModel.categoria))
+            onchange=(action (mut selectedCat))
             as |category|
           }}
             {{category.nombre}}
@@ -77,6 +81,6 @@
 
 <div class="row">
   	<div class="col s12 m8 offset-m2">
-      <a {{action 'guardar' myModel myExistencia}} class="waves-effect waves-light btn right"><i class="material-icons left">save</i>Guardar</a>
+      <a {{action 'guardar' myModel myExistencia selectedCat}} class="waves-effect waves-light btn right"><i class="material-icons left">save</i>Guardar</a>
     </div>
 </div>
