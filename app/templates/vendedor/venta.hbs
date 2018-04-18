@@ -15,12 +15,20 @@ input{
 .name{
 	font-size: 1.5em;
 }
+.collection .collection-item{
+	font-size: 1.7em;
+}
+
+.collection {
+  overflow-y: scroll;
+  height: 700px;
+}
 </style>
 
 <div class="row main">
 	<div class="col s12">
 		<div class="row">
-			<div class="col s12 m3">
+			<div class="col s12 m4">
 				<div class="card center-align">
 					<div class="collection">
 						<a class="collection-item" {{action 'changeCategoria' 'all'}}>
@@ -36,7 +44,7 @@ input{
 			</div>
 			<div class="col s12 m4">
 				<div class="card center-align">
-					<div class="collection">
+					<div class="">
 						{{#power-select 
 							options=myProductos 
 							selected=selectedProducto
@@ -58,7 +66,7 @@ input{
 				</div>
 			</div>
 
-			<div class="col s12 m5">
+			<div class="col s12 m4">
 				{{teclado-numeric myCantidad=model.cantidad maxValue=existenceProducto.cantidad}}
 					<a {{action 'agregarPedido' model}} class="waves-effect waves-light btn right">
 						{{!-- {{if (or disabledAgregar (v-get this 'cantidad' 'isInvalid')) 'disabled'}}"> --}}
