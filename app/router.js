@@ -67,7 +67,9 @@ Router.map(function() {
   this.route('en');
   this.route('login');
   this.route('dir');
-  this.route('cajero', function() {});
+  this.route('cajero', function() {
+    this.route('historial');
+  });
 });
 
 export default Router;
