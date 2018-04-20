@@ -69,6 +69,7 @@ Router.map(function() {
   this.route('dir');
   this.route('cajero', function() {
     this.route('historial');
+    this.route('corte');
   });
 });
 
