@@ -111,11 +111,9 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 	let ventaSnapGeneral = null
 	return db.ref(`/venta/${event.params.ventaId}`).once('value').then((ventaSnap)=>{
 		let venta = ventaSnap.val()
-		ventaSnapGeneral =ventaSnap
+		ventaSnapGeneral = ventaSnap
 		let promises = []
-
 		let sucursal = venta.sucursal;
-
 		for(var pedido_id in venta.pedidos){
 			promises.push(
 				db.ref(`pedidos/${pedido_id}`).once('value').then((pedidoSnap)=>{
@@ -126,38 +124,66 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 						let existencias = existencesSnap.val()
 						let existenciaRef = null
 						for(var existencia_id in existencias){
-							
 							if(existencias[existencia_id].sucursalId==sucursal){
-
 								existenciaRef = existencia_id
-							}
-								
+							}		
 						}
 						return db.ref(`existences/${existenciaRef}`).transaction((existencia)=>{
 							if(existencia){
 								existencia.cantidad = existencia.cantidad - cantidad
-
-
 							}
 							return existencia
-
 						})
-
-
 
 					})
 				})
-
 			)
 		}
+
 		return Promise.all(promises).then(()=>{
+			var PDFDocument = require('pdfkit');;
+			var fs = require('fs');
+			var	doc = new PDFDocument({
+  				layout: 'landscape',
+  				size: [350, 200] // a smaller document for small badge printers
+			});
+			
+			doc.pipe(fs.createWriteStream('new-file.pdf'));
+				// lógica para crear el documento PDF va aquí
+				// TITULO
+				doc.fontSize(14).text('PAN LA VILLITA', 25, 25);
+				// CONTENIDO
+				
+				for(var id_pedido in venta.pedidos){
+					db.ref(`pedidos/${id_pedido}`).once('value').then((pedidoSnap)=>{
+						let pedido = pedidoSnap.val()
+
+						doc.fontSize(10).text('Producto: ' + pedido.productoid+ ', Cantidad: ' + pedido.cantidad, {
+	  						width: 100, // anchura en px
+	  						align: 'left', // tipo de alineación (left, center, right o justify)
+						});
+						doc.fontSize(10).text('Precio unitario: ' + pedido.producto.precio + ', Importe: $' + pedido.total, {
+	  						width: 100, 
+	  						align: 'right', 
+						});
+					})
+				}
+				// TOTAL
+				doc.fontSize(12).text('TOTAL: $' + venta.importeTotal, {
+	  				width: 100, 
+	  				align: 'right',
+				});
+
+			doc.end();
+
+			let file =  doc;
+			var ventaRef = ventaSnapGeneral.ref()
+			return ventaRef.put(doc).then(function(snapshot){
+
+			})
 
 			console.log("Venta procesada")
-			return exportablesController.generateTicket(ventaSnapGeneral).then(()=>{
-				console.log("Ticket Generado")
-			}).catch((error)=> {
-				console.log(error)
-			})
+			
 		})
 	})
 });
