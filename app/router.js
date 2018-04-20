@@ -39,6 +39,8 @@ Router.map(function() {
     this.route('edit-distribuido', {path: "/distribuido/:id"});
     this.route('edit-proveedor', {path: "/proveedor/:id"});
     this.route('edit-mprima', {path: "/m-prima/:id"});
+    this.route('finanzas');
+    this.route('retiros');
   });
 
   this.route('cliente', function() {
@@ -70,6 +72,7 @@ Router.map(function() {
   this.route('cajero', function() {
     this.route('historial');
     this.route('corte');
+    this.route('retiros');
   });
 });
 
