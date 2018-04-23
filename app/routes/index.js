@@ -12,6 +12,13 @@ export default Route.extend({
     // this.get('ajax').request('/recargas').then(()=>{
     //   debugger
     // })
+
+    // this.store.createRecord('account', {
+    //   nombre: 'cajero',
+    //   apellido: 'yoc',
+    //   perfil: 'cajero'
+    // }).save();
+
     return this.get('session').fetch().catch(function() {
     })
 
