@@ -10,7 +10,12 @@ export default DS.Model.extend({
   fechaUnix: computed('fecha', function () {
     	return (!isBlank(this.get('fecha'))) ? moment.utc(this.get('fecha')).unix() : 0;
   }).meta({ serialize: true }),
-    
+  
+  fechaPago: DS.attr('string'),
+  fechaUnixPago: computed('fechaPago', function () {
+      return (!isBlank(this.get('fechaPago'))) ? moment.utc(this.get('fechaPago')).unix() : 0;
+  }).meta({ serialize: true }),
+
   importeTotal: computed('pedidos.@each.total', function() {
     let sum = 0;
     this.get('pedidos').forEach((pedido) => {

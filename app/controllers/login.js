@@ -72,7 +72,7 @@ export default Controller.extend(Validations, {
           }).then(()=>{
             this.get('currentUser.account').then((account)=>{
               console.log(account)
-              debugger
+              //debugger
               account.set('sucursal', this.get('sucursal'))
               account.save()
             })
