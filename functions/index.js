@@ -113,9 +113,7 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 		let venta = ventaSnap.val()
 		ventaSnapGeneral =ventaSnap
 		let promises = []
-
 		let sucursal = venta.sucursal;
-
 		for(var pedido_id in venta.pedidos){
 			promises.push(
 				db.ref(`pedidos/${pedido_id}`).once('value').then((pedidoSnap)=>{
@@ -126,37 +124,109 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 						let existencias = existencesSnap.val()
 						let existenciaRef = null
 						for(var existencia_id in existencias){
-							
 							if(existencias[existencia_id].sucursalId==sucursal){
-
 								existenciaRef = existencia_id
 							}
-								
 						}
 						return db.ref(`existences/${existenciaRef}`).transaction((existencia)=>{
 							if(existencia){
 								existencia.cantidad = existencia.cantidad - cantidad
-
-
 							}
 							return existencia
-
 						})
-
-
-
 					})
 				})
-
 			)
 		}
-		return Promise.all(promises).then(()=>{
+		return Promise.all(promises).then(()=>{		
+			let ventaObj= {}
+			ventaObj.idVenta = ventaSnap.key
+			let promisesVenta = []
+			for(var id_pedido in venta.pedidos){
+				promisesVenta.push(
+					db.ref(`pedidos/${id_pedido}`).once('value').then((pedidoSnap)=>{
+						let pedido = pedidoSnap.val()
+						//console.log('Pedido: ', pedido)
+						let path = null;
+						switch(pedido.tipo){
+							case "receta":
+								path = "receta"
+								break;
+							case "distribuido":
+								path = "distribuidos"
+								break;
+						}
 
-			console.log("Venta procesada")
-			return exportablesController.generateTicket(ventaSnapGeneral).then(()=>{
-				console.log("Ticket Generado")
-			}).catch((error)=> {
-				console.log(error)
+						return db.ref(`${path}/${pedido.productoId}`).once('value').then((productoSnap)=>{
+							//console.log('Producto: ', productoSnap.val())
+							return {
+								cantidad: pedido.cantidad,
+								producto: productoSnap.val()
+							}
+						})		
+					})
+				)
+			}
+
+			let sucursal_id = ventaSnap.val().sucursal
+			return db.ref(`sucursals/${sucursal_id}`).once('value').then((sucursalSnap)=>{
+				ventaObj.nombreSucursal = sucursalSnap.val().nombre
+				return Promise.all(promisesVenta).then((nVenta)=>{
+					ventaObj.pedidos = nVenta;
+					console.log('peedidos', ventaObj.pedidos)
+					console.log('Trabajando en PDF')
+					var PDFDocument = require('pdfkit');
+					const myPdfFile = admin.storage().bucket().file(`/ticket-ventas/${ventaObj.idVenta}/venta-${ventaObj.idVenta}.pdf`);		
+
+					var	doc = new PDFDocument({
+						layout: 'landscape',
+						size: [350, 200] // a smaller document for small badge printers
+					});
+					const stream = doc.pipe(myPdfFile.createWriteStream());
+
+						// TITULO
+						doc.fontSize(13).text('PAN LA VILLITA', 25, 25);
+						doc.fontSize(11).text(`Sucursal: ${ventaObj.nombreSucursal}`);
+
+						// CONTENIDO						
+						for(var pedidoIndex in ventaObj.pedidos) {
+							let producto = ventaObj.pedidos[pedidoIndex].producto
+							let cant = ventaObj.pedidos[pedidoIndex].cantidad
+							let numberIndex = Number(pedidoIndex)+1
+
+							doc.fontSize(8).text(`Producto ${numberIndex}: ${producto.nombre}`, {
+							 	width: 120, // anchura en px
+							 	align: 'left', // tipo de alineación (left, center, right o justify)
+							});	
+							doc.fontSize(8).text(`Cantidad: ${cant}`, {
+							 	width: 120, // anchura en px
+							 	align: 'left', // tipo de alineación (left, center, right o justify)
+							});			  
+							doc.fontSize(8).text(`Precio unitario: $${producto.precio}` 
+							 	//+ ', Importe: $' + pedido.total,
+							 	, {
+							 	width: 120, 
+							 	align: 'right', 
+							});	
+						}						
+						/*
+						// TOTAL
+						doc.fontSize(12).text('TOTAL: $' + venta.importeTotal, {
+							width: 100, 
+							align: 'right',
+						});
+							*/
+					doc.end();
+
+					console.log("Venta procesada")
+					return true;
+				})
+			})
+
+			let file =  doc;
+			var ventaRef = ventaSnapGeneral.ref()
+			return ventaRef.put(doc).then(function(snapshot){
+
 			})
 		})
 	})

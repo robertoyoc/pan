@@ -14,8 +14,16 @@ export default DS.Model.extend({
       else return null
 	  }),
 
-    total: computed('producto.precio', 'cantidad', function () {
-      return this.get('producto.precio') * this.get('cantidad')
+    total: computed('producto','producto.precio', 'cantidad', function () {
+		if(this.get('producto')){
+			console.log(this.get('producto'))
+			let total = this.get('producto.precio') * this.get('cantidad')
+			console.log(total)
+      		return total
+		}
+		else return 0
+		
+		
     }).meta({ serialize: true }),
 
 });
