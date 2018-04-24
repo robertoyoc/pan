@@ -141,6 +141,7 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 		return Promise.all(promises).then(()=>{		
 			let ventaObj= {}
 			ventaObj.idVenta = ventaSnap.key
+			ventaObj.importeT =  ventaSnap.val().importeTotal
 			let promisesVenta = []
 			for(var id_pedido in venta.pedidos){
 				promisesVenta.push(
@@ -170,6 +171,7 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 
 			let sucursal_id = ventaSnap.val().sucursal
 			return db.ref(`sucursals/${sucursal_id}`).once('value').then((sucursalSnap)=>{
+				console.log('veenta: ',ventaObj)
 				ventaObj.nombreSucursal = sucursalSnap.val().nombre
 				return Promise.all(promisesVenta).then((nVenta)=>{
 					ventaObj.pedidos = nVenta;
@@ -193,6 +195,7 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 							let producto = ventaObj.pedidos[pedidoIndex].producto
 							let cant = ventaObj.pedidos[pedidoIndex].cantidad
 							let numberIndex = Number(pedidoIndex)+1
+							let importeProduct = Number(producto.precio)*Number(cant)
 
 							doc.fontSize(8).text(`Producto ${numberIndex}: ${producto.nombre}`, {
 							 	width: 120, // anchura en px
@@ -203,19 +206,23 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 							 	align: 'left', // tipo de alineación (left, center, right o justify)
 							});			  
 							doc.fontSize(8).text(`Precio unitario: $${producto.precio}` 
+							 	, {
+							 	width: 120, 
+							 	align: 'left', 
+							});	
+							doc.fontSize(8).text(`Importe: $${importeProduct}` 
 							 	//+ ', Importe: $' + pedido.total,
 							 	, {
 							 	width: 120, 
 							 	align: 'right', 
 							});	
 						}						
-						/*
 						// TOTAL
-						doc.fontSize(12).text('TOTAL: $' + venta.importeTotal, {
+						doc.fontSize(11).text('TOTAL: $' + ventaObj.importeT, {
 							width: 100, 
 							align: 'right',
 						});
-							*/
+
 					doc.end();
 
 					console.log("Venta procesada")

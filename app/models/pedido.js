@@ -7,23 +7,22 @@ export default DS.Model.extend({
   	cantidad: DS.attr('number'),
   	
   	tipo: DS.attr('string'),
-	  productoId: DS.attr('string'),
-	  producto: computed('tipo', 'productoId', function(){
+	 
+	productoId: DS.attr('string'),
+	producto: computed('tipo', 'productoId', function(){
       if(this.get('tipo'))
 		    return this.store.findRecord(this.get('tipo'), this.get('productoId'))
       else return null
 	  }),
 
-    total: computed('producto','producto.precio', 'cantidad', function () {
-		if(this.get('producto')){
-			console.log(this.get('producto'))
+    total: computed('productoId','producto.precio', 'cantidad', function () {
+		if(this.get('producto.precio')) {
 			let total = this.get('producto.precio') * this.get('cantidad')
 			console.log(total)
-      		return total
+	    	return total
 		}
-		else return 0
-		
-		
+		else 
+			return 0		
     }).meta({ serialize: true }),
 
 });

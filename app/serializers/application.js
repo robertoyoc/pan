@@ -11,20 +11,20 @@ export default FirebaseSerializer.extend({
         let json = this._super(...arguments);
 
 		// const path = this._getPath(snapshot);
-        debugger
+        //debugger
 		snapshot.record.constructor.eachComputedProperty((key, meta) => {
 			if (get(meta, 'serialize')) {
                 let prop = snapshot.record.get(key);
-                debugger
+                //debugger
 				if (prop && prop.then) {
-                    debugger
+                  //  debugger
 					prop = get(prop, 'content');
 				}
 				json[`${key}`] = prop;
 				// json[`${path}/${key}`] = prop;
 			}
 		});
-        debugger
+//        debugger
 		// json['user'] = this.get('session.currentUser.uid');
 
 		return json;
