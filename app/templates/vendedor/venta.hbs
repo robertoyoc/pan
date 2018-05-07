@@ -58,17 +58,14 @@ input{
 							</div>
   							<div class="col s9"><span class="name">{{mProduct.nombre}}</span></div>
   						</div>
-						{{/power-select}}
-
-						
-
+						{{/power-select}}	
 				     </div>
 				</div>
 			</div>
 
 			<div class="col s12 m4">
 				{{teclado-numeric myCantidad=model.cantidad maxValue=existenceProducto.cantidad}}
-					<a {{action 'agregarPedido' model}} class="waves-effect waves-light btn right">
+					<a {{action 'agregarPedido' model}} class="waves-effect waves-light btn right {{if disabledAgregar 'disabled'}}">
 						{{!-- {{if (or disabledAgregar (v-get this 'cantidad' 'isInvalid')) 'disabled'}}"> --}}
 						Agregar al Pedido
 					</a>

@@ -21,7 +21,7 @@ export default DS.Model.extend({
     this.get('pedidos').forEach((pedido) => {
       sum += parseInt(pedido.get('total'));
     });
-    console.log(sum)
+    //console.log(sum)
     return sum;
   }).meta({ serialize: true }),
 

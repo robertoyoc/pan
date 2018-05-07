@@ -18,7 +18,7 @@ export default DS.Model.extend({
     total: computed('productoId','producto.precio', 'cantidad', function () {
 		if(this.get('producto.precio')) {
 			let total = this.get('producto.precio') * this.get('cantidad')
-			console.log(total)
+			// console.log(total)
 	    	return total
 		}
 		else 

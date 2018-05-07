@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import { computed } from "@ember/object";
 import { inject as service } from "@ember/service";
-
+import { isBlank } from '@ember/utils'; 
 import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
 
 export default Controller.extend(FindQuery, {
@@ -78,6 +78,10 @@ export default Controller.extend(FindQuery, {
 	existenceProducto: computed('existenceProm.content', function(){
 		return this.get('existenceProm.content')
 	}), 
+
+	disabledAgregar: computed('selectedProducto', function() {
+		return isBlank(this.get('selectedProducto'));
+    }),
 
 	actions: {
 		agregarPedido(model){
