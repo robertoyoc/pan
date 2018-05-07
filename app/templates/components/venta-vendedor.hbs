@@ -105,8 +105,10 @@
 		<table class="centered sripped">
 			<thead>
 				<tr>
+					<th>Producto</th>
+					<th>Precio</th>
 				    <th>Cantidad</th>
-				    <th>Producto</th>
+					<th>Subtotal</th>
 				    <th>Accion</th>
 				</tr>
 			</thead>
@@ -114,8 +116,10 @@
 				{{#each myModel.pedidos as |pedido|}}
 				    {{#unless pedido.isNew}}
 					    <tr>
-					        <td>{{number-input cantidad=pedido.cantidad}}</td>						
-					        <td>{{pedido.producto.nombre}}</td>
+							<td>{{pedido.producto.nombre}}</td>
+							<td>{{format-money pedido.producto.precio symbol=selectedCurrency format="%v %s"}}</td>
+					        <td>{{number-input cantidad=pedido.cantidad}}</td>
+							<td>{{format-money (mult pedido.cantidad pedido.producto.precio) symbol=selectedCurrency format="%v %s"}}</td>						
 					        <td><a class="btn-floating waves-effect waves-light red" {{action 'delete' pedido}}><i class="material-icons">delete</i></a></td>
 					    </tr>
 				    {{/unless}}
@@ -125,7 +129,7 @@
 		</table>
 	</div>
 	<div class="redondo">
-		<h6> Total: ${{myModel.importeTotal}}</h6>
+		<h6> Total: {{format-money myModel.importeTotal symbol=selectedCurrency format="%v %s"}}</h6>
 	</div>
 	<a class="waves-effect waves-light btn right {{unless disabledVender 'disabled'}}" {{action 'finalizar' myModel}} ><i class="material-icons left">save</i>Vender</a>
    </div>
