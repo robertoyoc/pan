@@ -228,9 +228,15 @@ body {
       {{/if}}
     </div>
     {{#if isVenta}}
-      <a class="waves-effect waves-light btn right {{unless disabledVender 'disabled'}}" {{action 'finalizar' myModel.venta}}><i class="material-icons left">save</i>Vender</a>
+      <a class="waves-effect waves-light btn right {{unless disabledVender 'disabled'}}" {{action 'finalizar' myModel.venta}}>
+        <i class="material-icons left">save</i>
+        Finalizar Venta
+      </a>
     {{else}}
-      <a class="waves-effect waves-light btn right {{unless disabledVender 'disabled'}}" {{action 'finalizar' myModel.cortesia}}><i class="material-icons left">save</i>Vender</a>
+      <a class="waves-effect waves-light btn right {{unless disabledVender 'disabled'}}" {{action 'finalizar' myModel.cortesia}}>
+        <i class="material-icons left">save</i>
+        Finalizar {{unless isNew 'Cortesía'}}
+      </a>
     {{/if}}
   </div>
   {{#if isNew}}
