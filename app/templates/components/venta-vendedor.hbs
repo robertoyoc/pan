@@ -179,7 +179,7 @@ body {
   </div>
   <div class="col s12 m5">
     <div class="card products">
-      <table class="centered sripped">
+      <table class="centered stripped">
         <thead>
           <tr>
             <th>Producto</th>
@@ -222,9 +222,9 @@ body {
     </div>
     <div class="redondo">
       {{#if isVenta}}
-        <h6> Total: {{format-money myModel.venta.importeTotal symbol=selectedCurrency format="%v %s"}}</h6>
+        <h6> Total : {{format-money myModel.venta.importeTotal symbol=selectedCurrency format="%v %s"}}</h6>
       {{else}}
-        <h6> Total: {{format-money myModel.cortesia.importeTotal symbol=selectedCurrency format="%v %s"}}</h6>
+        <h6> Total {{unless isNew 'Cortesía'}}: {{format-money myModel.cortesia.importeTotal symbol=selectedCurrency format="%v %s"}}</h6>
       {{/if}}
     </div>
     {{#if isVenta}}
@@ -233,11 +233,14 @@ body {
       <a class="waves-effect waves-light btn right {{unless disabledVender 'disabled'}}" {{action 'finalizar' myModel.cortesia}}><i class="material-icons left">save</i>Vender</a>
     {{/if}}
   </div>
+  {{#if isNew}}
+    <div class="row">
+      {{#link-to "vendedor.historial-venta" (query-params year=year month=month day=day) class="waves-effect waves-light btn right" }}
+        <i class="material-icons">history</i> Ventas de hoy
+      {{/link-to}}
+      {{#link-to "vendedor.historial-cortesia" (query-params year=year month=month day=day) class="waves-effect waves-light btn right" }}
+        <i class="material-icons">history</i> Cortesías de hoy
+      {{/link-to}}
+    </div>
+  {{/if}}
 </div>
-{{#if isNew}}
-  <div>
-    {{#link-to "vendedor.historial-venta" (query-params year=year month=month day=day) class="waves-effect waves-light btn right" }}
-      <i class="material-icons">history</i> Ventas de hoy
-    {{/link-to}}
-  </div>
-{{/if}}
