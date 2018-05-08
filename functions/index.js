@@ -180,6 +180,8 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 					var PDFDocument = require('pdfkit');
 					const myPdfFile = admin.storage().bucket().file(`/ticket-ventas/${ventaObj.idVenta}/venta-${ventaObj.idVenta}.pdf`);		
 
+					console.log(myPdfFile.get('userProject'))
+
 					var	doc = new PDFDocument({
 						layout: 'landscape',
 						size: [350, 200] // a smaller document for small badge printers

@@ -59,7 +59,7 @@
  <div class="row" style="margin-top: 4%;">
  	<div class="col s12 m7">
  		<div class="row">
-    {{#link-to "vendedor.venta" myModel.id}}
+    {{#link-to "vendedor.venta" myModel.venta.id}}
     <div class="col s12 m5 img" style="margin-left: 3%;">
      	<div class="card">
             <div class="card-image">
@@ -68,12 +68,12 @@
             </div>
         </div>
     </div>{{/link-to}}
-    {{#link-to "vendedor.index"}}
+    {{#link-to "vendedor.cortesia" myModel.cortesia.id}}
     <div class="col s12 m5 img">
      	<div class="card">
             <div class="card-image">
-              <img src="../media/pan-panel.jpg">
-              <span class="card-title">Acceso Directo</span>
+              <img src="../media/the-courtesy.png">
+              <span class="card-title">Nueva Cortesía</span>
             </div>
         </div>
     </div>{{/link-to}}

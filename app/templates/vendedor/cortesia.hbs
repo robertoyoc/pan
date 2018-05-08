@@ -1,0 +1,76 @@
+<style>
+.main {
+	margin-top: 3%;
+}
+
+input{
+	width: 20% !important;
+}
+ 
+ .img{
+ 	width: 60px;
+ 	height: 60px;
+ }
+
+.name{
+	font-size: 1.5em;
+}
+.collection .collection-item{
+	font-size: 1.7em;
+}
+
+.collection {
+  overflow-y: scroll;
+  height: 700px;
+}
+</style>
+
+<div class="row main">
+	<div class="col s12">
+		<div class="row">
+			<div class="col s12 m4">
+				<div class="card center-align">
+					<div class="collection">
+						<a class="collection-item" {{action 'changeCategoria' 'all'}}>
+					        	Todos
+					    </a>
+						{{#each myCategorias as |categoria|}}
+					        <a class="collection-item" {{action 'changeCategoria' categoria.nombre}}>
+					        	{{categoria.nombre}}
+					        </a>
+				        {{/each}}
+				     </div>
+				</div>
+			</div>
+			<div class="col s12 m4">
+				<div class="card center-align">
+					<div class="">
+						{{#power-select 
+							options=myProductos 
+							selected=selectedProducto
+							onchange=(action (mut selectedProducto)) 
+							searchPlaceholder="Escribe para buscar" 
+							placeholder="Escribe para buscar" 
+							searchField='nombre' as |mProduct|}} 
+							<div class="row">
+							<div class="col s3">
+								<img class="img circle" src="http://3.bp.blogspot.com/-Tk4n8JQzTaw/U6ayLnFuO7I/AAAAAAAAB-s/dyRCtYH85dc/s200/Evitar+el+Pan+Antes+de+Comer.png">
+							</div>
+  							<div class="col s9"><span class="name">{{mProduct.nombre}}</span></div>
+  						</div>
+						{{/power-select}}	
+				     </div>
+				</div>
+			</div>
+
+			<div class="col s12 m4">
+				{{teclado-numeric myCantidad=model.cantidad maxValue=existenceProducto.cantidad}}
+					<a {{action 'agregarPedido' model}} class="waves-effect waves-light btn right {{if disabledAgregar 'disabled'}}">
+						{{!-- {{if (or disabledAgregar (v-get this 'cantidad' 'isInvalid')) 'disabled'}}"> --}}
+						Agregar al Pedido
+					</a>
+			</div>
+		</div>
+		
+	</div>
+</div>

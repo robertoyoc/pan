@@ -1,4 +1,5 @@
 import Route from '@ember/routing/route';
+import { hash } from 'rsvp';
 
 export default Route.extend({
 
@@ -22,7 +23,11 @@ export default Route.extend({
     },
 
     model() {
-        return this.store.createRecord('venta');
+		// return hash() this.store.createRecord('venta');
+		return hash({
+              venta: this.store.createRecord('venta'),
+              cortesia: this.store.createRecord('courtesy')
+        });
     }
 
 });
