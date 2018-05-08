@@ -15,24 +15,44 @@ export default Component.extend({
         return this.get('store').findAll('categoria')
     }),
 
-    disabledVender: computed('myModel', function() {
-		return this.get('myModel.pedidos.length') > 0;
+    disabledVender: computed('myModel', 'isVenta', function() {
+      if(this.get('isVenta')) {
+        return this.get('myModel.venta.pedidos.length') > 0;
+      } else {
+        return this.get('myModel.cortesia.pedidos.length') > 0;
+      }
+    }),
+
+    disabledLinkventa: computed('isNew', 'isVenta', function(){
+      if(this.get('isNew')){
+        return false
+      } else {
+        return !this.get('isVenta')
+      }
+    }),
+
+    disabledLinkcortesia: computed('isNew', 'isVenta', function(){
+      if(this.get('isNew')){
+        return false
+      } else {
+        return this.get('isVenta')
+      }
     }),
 
     actions: {
         delete(pedido){
 			pedido.destroyRecord()
-        }, 
+        },
 
         finalizar(venta){
             venta.set('fecha', moment().format())
-			all(venta.get('pedidos').invoke('save')).then(()=>{
-				venta.save().then(()=>{
+			      all(venta.get('pedidos').invoke('save')).then(()=>{
+				          venta.save().then(()=>{
                     window.swal({
                         title: '<i>VENTA</i>',
                         type: 'info',
                         html:
-                            '<a href="'+ 
+                            '<a href="'+
                             // https://firebasestorage.googleapis.com/v0/b/panlavillita-dev.appspot.com/o/ticket-ventas%2F-LAq_L91h6n1HTGRTAcF%2Fventa--LAq_L91h6n1HTGRTAcF.pdf?alt=media&token=609d1026-e30e-455d-852d-57260f546b21
                             // https://firebasestorage.googleapis.com/v0/b/panlavillita-dev.appspot.com/o/ticket-ventas%2F-LAq_L91h6n1HTGRTAcF%2Fventa--LAq_L91h6n1HTGRTAcF.pdf?alt=media&token=609d1026-e30e-455d-852d-57260f546b21
                             // https://firebasestorage.googleapis.com/v0/b/panlavillita-dev.appspot.com/o/ticket-ventas%2F-LAqCJnoYxyxv254qFaS%2Fventa--LAqCJnoYxyxv254qFaS.pdf?alt=media&token=233b2559-651a-4ac6-aff3-95c3a960e68d
@@ -50,6 +70,6 @@ export default Component.extend({
                     //this.sendAction('nuevaVenta', venta);
                 })
             })
-		}, 
+        },
     }
 });

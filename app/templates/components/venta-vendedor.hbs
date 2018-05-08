@@ -75,7 +75,7 @@ body {
 <div class="row">
   <div class="col s12 m7">
     <div class="row">
-      {{#link-to "vendedor.venta" myModel.venta.id}}
+      {{#link-to "vendedor.venta" myModel.venta.id disabled=disabledLinkventa}}
         <div class="col s12 m5 img" style="margin-left: 3%;">
           <div class="card">
             <div class="card-image">
@@ -85,7 +85,7 @@ body {
           </div>
         </div>
       {{/link-to}}
-      {{#link-to "vendedor.cortesia" myModel.cortesia.id}}
+      {{#link-to "vendedor.cortesia" myModel.cortesia.id disabled=disabledLinkcortesia}}
         <div class="col s12 m5 img">
           <div class="card">
             <div class="card-image" style="bottom:0!important">
@@ -190,31 +190,54 @@ body {
           </tr>
         </thead>
         <tbody>
-          {{#each myModel.pedidos as |pedido|}}
-            {{#unless pedido.isNew}}
-              <tr>
-                <td>{{pedido.producto.nombre}}</td>
-                <td>{{format-money pedido.producto.precio symbol=selectedCurrency format="%v %s"}}</td>
-                <td>{{number-input cantidad=pedido.cantidad}}</td>
-                <td>{{format-money (mult pedido.cantidad pedido.producto.precio) symbol=selectedCurrency format="%v %s"}}</td>
-                <td><a class="btn-floating waves-effect waves-light red" {{action 'delete' pedido}}><i class="material-icons">delete</i></a></td>
-              </tr>
-            {{/unless}}
-            {{else}}Ningún producto agregado
-          {{/each}}
+          {{#if isVenta}}
+            {{#each myModel.venta.pedidos as |pedido|}}
+              {{#unless pedido.isNew}}
+                <tr>
+                  <td>{{pedido.producto.nombre}}</td>
+                  <td>{{format-money pedido.producto.precio symbol=selectedCurrency format="%v %s"}}</td>
+                  <td>{{number-input cantidad=pedido.cantidad}}</td>
+                  <td>{{format-money (mult pedido.cantidad pedido.producto.precio) symbol=selectedCurrency format="%v %s"}}</td>
+                  <td><a class="btn-floating waves-effect waves-light red" {{action 'delete' pedido}}><i class="material-icons">delete</i></a></td>
+                </tr>
+              {{/unless}}
+              {{else}}Ningún producto agregado
+            {{/each}}
+          {{else}}
+            {{#each myModel.cortesia.pedidos as |pedido|}}
+              {{#unless pedido.isNew}}
+                <tr>
+                  <td>{{pedido.producto.nombre}}</td>
+                  <td>{{format-money pedido.producto.precio symbol=selectedCurrency format="%v %s"}}</td>
+                  <td>{{number-input cantidad=pedido.cantidad}}</td>
+                  <td>{{format-money (mult pedido.cantidad pedido.producto.precio) symbol=selectedCurrency format="%v %s"}}</td>
+                  <td><a class="btn-floating waves-effect waves-light red" {{action 'delete' pedido}}><i class="material-icons">delete</i></a></td>
+                </tr>
+              {{/unless}}
+              {{else}}Ningún producto agregado
+            {{/each}}
+          {{/if}}
         </tbody>
       </table>
     </div>
     <div class="redondo">
-      <h6> Total: {{format-money myModel.importeTotal symbol=selectedCurrency format="%v %s"}}</h6>
+      {{#if isVenta}}
+        <h6> Total: {{format-money myModel.venta.importeTotal symbol=selectedCurrency format="%v %s"}}</h6>
+      {{else}}
+        <h6> Total: {{format-money myModel.cortesia.importeTotal symbol=selectedCurrency format="%v %s"}}</h6>
+      {{/if}}
     </div>
-    <a class="waves-effect waves-light btn right {{unless disabledVender 'disabled'}}" {{action 'finalizar' myModel}}><i class="material-icons left">save</i>Vender</a>
+    {{#if isVenta}}
+      <a class="waves-effect waves-light btn right {{unless disabledVender 'disabled'}}" {{action 'finalizar' myModel.venta}}><i class="material-icons left">save</i>Vender</a>
+    {{else}}
+      <a class="waves-effect waves-light btn right {{unless disabledVender 'disabled'}}" {{action 'finalizar' myModel.cortesia}}><i class="material-icons left">save</i>Vender</a>
+    {{/if}}
   </div>
 </div>
-{{#unless disabledVender}}
+{{#if isNew}}
   <div>
     {{#link-to "vendedor.historial-venta" (query-params year=year month=month day=day) class="waves-effect waves-light btn right" }}
       <i class="material-icons">history</i> Ventas de hoy
     {{/link-to}}
   </div>
-{{/unless}}
+{{/if}}

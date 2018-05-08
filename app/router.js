@@ -64,7 +64,7 @@ Router.map(function() {
     this.route('venta', {path: "/venta/:idventa"});
     this.route('historial-venta');
     this.route('cortesia', {path: "/cortesia/:id"});
-    this.route('procesando-cortesia');
+    this.route('procesando-cortesia', {path: "/:id"});
   });
   this.route('nva-venta');
   this.route('nvo-especial');
