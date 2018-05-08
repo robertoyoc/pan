@@ -7,13 +7,19 @@ export default DS.Model.extend({
   sucursal: DS.belongsTo('sucursal'),
   pedidos: DS.hasMany('pedidos'),
   fecha: DS.attr('string'),
-  fechaUnix: computed('fecha', function () {
-    	return (!isBlank(this.get('fecha'))) ? moment.utc(this.get('fecha')).unix() : 0;
+  status: DS.attr('string'),
+  hora: computed('fecha', function() {
+    let date = moment(this.get('fecha'))
+    return `${date.hour()}:${date.minutes()}`
+
+  }),
+  fechaUnix: computed('fecha', function() {
+    return (!isBlank(this.get('fecha'))) ? moment.utc(this.get('fecha')).unix() : 0;
   }).meta({ serialize: true }),
-  
+
   fechaPago: DS.attr('string'),
-  fechaUnixPago: computed('fechaPago', function () {
-      return (!isBlank(this.get('fechaPago'))) ? moment.utc(this.get('fechaPago')).unix() : 0;
+  fechaUnixPago: computed('fechaPago', function() {
+    return (!isBlank(this.get('fechaPago'))) ? moment.utc(this.get('fechaPago')).unix() : 0;
   }).meta({ serialize: true }),
 
   importeTotal: computed('pedidos.@each.total', function() {

@@ -55,6 +55,7 @@ Router.map(function() {
     this.route('retiros');
     this.route('nvo-retiro');
     this.route('grafica');
+    this.route('cancelaciones');
   });
 
   this.route('vendedor', function(){
