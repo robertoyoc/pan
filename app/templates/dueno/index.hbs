@@ -20,52 +20,63 @@
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
  	}
-
- 	.mt{
- 		margin-top: 5%;
- 	}
  </style>
  
- <div class="row mt">
- 	<div class="col s6 offset-s3">
- 		<div class="row">
- 	{{#link-to "dueno.finanzas"}}
-    <div class="col s12 m6 img">
+ <div class="row" style="margin-top: 4%;">
+    {{#link-to "dueno.finanzas"}}
+    <div class="col s12 m3 offset img" style="margin-left: 3%;">
      	<div class="card">
             <div class="card-image">
-              <img src="../media/cortes.jpg">
+              <img src="../media/cortes.jpg" width="100%">
               <span class="card-title">Finanzas</span>
             </div>
         </div>
     </div>{{/link-to}}
     {{#link-to "dueno.reportes"}}
-    <div class="col s12 m6 img">
+    <div class="col s12 m3 offset-m1 img">
      	<div class="card">
             <div class="card-image">
-              <img src="../media/report-dueno.jpg" width="100%">
+              <img src="../media/report-dueno.jpg">
               <span class="card-title">Reportes</span>
             </div>
         </div>
     </div>{{/link-to}}
     {{#link-to "dueno.retiros"}}
-    <div class="col s12 m6 img">
+    <div class="col s12 m3 offset-m1 img">
      	<div class="card">
             <div class="card-image">
-              <img src="../media/retiros-dueno.jpg">
+              <img src="../media/retiros-dueno.jpg" width="100%">
               <span class="card-title">Retiros</span>
             </div>
         </div>
-    </div>{{/link-to}}
+    </div>
+    {{/link-to}}
     {{#link-to "dueno.cancelaciones"}}
-    <div class="col s12 m6 img">
+    <div class="col s12 m3 offset img" style="margin-left: 3%;">
      	<div class="card">
             <div class="card-image">
               <img src="../media/dueno-cancelacion.jpg" width="100%">
               <span class="card-title">Cancelaciones</span>
             </div>
         </div>
+    </div>{{/link-to}}
+    {{#link-to "dueno.cajeros"}}
+    <div class="col s12 m3 offset-m1 img">
+     	<div class="card">
+            <div class="card-image">
+              <img src="../media/cajero.jpg">
+              <span class="card-title">Cajeros</span>
+            </div>
+        </div>
+    </div>{{/link-to}}
+    {{#link-to "dueno.vendedores"}}
+    <div class="col s12 m3 offset-m1 img">
+     	<div class="card">
+            <div class="card-image">
+              <img src="../media/vendedor.jpg" width="100%">
+              <span class="card-title">Vendedores</span>
+            </div>
+        </div>
     </div>
     {{/link-to}}
-</div>
-  </div>
 </div>

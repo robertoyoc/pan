@@ -56,6 +56,10 @@ Router.map(function() {
     this.route('nvo-retiro');
     this.route('grafica');
     this.route('cancelaciones');
+    this.route('cajeros');
+    this.route('vendedores');
+    this.route('nvo-vendedor');
+    this.route('nvo-cajero');
   });
 
   this.route('vendedor', function(){
