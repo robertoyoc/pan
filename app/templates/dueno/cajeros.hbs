@@ -33,20 +33,23 @@ body {
           <tr>
             <th>Nombre</th>
             <th>Telefono</th>
-            <th>Acción</th>
+            <th>Sucursal</th>
+            <th>Acciones</th>
           </tr>
         </thead>
-        {{log model}}
         <tbody>
             {{#each model as |cajero|}}
-              <tr>
-                <td>{{cajero.nombre}}</td>
-                <td>rgrgb</td>
-                <td>
-                  <a class="btn-floating"><i class="material-icons" {{action 'editCajero' cajero}}>edit</i></a>
-                  <a class="btn-floating red"><i class="material-icons" {{action 'deleteCajero' cajero}} >delete</i></a>
-                </td>
-              </tr>
+              {{#unless cajero.isNew}}
+                <tr>
+                  <td>{{cajero.nombre}} {{cajero.apellido}}</td>
+                  <td>{{cajero.telefono}}</td>
+                  <td>{{cajero.sucursal.nombre}}</td>
+                  <td>
+                    <a class="btn-floating"><i class="material-icons" {{action 'editCajero' cajero}}>edit</i></a>
+                    <a class="btn-floating red"><i class="material-icons" {{action 'deleteCajero' cajero}} >delete</i></a>
+                  </td>
+                </tr>
+              {{/unless}}
             {{else}}
               <h5>No hay cajeros registrados.</h5>
             {{/each}}

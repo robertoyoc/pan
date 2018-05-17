@@ -21,7 +21,7 @@ body {
 		<div class="card">
             {{m-wrapper}}
 			<br>
-			<h5 class="center-align">Nuevo {{model.perfil}}</h5>
+			<h5 class="center-align">Agregar {{model.perfil}}</h5>
 			<div class="row">
 				<div class="input-field col s5 offset-s1">
 		          <i class="material-icons prefix">person</i>
@@ -44,6 +44,7 @@ body {
                     }}
                         {{sucursalOption.nombre}}
                     {{/power-select}}
+                    <br>
                 </div>
                 {{#unless model.uid}}
                     <div class="input-field col s10 offset-s1">
@@ -59,7 +60,7 @@ body {
                 {{/unless}}
 			</div>
 		</div>
-		<a class="waves-effect waves-light btn right" {{action "guardar" model sucursal newUser}}><i class="material-icons left">done</i>Crear Cajero</a>
+		<a class="waves-effect waves-light btn right" {{action "guardar" model sucursal newUser}}><i class="material-icons left">done</i>Guardar Cajero</a>
 		{{#link-to "dueno.cajeros" class="waves-effect waves-light btn right red mr"}}<i class="material-icons left">cancel</i>Cancelar{{/link-to}}
 	</div>
 </div>
