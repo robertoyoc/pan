@@ -18,26 +18,26 @@ export default Component.extend({
     }),
 
     actions: {
-        guardar(cajero, sucursal, isNew){
-            if(isEmpty(sucursal.get('cajerosId')))
-                sucursal.set('cajerosId', []);
+        guardar(vendedor, sucursal, isNew){
+            if(isEmpty(sucursal.get('vendedoresId')))
+                sucursal.set('vendedoresId', []);
 
-            cajero.set('sucursal', sucursal);
+            vendedor.set('sucursal', sucursal);
 
             if(isNew){
                 //console.log('Nuevo')
                 this.get('firebase').auth().createUserWithEmailAndPassword(this.get('halfmail') + "@panlavillita.mx", this.get('password')).then((newUser)=>{
-                    cajero.set('uid', newUser.uid);
-                    //console.log(sucursal.get('cajerosId'))
-                    sucursal.get('cajerosId').push(cajero.get('id'))
-                    cajero.save().then(()=>{
-                        this.sendAction('saveCajero')
+                    vendedor.set('uid', newUser.uid);
+                    //console.log(sucursal.get('vendedoresId'))
+                    sucursal.get('vendedoresId').push(vendedor.get('id'))
+                    vendedor.save().then(()=>{
+                        this.sendAction('saveVendedor')
                     })
                 })
             } else {
                 //console.log('Editado')
-                cajero.save().then(()=>{
-                    this.sendAction('saveCajero')
+                vendedor.save().then(()=>{
+                    this.sendAction('saveVendedor')
                 })
             }
         }

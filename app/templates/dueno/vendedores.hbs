@@ -26,25 +26,32 @@ body {
 </style>
 <div class="row">
   <div class="col s8 offset-s2"><br>
-  	{{#link-to "dueno.nvo-cajero" class="waves-effect waves-light btn right"}}<i class="material-icons left">add</i>Agregar Vendedor{{/link-to}}
+  	{{#link-to "dueno.nvo-vendedor" class="waves-effect waves-light btn right"}}<i class="material-icons left">add</i>Agregar Vendedor{{/link-to}}
     <div class="card mt">
       <table class="striped centered">
         <thead>
           <tr>
             <th>Nombre</th>
             <th>Telefono</th>
-            <th>Acción</th>
+            <th>Acción</th> 
           </tr>
         </thead>
         <tbody>
-            <tr>
-              <td>frbrfb</td>
-              <td>rgrgb</td>
-              <td>
-              	 <a class="btn-floating"><i class="material-icons" {{action 'editProveedor' proveedor}}>edit</i></a>
-                <a class="btn-floating red"><i class="material-icons" {{action 'deleteProveedor' proveedor}} >delete</i></a>
-              </td>
-            </tr>
+            {{#each model as |vendedor|}}
+              {{#unless vendedor.isNew}}
+                <tr>
+                  <td>{{vendedor.nombre}} {{vendedor.apellido}}</td>
+                  <td>{{vendedor.telefono}}</td>
+                  <td>{{vendedor.sucursal.nombre}}</td>
+                  <td>
+                    <a class="btn-floating"><i class="material-icons" {{action 'editVendedor' vendedor}}>edit</i></a>
+                    <a class="btn-floating red"><i class="material-icons" {{action 'deleteVendedor' vendedor}} >delete</i></a>
+                  </td>
+                </tr>
+              {{/unless}}
+            {{else}}
+              <h5>No hay cajeros registrados.</h5>
+            {{/each}}
         </tbody>
       </table>
     </div>

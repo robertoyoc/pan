@@ -11,7 +11,6 @@ export default DS.Model.extend({
 			return [];
 		}
 	}),
-
 	cajeros: computed('cajerosId', function(){
 		if(this.get('cajerosId').length > 0 ){
 			let cajerosList = [];
@@ -22,6 +21,28 @@ export default DS.Model.extend({
 				})
 			});
 			return cajerosList
+			debugger
+		} else {
+			debugger
+			return null;
+		}
+	}),
+
+	vendedoresId: DS.attr({
+		defaultValue: function(){
+			return [];
+		}
+	}),
+	vendedores: computed('vendedoresId', function(){
+		if(this.get('vendedoresId').length > 0 ){
+			let vendedoresList = [];
+			this.get('vendedoresId').forEach((vendedorId) => {
+				this.get('store').findRecord('account', vendedorId).then((record)=>{
+					//if(record.get('perfil') == "cajero")
+					vendedoresList.pushObject(record)
+				})
+			});
+			return vendedoresList
 			debugger
 		} else {
 			debugger
