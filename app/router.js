@@ -60,6 +60,7 @@ Router.map(function() {
     this.route('vendedores');
     this.route('nvo-vendedor');
     this.route('nvo-cajero');
+    this.route('edit-cajero', {path: "/cajero/:id"});
   });
 
   this.route('vendedor', function(){

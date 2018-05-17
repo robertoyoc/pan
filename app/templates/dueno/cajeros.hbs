@@ -36,15 +36,20 @@ body {
             <th>Acción</th>
           </tr>
         </thead>
+        {{log model}}
         <tbody>
-            <tr>
-              <td>frbrfb</td>
-              <td>rgrgb</td>
-              <td>
-              	 <a class="btn-floating"><i class="material-icons" {{action 'editProveedor' proveedor}}>edit</i></a>
-                <a class="btn-floating red"><i class="material-icons" {{action 'deleteProveedor' proveedor}} >delete</i></a>
-              </td>
-            </tr>
+            {{#each model as |cajero|}}
+              <tr>
+                <td>{{cajero.nombre}}</td>
+                <td>rgrgb</td>
+                <td>
+                  <a class="btn-floating"><i class="material-icons" {{action 'editCajero' cajero}}>edit</i></a>
+                  <a class="btn-floating red"><i class="material-icons" {{action 'deleteCajero' cajero}} >delete</i></a>
+                </td>
+              </tr>
+            {{else}}
+              <h5>No hay cajeros registrados.</h5>
+            {{/each}}
         </tbody>
       </table>
     </div>
