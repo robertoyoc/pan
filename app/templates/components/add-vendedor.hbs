@@ -1,0 +1,71 @@
+<style type="text/css">
+body {
+  background: url(https://images.unsplash.com/photo-1413745000559-46fdd2d81cd7?auto=format&fit=crop&w=1334&q=80);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 100vh;
+  margin: 3px auto 0;
+  position: relative;
+}
+
+.mt{
+	margin-top: 10%;
+}
+
+.mr{
+	margin-right: 2%;
+}
+</style>
+<div class="row">
+	<div class="col s12 m8 offset-m2 mt">
+		<div class="card">
+            {{m-wrapper}}
+			<br>
+			<h5 class="center-align">Agregar {{model.perfil}}</h5>
+			<div class="row">
+				<div class="input-field col s5 offset-s1">
+		          <i class="material-icons prefix">person</i>
+		          {{input id="name" type="text" class="validate" value=model.nombre}}
+		          <label for="name">Nombre</label>
+		        </div>
+                <div class="input-field col s5">
+		          <i class="material-icons prefix">person_outline</i>
+		          {{input id="lastname" type="text" class="validate" value=model.apellido}}
+		          <label for="lastname">Apellido</label>
+		        </div>
+                <div class="input-field col s10 offset-s1">
+                    <i class="material-icons prefix">local_phone</i>
+                    {{input  id="phone" type="text" class="validate" value=model.telefono}}
+                    <label for="phone">Teléfono</label>
+                </div>
+                <div class="input-field col s10 offset-s1">
+                    <i class="material-icons prefix">view_list</i>
+                    <label>Selecciona la Sucursal</label><br><br>
+                    {{#power-select 
+                        selected=sucursal
+                        options=sucursales
+                        onchange=(action (mut sucursal))
+                        as |sucursalOption|
+                    }}
+                        {{sucursalOption.nombre}}
+                    {{/power-select}}
+                    <br>
+                </div>
+                {{#unless model.uid}}
+                    <div class="input-field col s10 offset-s1">
+                    <i class="material-icons prefix">how_to_reg</i>
+                    {{input  id="user" type="text" class="validate" value=halfmail}}
+                    <label for="user">Usuario</label>
+                    </div>
+                    <div class="input-field col s10 offset-s1">
+                    <i class="material-icons prefix">vpn_key</i>
+                    {{input  id="psw" type="password" class="validate" value=password}}
+                    <label for="psw">Contraseña</label>
+                    </div>
+                {{/unless}}
+			</div>
+		</div>
+		<a class="waves-effect waves-light btn right" {{action "guardar" model sucursal newUser}}><i class="material-icons left">done</i>Guardar Vendedor</a>
+		{{#link-to "dueno.vendedores" class="waves-effect waves-light btn right red mr"}}<i class="material-icons left">cancel</i>Cancelar{{/link-to}}
+	</div>
+</div>
