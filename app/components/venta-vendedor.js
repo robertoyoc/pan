@@ -48,43 +48,43 @@ export default Component.extend({
           venta.set('fecha', moment().format())
           all(venta.get('pedidos').invoke('save')).then(()=>{
                 venta.save().then((data)=>{
-
-
                   swal({
-                    title: 'Submit your Github username',
-                    input: 'text',
-                    inputAttributes: {
-                      autocapitalize: 'off'
-                    },
-                    showCancelButton: true,
-                    confirmButtonText: 'Look up',
+                    type: 'question',
+                    confirmButtonText: '¿Generar Ticket?',
                     showLoaderOnConfirm: true,
-                    preConfirm: (login) => {
+                    preConfirm: () => {
                       return new Promise((resolve)=>{
                         function checkData(){
                           if(data.get('ticketUrl')){
-                          console.log(data.get('ticketUrl'))
-                            return resolve()
+                            // console.log(data.get('ticketUrl'))
+                            return resolve(data.get('ticketUrl'))
                           }
                           else return setTimeout(checkData, 2000)
                         }
                         checkData()
-
                       })
                     },
-                    allowOutsideClick: () => !swal.isLoading()
+                    allowOutsideClick: false
                   }).then((result) => {
-                    if (result.value) {
+                    console.log(result)
+                    if (!isBlank(result)) {
                       swal({
-                        title: `${result.value.login}'s avatar`,
-                        imageUrl: result.value.avatar_url
-                      })
+                        title: '<i>TICKET</i>',
+                        type: 'info',
+                        html:
+                            '<a href="' +
+                            result +
+                            '" target="_blank">Ticket</a> ',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: '¡Ticket impreso correctamente!',
+                        allowOutsideClick: false
+                      }).then(()=>{
+                        this.sendAction('nuevaVenta', venta);
+                      }).catch((error)=>{
+                        console.log(error)
+                    });
                     }
                   })
-                  //let myDownloadURL = this.send('getDownloadUrl', null, 0, venta)
-
-
-
               })
           })
       }

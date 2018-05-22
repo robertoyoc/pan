@@ -29,18 +29,19 @@ input {
   width: 100%!important;
 }
 </style>
+
 <div class="row main">
   <div class="col s12">
     <div class="row">
       <div class="col s12 m4">
         <div class="card center-align">
           <div class="collection">
-            <a class="collection-item" {{action 'changeCategoria' 'all'}}>
+            <a class="collection-item" {{action 'changePrecio' 'all'}}>
 					        	Todos
 					    </a>
-            {{#each myCategorias as |categoria|}}
-              <a class="collection-item" {{action 'changeCategoria' categoria.nombre}}>
-					        	{{categoria.nombre}}
+            {{#each precios as |precio|}}
+              <a class="collection-item" {{action 'changePrecio' precio}}>
+					        	{{format-money precio symbol=selectedCurrency format="%v %s"}}
 					        </a>
             {{/each}}
           </div>
