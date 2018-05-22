@@ -8,6 +8,7 @@ export default DS.Model.extend({
   pedidos: DS.hasMany('pedidos'),
   fecha: DS.attr('string'),
   status: DS.attr('string'),
+  isCourtesy: DS.attr('boolean', { defaultValue: false }),
   hora: computed('fecha', function() {
     let date = moment(this.get('fecha'))
     return `${date.hour()}:${date.minutes()}`

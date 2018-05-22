@@ -143,6 +143,7 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 		return Promise.all(promises).then(()=>{		
 			let ventaObj= {}
 			ventaObj.idVenta = ventaSnap.key
+			console.log('Venta ID: ', ventaObj.idVenta)
 			ventaObj.importeT =  ventaSnap.val().importeTotal
 			ventaObj.fecha = ventaSnap.val().fechaUnix
 			let promisesVenta = []
@@ -249,7 +250,7 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 						let impTotal = formatCurrency(ventaObj.importeT, opts)
 						let dateString = moment.unix(ventaObj.fecha).format("DD/MM/YYYY");
 						let hourString = moment.unix(ventaObj.fecha).utcOffset("-05:00").format("HH:mm:ss");
-						console.log("hora correcta", moment.unix(ventaObj.fecha).utcOffset("-05:00"))
+						// console.log("hora correcta", moment.unix(ventaObj.fecha).utcOffset("-05:00"))
 						let heightt = Number(cPedidos) * 20 + 180;
 
 						var docDefinition = {

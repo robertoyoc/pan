@@ -23,11 +23,11 @@ export default Route.extend({
     },
 
     model() {
-		// return hash() this.store.createRecord('venta');
-		return hash({
-              venta: this.store.createRecord('venta'),
-              cortesia: this.store.createRecord('courtesy')
-        });
+		return this.store.createRecord('venta');
+		// return hash({
+        //       venta: this.store.createRecord('venta'),
+        //       cortesia: this.store.createRecord('courtesy')
+        // });
     }
 
 });
