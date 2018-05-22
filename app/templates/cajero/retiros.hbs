@@ -43,7 +43,7 @@ textarea.materialize-textarea {
 <div class="row">
   <div class="col s8 offset-s2 mt">
     {{#m-wrapper query=".datepicker" method="pickadate" }}
-      <input type="text" class="datepicker" placeholder="Selecciona la fecha...">
+      {{input type="text" class="datepicker" placeholder="Selecciona la fecha..." change=(action 'changeFecha')}}
     {{/m-wrapper}}
   </div>
   <div class="col s8 offset-s2">
@@ -51,7 +51,7 @@ textarea.materialize-textarea {
       <table class="striped centered">
         <thead>
           <tr>
-            <th>Hora</th>
+            <th>Fecha y Hora</th>
             <th>Cantidad</th>
             <th>Destinatario</th>
             <th>Estatus</th>
@@ -60,9 +60,10 @@ textarea.materialize-textarea {
         </thead>
         <tbody>
           {{#each model as |retiro|}}
+            {{#unless retiro.isNew}}
             <tr>
-              <td>{{retiro.hora}}</td>
-              <td>{{retiro.cantidad}}</td>
+              <td>{{moment-format retiro.fechaUnix 'MMM DD, HH:mm' 'X' utc=true}}</td>
+              <td>{{format-money retiro.cantidad symbol=selectedCurrency format="%v %s"}}</td>
               <td>{{retiro.destinatario}}</td>
               <td>{{retiro.status}}</td>
               <td>
@@ -71,6 +72,9 @@ textarea.materialize-textarea {
                 {{/if}}
               </td>
             </tr>
+            {{/unless}}
+            {{else}}
+              <h5>Aún no se registran retiros. </h5>
           {{/each}}
         </tbody>
       </table>

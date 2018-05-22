@@ -39,24 +39,29 @@ input {
   margin-right: 35%;
 }
 </style>
+
 <ul id="slide-out" class="side-nav fixed">
   <li>
     <div class="userView">
       <div class="background">
         <img src="media/productos.jpg">
       </div>
-      <a href="#!user"></a>
-      <a href="#!name"><span class="white-text name">Pan La Villia</span></a>
+      <a><span class="white-text name">Pan La Villita</span></a>
+      <a><span class="white-text name">Sucursal: {{currentCajero.sucursal.nombre}} </span></a>
+      <a><span class="white-text name">Cajero: {{currentCajero.nombre}} {{currentCajero.apellido}}</span></a>
     </div>
   </li>
   <li>
-    {{#link-to 'cajero.historial'}}<i class="material-icons">schedule</i>Historial{{/link-to}}
+    {{#link-to 'cajero.historial' (query-params date=today isToday=true)}}<i class="material-icons">schedule</i>Historial{{/link-to}}
   </li>
   <li>
     {{#link-to 'cajero.corte'}}<i class="material-icons">assessment</i>Corte{{/link-to}}
   </li>
   <li>
-    {{#link-to 'cajero.retiros'}}<i class="material-icons">call_missed_outgoing</i>Retiros{{/link-to}}
+    {{#link-to 'cajero.retiros' (query-params date=today isToday=true)}}<i class="material-icons">call_missed_outgoing</i>Retiros{{/link-to}}
+  </li>
+  <li {{action 'signOut'}}>
+    <a><i class="material-icons">closet</i>Cerrar Sesión</a>
   </li>
   <li>
     <div class="divider"></div>
@@ -80,7 +85,7 @@ input {
     </div>
     <div class="col s6">
       <span class="info mt right cp">
-        $ {{selectedVenta.importeTotal}}.00
+        {{format-money selectedVenta.importeTotal symbol=selectedCurrency format="%v %s"}}
       </span>
     </div>
     <div class="col s8 offset-s2">
@@ -102,7 +107,7 @@ input {
     <div class="col s6">
       <br>
       <span class="info  right cp">
-        ${{cambioCliente}}.00 
+        {{format-money cambioCliente symbol=selectedCurrency format="%v %s"}}
       </span>
     </div>
     <div class="input-field col s8 offset-s2">
