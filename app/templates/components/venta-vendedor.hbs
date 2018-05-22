@@ -64,12 +64,17 @@ body {
   margin: 0;
 }
 
-.card .card-image .card-title {
+.card .card-image .card-title
   bottom: 46px;
 }
 
 #idCardRara {
   bottom: -17px!important
+}
+
+.cardFixed {
+  height: unset;
+  overflow-y: scroll;
 }
 </style>
 <div class="row">
@@ -178,7 +183,7 @@ body {
     </div>
   </div>
   <div class="col s12 m5">
-    <div class="card products">
+    <div class="card products cardFixed">
       <table class="centered stripped">
         <thead>
           <tr>
@@ -196,7 +201,13 @@ body {
                   <td>{{pedido.producto.nombre}}</td>
                   <td>{{format-money pedido.producto.precio symbol=selectedCurrency format="%v %s"}}</td>
                   <td>{{number-input cantidad=pedido.cantidad}}</td>
-                  <td>{{format-money (mult pedido.cantidad pedido.producto.precio) symbol=selectedCurrency format="%v %s"}}</td>
+                  <td>
+                    {{#unless pedido.isCourtesy}}
+                      {{format-money (mult pedido.cantidad pedido.producto.precio) symbol=selectedCurrency format="%v %s"}}
+                    {{else}}
+                      {{format-money 0 symbol=selectedCurrency format="%v %s"}}
+                    {{/unless}}
+                  </td>
                   <td><a class="btn-floating waves-effect waves-light red" {{action 'delete' pedido}}><i class="material-icons">delete</i></a></td>
                 </tr>
               {{/unless}}
@@ -215,9 +226,6 @@ body {
     <div class="row">
       {{#link-to "vendedor.historial-venta" (query-params year=year month=month day=day) class="waves-effect waves-light btn right" }}
         <i class="material-icons">history</i> Ventas de hoy
-      {{/link-to}}
-      {{#link-to "vendedor.historial-cortesia" (query-params year=year month=month day=day) class="waves-effect waves-light btn right" }}
-        <i class="material-icons">history</i> Cortesías de hoy
       {{/link-to}}
     </div>
   {{/if}}

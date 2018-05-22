@@ -1,10 +1,12 @@
 import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
+import {inject as service} from "@ember/service";
 
 export default Route.extend({
+  	currentUser: service(),
 
     beforeModel(){
-        /* 
+        /*
 		this.store.createRecord('producto', {
 			nombre: "Coca-cola 1l",
 			precio: 15,
@@ -23,11 +25,14 @@ export default Route.extend({
     },
 
     model() {
-		return this.store.createRecord('venta');
-		// return hash({
-        //       venta: this.store.createRecord('venta'),
-        //       cortesia: this.store.createRecord('courtesy')
-        // });
+      return this.get('currentUser.account').then((account)=>{
+        	return account.get('sucursal').then((sucursal)=>{
+        		  return this.store.createRecord('venta', {
+		              	propietario: account,
+		              	sucursal: sucursal
+		          })
+        	})
+      })
     }
 
 });

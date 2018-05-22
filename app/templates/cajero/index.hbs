@@ -46,10 +46,19 @@ input {
       <div class="background">
         <img src="media/productos.jpg">
       </div>
-      <a><span class="white-text name">Pan La Villita</span></a>
-      <a><span class="white-text name">Sucursal: {{currentCajero.sucursal.nombre}} </span></a>
-      <a><span class="white-text name">Cajero: {{currentCajero.nombre}} {{currentCajero.apellido}}</span></a>
+      <blockquote class="white-text">
+        Pan La Villita
+      </blockquote>
     </div>
+  </li>
+  <li>
+    <a><i class="material-icons">home</i>Sucursal: {{currentCajero.sucursal.nombre}} </a>
+  </li>
+  <li>
+    <a><i class="material-icons">person</i>Cajero: {{currentCajero.nombre}} {{currentCajero.apellido}} </a>
+  </li>
+  <li>
+    <div class="divider"></div>
   </li>
   <li>
     {{#link-to 'cajero.historial' (query-params date=today isToday=true)}}<i class="material-icons">schedule</i>Historial{{/link-to}}
@@ -62,9 +71,6 @@ input {
   </li>
   <li {{action 'signOut'}}>
     <a><i class="material-icons">closet</i>Cerrar Sesión</a>
-  </li>
-  <li>
-    <div class="divider"></div>
   </li>
 </ul>
 <div class="row">
@@ -80,7 +86,7 @@ input {
   <div class="row">
     <div class="col s6">
       <span class="info mt right">
-        Cantidad a pagar: 
+        Cantidad a pagar:
       </span>
     </div>
     <div class="col s6">
@@ -101,7 +107,7 @@ input {
     <div class="col s6">
       <br>
       <span class="info right">
-        Cambio del cliente: 
+        Cambio del cliente:
       </span>
     </div>
     <div class="col s6">

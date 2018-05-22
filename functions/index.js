@@ -15,7 +15,7 @@ let exportablesController = require('./controllers/exportables')
 
 //	Router para API
 // if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'api') {
-//   
+//
 // }
 
 
@@ -62,11 +62,11 @@ exports.processReparto = functions.database.ref('/repartos/{repartoId}').onCreat
 								case sucursal:
 									sucursalRef = existencia_id
 									break;
-								case origin: 
+								case origin:
 									originRef = existencia_id
 									break
 							}
-								
+
 						}
 						let existencesPromises = []
 
@@ -108,9 +108,28 @@ exports.processReparto = functions.database.ref('/repartos/{repartoId}').onCreat
 	})
 });
 
+// GENERANDO CORTE
+exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(function (event) {
+	
+});
+
+// if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'processReparto') {
+
+// }
+
+// function addToExports(obj) {
+//   keys(obj).forEach((k) => {
+//     if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === k) {
+//       module.exports[k] = obj[k]
+//     }
+//   })
+// }
+
+// FUNCION ORIGINAL TICKET
+/*
 exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(function (event) {
 	let ventaSnapGeneral = null
-	
+
 	return db.ref(`/venta/${event.params.ventaId}`).once('value').then((ventaSnap)=>{
 		let venta = ventaSnap.val()
 		ventaSnapGeneral =ventaSnap
@@ -140,11 +159,12 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 				})
 			)
 		}
-		return Promise.all(promises).then(()=>{		
+		return Promise.all(promises).then(()=>{
 			let ventaObj= {}
 			ventaObj.idVenta = ventaSnap.key
-			console.log('Venta ID: ', ventaObj.idVenta)
+			console.log('Venta: ', ventaObj.idVenta)
 			ventaObj.importeT =  ventaSnap.val().importeTotal
+			ventaObj.importeC =  ventaSnap.val().importeCortesia
 			ventaObj.fecha = ventaSnap.val().fechaUnix
 			let promisesVenta = []
 			for(var id_pedido in venta.pedidos){
@@ -167,12 +187,13 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 								cantidad: pedido.cantidad,
 								producto: productoSnap.val()
 							}
-						})		
+						})
 					})
 				)
 			}
 
 			let sucursal_id = ventaSnap.val().sucursal
+			console.log('Sucursal: ', sucursal_id)
 			let vendedor_id = ventaSnap.val().propietario
 
 			return db.ref(`sucursals/${sucursal_id}`).once('value').then((sucursalSnap)=>{
@@ -191,7 +212,7 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 						    bolditalics: 'fonts/Roboto-MediumItalic.ttf'
 						  }
 						};
-						
+
 						var PdfPrinter = require('pdfmake');
 						var printer = new PdfPrinter(fonts);
 						// Código QR
@@ -215,12 +236,13 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 								Producto: producto.nombre.toString(),
 								Cantidad: cant,
 								Unidad: formatCurrency(producto.precio, opts),
-								Total: formatCurrency(importeProduct, opts)
+								Importe: formatCurrency(importeProduct, opts)
 							})
 							cPedidos++;
 						}
 
-						function buildTableBody(data, columns) {
+						function buildTableBody(data) {
+								var columns = ['Producto', 'Cantidad', 'Unidad', 'Importe'];
 						    var body = [];
 						    body.push(columns);
 
@@ -235,19 +257,48 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 						}
 
 						function table(data) {
-							var columns = ['Producto', 'Cantidad', 'Unidad', 'Total'];
 						    return {
 						   		style: 'tableExample2',
 						    	layout: 'noBorders',
 						        table: {
 						        	widths: ['35%', '25%', '20%', '20%'],
 						            headerRows: 1,
-						            body: buildTableBody(data, columns)
+						            body: buildTableBody(data)
 						        }
 						    }
 						}
 
+						function hasCourtesy(){
+							if (ventaObj.importeC > 0) {
+								return {
+									style: 'tableExample2',
+									table: {
+										widths: ['50%', '25%', '25%'],
+										headerRows: 1,
+										body: [
+											['', 'Cortesía', impCourtesy],
+											['', 'Subtotal', impTotal]
+										]
+									},
+									layout: 'noBorders'
+								}
+							} else {
+								return {
+									style: 'tableExample2',
+									table: {
+										widths: ['50%', '25%', '25%'],
+										headerRows: 1,
+										body: [
+											['', 'Subtotal', impTotal]
+										]
+									},
+									layout: 'noBorders'
+								}
+							}
+						}
+
 						let impTotal = formatCurrency(ventaObj.importeT, opts)
+						let impCourtesy = formatCurrency(ventaObj.importeC, opts)
 						let dateString = moment.unix(ventaObj.fecha).format("DD/MM/YYYY");
 						let hourString = moment.unix(ventaObj.fecha).utcOffset("-05:00").format("HH:mm:ss");
 						// console.log("hora correcta", moment.unix(ventaObj.fecha).utcOffset("-05:00"))
@@ -269,23 +320,11 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 						    { text: `Hora: ${hourString}`, fontSize: 3, margin: [0, 2, 0, 0] },
 						    { text: `Sucursal: ${ventaObj.nombreSucursal}`, fontSize: 3, margin: [0, 2, 0, 0] },
 						    { text: `Atendió: ${ventaObj.nombreVendedor}`, fontSize: 3, margin: [0, 2, 0, 2] },
-						    
-						      	table(pedidosData)
+						      table(pedidosData)
 						    ,
-						    {
-						      style: 'tableExample2',
-						      table: {
-						        widths: ['50%', '25%', '25%'],
-						        headerRows: 1,
-						        body: [
-						          ['', 'Cortesia', formatCurrency(0, opts)],
-						          ['', 'Total', impTotal]
-						        ]
-						      },
-						      layout: 'noBorders'
-						    },
-		
-						    { text: `TOTAL: ${impTotal}`, fontSize: 4, margin: [40, 3, 0, 0] },
+									hasCourtesy()
+								,
+						    { text: `TOTAL ${impTotal}`, fontSize: 4, margin: [40, 3, 0, 0] },
 						    {qr: greeting, fit: 50, margin: [10, 3, 0, 0]},
 						    { text: 'Prueba nuestros pedidos online en:', fontSize: 3, margin: [9, 5, 0, 0] },
 						    { text: 'panlavillita.mx', fontSize: 3, margin: [23, 2, 0, 0] }
@@ -321,13 +360,14 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 						  }
 						};
 
-						const myPdfFile = admin.storage().bucket().file(`/ticket-ventas/${ventaObj.idVenta}/venta-${ventaObj.idVenta}.pdf`);
 						var pdfDoc = printer.createPdfKitDocument(docDefinition);
+						pdfDoc.end();
+						// Checa estas lineas brow
+						const myPdfFile = admin.storage().bucket().file(`/ticket-ventas/${ventaObj.idVenta}/venta-${ventaObj.idVenta}.pdf`);
 						const stream = pdfDoc.pipe(myPdfFile.createWriteStream());
-						pdfDoc.end();	
 
 						const gcs = require('@google-cloud/storage')({keyFilename: './config/service_accounts/admin.json'});
-						const bucket = gcs.bucket('quesadillaselgueromx.appspot.com');
+						const bucket = gcs.bucket('panlavillita-dev.appspot.com');
 						const file = bucket.file(`/ticket-ventas/${ventaObj.idVenta}/venta-${ventaObj.idVenta}.pdf`);
 						return file.getSignedUrl({
 						  action: 'read',
@@ -347,15 +387,4 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 		})
 	})
 });
-
-// if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'processReparto') {
-	
-// }
-
-// function addToExports(obj) {
-//   keys(obj).forEach((k) => {
-//     if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === k) {
-//       module.exports[k] = obj[k]
-//     }
-//   })
-// }
+*/

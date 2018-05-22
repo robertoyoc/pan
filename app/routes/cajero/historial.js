@@ -28,31 +28,33 @@ export default Route.extend(FindQuery, {
 
     return this.get('currentUser.account').then((account) => {
       this.set('accountId', account.get('id'))
-      let sucursal = account.get('sucursal');
-      this.set('sucursalId', sucursal.get('id'))
-
-      let context = this;
-      return new Promise(function(resolve, reject) {
-          context.filterCustom(context.store, 'cobro', {
-            'sucursalId': ['==', sucursal.get('id')],
-            'fechaUnix': ['>=', startDate.unix()],
-          }, function(cobros){
-            let cobrosList = [];
-            cobros.forEach(function(cobro){
-              if (cobro.get('fechaUnix') <= endDate.unix()) {
-                cobrosList.pushObject(cobro);
-              }
-            })
-            return resolve(cobrosList)
+      return account.get('sucursal').then((sucursal)=> {
+        console.log(startDate.unix());
+        this.set('sucursalId', sucursal.get('id'))
+        let context = this;
+        return new Promise(function(resolve, reject) {
+            context.filterCustom(context.store, 'cobro', {
+              'sucursalId': ['==', context.get('sucursalId')],
+              'fechaUnix': ['>=', startDate.unix()],
+            }, function(cobros){
+              console.log(cobros)
+              let cobrosList = [];
+              cobros.forEach(function(cobro){
+                if (cobro.get('fechaUnix') <= endDate.unix()) {
+                  cobrosList.pushObject(cobro);
+                }
+              })
+              console.log(cobrosList)
+              return resolve(cobrosList)
+          })
         })
-      })
+      });
     })
   },
-  
+
   setupController(controller) {
     this._super(...arguments)
     controller.set('sucursalId', this.get('sucursalId'))
     controller.set('accountId', this.get('accountId'))
-
   }
 });

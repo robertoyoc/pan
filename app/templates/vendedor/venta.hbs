@@ -62,10 +62,17 @@ input {
       </div>
       <div class="col s12 m4">
         {{teclado-numeric myCantidad=model.cantidad maxValue=existenceProducto.cantidad}}
+        <form action="#">
+           <p>
+             {{input type="checkbox" name="isCourtesy" checked=model.isCourtesy id="test5"}}
+             <label for="test5">¿Es Cortesía?</label>
+           </p>
+        </form>
+        <hr>
         <a {{action 'agregarPedido' model}} class="waves-effect waves-light btn right {{if disabledAgregar 'disabled'}}">
-						{{!-- {{if (or disabledAgregar (v-get this 'cantidad' 'isInvalid')) 'disabled'}}"> --}}
-						Agregar al Pedido
-					</a>
+           {{!-- {{if (or disabledAgregar (v-get this 'cantidad' 'isInvalid')) 'disabled'}}"> --}}
+           Agregar al Pedido
+       </a>
       </div>
     </div>
   </div>
