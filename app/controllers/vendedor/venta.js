@@ -5,14 +5,6 @@ import { isBlank } from '@ember/utils';
 import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
 
 export default Controller.extend(FindQuery, {
-	/*
-		//productList: service(),
-		productos: computed(function() {
-			debugger
-       	return this.get('productList.productos')
-      	}), 
-	*/
- 	
 	selectedCategoria: "all",
 
 	store: service(),
@@ -46,15 +38,16 @@ export default Controller.extend(FindQuery, {
 		} else {
 			let context = this;
 			return new Promise(function (resolve, reject){
-				context.filterEqual(context.get('store'), 'categoria', { 'nombre': context.get('selectedCategoria')}, function(categoria){
-					let idProductos = categoria[0].get('productosId')
-					let productList = [];
-					idProductos.forEach((producto)=>{
-						productList.pushObject(context.store.findRecord(producto.tipo, producto.id))
-					})
+				context.filterEqual(context.get('store'), 'categoria', { 
+						'nombre': context.get('selectedCategoria')
+					}, function(categoria){
+						let idProductos = categoria[0].get('productosId')
+						let productList = [];
+						idProductos.forEach((producto)=>{
+							productList.pushObject(context.store.findRecord(producto.tipo, producto.id))
+						})
 					return resolve(productList)
 				})
-			
 			})	
 		}
 		
@@ -109,7 +102,7 @@ export default Controller.extend(FindQuery, {
 			this.set('selectedCategoria', nomCategoria);
 			this.send('changeProducto')
 		},
-
+		
 		changeProducto(){
 			this.set('selectedProducto', undefined)
 		}

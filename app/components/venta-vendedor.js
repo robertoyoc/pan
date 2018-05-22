@@ -15,28 +15,8 @@ export default Component.extend({
         return this.get('store').findAll('categoria')
     }),
 
-    disabledVender: computed('myModel', 'isVenta', function() {
-      if(this.get('isVenta')) {
-        return this.get('myModel.venta.pedidos.length') > 0;
-      } else {
-        return this.get('myModel.cortesia.pedidos.length') > 0;
-      }
-    }),
-
-    disabledLinkventa: computed('isNew', 'isVenta', function(){
-      if(this.get('isNew')){
-        return false
-      } else {
-        return !this.get('isVenta')
-      }
-    }),
-
-    disabledLinkcortesia: computed('isNew', 'isVenta', function(){
-      if(this.get('isNew')){
-        return false
-      } else {
-        return this.get('isVenta')
-      }
+    disabledVender: computed('model', function() {
+      return this.get('model.pedidos.length') > 0;
     }),
 
     actions: {
@@ -48,9 +28,9 @@ export default Component.extend({
             venta.set('fecha', moment().format())
 			      all(venta.get('pedidos').invoke('save')).then(()=>{
 				          venta.save().then(()=>{
-                    let tagg = (this.get('isVenta'))? "VENTA": "CORTESÍA";
+                    let title = (!venta.get('isCourtesy')) ? 'VENTA' : 'CORTESÍA';
                     window.swal({
-                        title: '<i> '+ tagg +'</i>',
+                        title: '<i>' + title + '</i>',
                         type: 'info',
                         html:
                             '<a href="'+

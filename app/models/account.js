@@ -5,6 +5,6 @@ export default DS.Model.extend({
   nombre: DS.attr('string'),
   apellido: DS.attr('string'),
   perfil: DS.attr('string'),
+  telefono: DS.attr('string'),
   sucursal: DS.belongsTo('sucursal')
-
 });
