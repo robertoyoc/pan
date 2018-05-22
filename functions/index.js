@@ -108,11 +108,6 @@ exports.processReparto = functions.database.ref('/repartos/{repartoId}').onCreat
 	})
 });
 
-// GENERANDO CORTE
-exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(function (event) {
-	
-});
-
 // if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'processReparto') {
 
 // }
@@ -126,7 +121,7 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 // }
 
 // FUNCION ORIGINAL TICKET
-/*
+
 exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(function (event) {
 	let ventaSnapGeneral = null
 
@@ -387,4 +382,3 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 		})
 	})
 });
-*/
