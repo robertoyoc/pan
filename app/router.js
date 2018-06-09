@@ -39,6 +39,11 @@ Router.map(function() {
     this.route('edit-distribuido', {path: "/distribuido/:id"});
     this.route('edit-proveedor', {path: "/proveedor/:id"});
     this.route('edit-mprima', {path: "/m-prima/:id"});
+    this.route('finanzas');
+    this.route('retiros');
+    this.route('personal');
+    this.route('nvo-paselista');
+    this.route('edit-paselista');
   });
 
   this.route('cliente', function() {
@@ -53,6 +58,13 @@ Router.map(function() {
     this.route('retiros');
     this.route('nvo-retiro');
     this.route('grafica');
+    this.route('cancelaciones');
+    this.route('cajeros');
+    this.route('vendedores');
+    this.route('nvo-vendedor');
+    this.route('nvo-cajero');
+    this.route('edit-cajero', {path: "/cajero/:id"});
+    this.route('edit-vendedor', {path: "/vendedor/:id"});
   });
 
   this.route('vendedor', function(){
@@ -70,6 +82,7 @@ Router.map(function() {
   this.route('cajero', function() {
     this.route('historial');
     this.route('corte');
+    this.route('retiros');
   });
 });
 

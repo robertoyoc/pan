@@ -12,6 +12,7 @@
     "tests"
   ],
   "dependencies": {
-    "materialize": "^0.100.2"
+    "materialize": "^0.100.2",
+    "chart.js": "^2.7.2"
   }
 }

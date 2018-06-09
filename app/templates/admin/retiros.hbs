@@ -1,0 +1,32 @@
+{{#ember-wormhole to='admin-nav' }}
+  {{#link-to 'admin.finanzas' class='breadcrumb' }}Finanzas{{/link-to}}
+  {{#link-to 'admin.retiros' class='breadcrumb' }}Retiros{{/link-to}}
+{{/ember-wormhole}}
+<style type="text/css">
+	.mt{
+		margin-top: 8%;
+	}
+</style>
+
+<div class="row mt">
+	<div class="col s8 offset-s2">
+		<div class="row">
+			<div class="input-field col s10 offset-s1">
+	          <i class="material-icons prefix">attach_money</i>
+	          {{input id="cantidad" type="number" class="validate"}}
+	          <label for="cantidad">Cantidad</label>
+	        </div>
+	        <div class="input-field col s10 offset-s1">
+	          <i class="material-icons prefix">person</i>
+	          {{input id="destinatario" type="text" class="validate"}}
+	          <label for="destinatario">Destinatario</label>
+	        </div>
+	        <div class="input-field col s10 offset-s1">
+	          <i class="material-icons prefix">vpn_key</i>
+	          {{input id="psw" type="password" class="validate"}}
+	          <label for="psw">Contraseña</label>
+	        </div>
+		</div>
+		<a class="waves-effect waves-light btn right"><i class="material-icons left">done</i>Realizar</a>
+	</div>
+</div>

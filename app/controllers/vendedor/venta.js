@@ -1,22 +1,14 @@
 import Controller from '@ember/controller';
 import { computed } from "@ember/object";
 import { inject as service } from "@ember/service";
-
+import { isBlank } from '@ember/utils';
 import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
 
 export default Controller.extend(FindQuery, {
-	/*
-		//productList: service(),
-		productos: computed(function() {
-			debugger
-       	return this.get('productList.productos')
-      	}), 
-	*/
- 	
-	selectedCategoria: "all",
+	selectedPrecio: "all",
 
 	store: service(),
-	
+
 	init(){
 		this.set('cantProduct',0);
 	},
@@ -25,15 +17,15 @@ export default Controller.extend(FindQuery, {
 		return this.store.peekRecord('venta', this.get('venta_id'))
 	}),
 
-	myCategorias: computed(function() {
-		return this.get('store').findAll('categoria')
-    }),
+	precios: [1.5, 2.0, 5.0, 6.0, 7.0, 7.5, 8.0, 8.5, 10.0],
+	// Fuente: http://www3.inegi.org.mx/sistemas/inp/preciospromedio/
+	// Tulancingo, CDMX
 
-	myProductos: computed('selectedCategoria', function() {
-		if (this.get('selectedCategoria')=="all"){
+	myProductos: computed('selectedPrecio', function() {
+		if (this.get('selectedPrecio')=="all"){
 			let productosList = [];
 			return this.get('store').findAll('distribuido').then((distribuidos)=>{
-				return this.get('store').findAll('receta').then((recetas)=>{ 
+				return this.get('store').findAll('receta').then((recetas)=>{
 					distribuidos.forEach((distribuido)=>{
 						productosList.pushObject(distribuido)
 					})
@@ -44,24 +36,33 @@ export default Controller.extend(FindQuery, {
 				})
 			})
 		} else {
+			let productList = [];
 			let context = this;
 			return new Promise(function (resolve, reject){
-				context.filterEqual(context.get('store'), 'categoria', { 'nombre': context.get('selectedCategoria')}, function(categoria){
-					let idProductos = categoria[0].get('productosId')
-					let productList = [];
-					idProductos.forEach((producto)=>{
-						productList.pushObject(context.store.findRecord(producto.tipo, producto.id))
-					})
-					return resolve(productList)
+				context.filterEqual(context.get('store'), 'distribuido', {
+						'precio': context.get('selectedPrecio')
+					}, function(distribuidos){
+						context.filterEqual(context.get('store'), 'receta', {
+								'precio': context.get('selectedPrecio')
+							}, function(recetas){
+								distribuidos.forEach((distribuido)=>{
+									productList.pushObject(distribuido)
+								})
+								recetas.forEach((receta)=>{
+									productList.pushObject(receta)
+							})
+							//console.log(productList)
+							// debugger
+							return resolve(productList)
+						})
 				})
-			
-			})	
+			})
 		}
-		
+
     }),
 
 	tipoProducto: computed('selectedProducto', function(){
-		return this.get('selectedProducto.constructor.modelName')	
+		return this.get('selectedProducto.constructor.modelName')
 	}),
 
 	existenceProm: computed('selectedProducto', function(){
@@ -71,13 +72,17 @@ export default Controller.extend(FindQuery, {
 				context.filterEqual(context.get('store'), 'existence', { 'productoId': context.get('selectedProducto.id')}, function(existence){
 					return resolve(existence[0])
 			})
-		})	
+		})
 		})
 	}),
 
 	existenceProducto: computed('existenceProm.content', function(){
 		return this.get('existenceProm.content')
-	}), 
+	}),
+
+	disabledAgregar: computed('selectedProducto', function() {
+		return isBlank(this.get('selectedProducto'));
+    }),
 
 	actions: {
 		agregarPedido(model){
@@ -101,9 +106,9 @@ export default Controller.extend(FindQuery, {
 			pedido.destroyRecord()
 		},
 
-		changeCategoria(nomCategoria){
-			this.set('selectedCategoria', nomCategoria);
-			this.send('changeProducto')
+		changePrecio(precio){
+			this.set('selectedPrecio', precio);
+			// this.send('changeProducto')
 		},
 
 		changeProducto(){

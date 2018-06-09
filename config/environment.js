@@ -7,7 +7,7 @@ module.exports = function(environment) {
     environment,
     rootURL: '',
     locationType: 'hash',
-    
+
     torii: {
       sessionServiceName: 'session'
     },
@@ -60,18 +60,26 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
-    ENV.APP.autoboot = false; 
+    ENV.APP.autoboot = false;
   }
 
   if (environment === 'production') {
     ENV['firebase'] = {
-      apiKey: "AIzaSyAzAZwIw0UnLQaVCuArb9_OVKTSVAZ6gNg",
-      authDomain: "panlavillitamx.firebaseapp.com",
-      databaseURL: "https://panlavillitamx.firebaseio.com",
-      projectId: "panlavillitamx",
-      storageBucket: "panlavillitamx.appspot.com",
-      messagingSenderId: "1030925768507"
+      apiKey: "AIzaSyBFxcDTxe25ClMfRbn95VoLZ6S3ZNdwUSs",
+      authDomain: "panlavillita-dev.firebaseapp.com",
+      databaseURL: "https://panlavillita-dev.firebaseio.com",
+      projectId: "panlavillita-dev",
+      storageBucket: "panlavillita-dev.appspot.com",
+      messagingSenderId: "86780068472"
     };
+    // ENV['firebase'] = {
+    //   apiKey: "AIzaSyAzAZwIw0UnLQaVCuArb9_OVKTSVAZ6gNg",
+    //   authDomain: "panlavillitamx.firebaseapp.com",
+    //   databaseURL: "https://panlavillitamx.firebaseio.com",
+    //   projectId: "panlavillitamx",
+    //   storageBucket: "panlavillitamx.appspot.com",
+    //   messagingSenderId: "1030925768507"
+    // };
   }
 
   return ENV;

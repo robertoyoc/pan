@@ -1,144 +1,232 @@
 <style type="text/css">
-	body {
-		background: url(https://images.unsplash.com/photo-1413745000559-46fdd2d81cd7?auto=format&fit=crop&w=1334&q=80);
-			background-repeat: no-repeat;
-  		background-size: 100% 100%;
-  		height: 100vh;
-  		margin: 3px auto 0;
-  		position: relative;
-	}
+body {
+  background: url(https://images.unsplash.com/photo-1413745000559-46fdd2d81cd7?auto=format&fit=crop&w=1334&q=80);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 100vh;
+  margin: 3px auto 0;
+  position: relative;
+}
 
- 	.img{
- 	max-width: 100%;
+.img {
+  max-width: 100%;
   -moz-transition: all 0.3s;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
- 	}
+}
 
- 	.img:hover{
- 		-moz-transform: scale(1.1);
-  		-webkit-transform: scale(1.1);
-  		transform: scale(1.1);
- 	}
+.img:hover {
+  -moz-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
 
- 	input{
-	width: 20% !important;
-	}
+input {
+  width: 20% !important;
+}
 
-	button{
-		border-radius: 20px;
-		height: 25px;
-		margin-right: 2%;
-		margin-left: 2%;
-	}
+button {
+  border-radius: 20px;
+  height: 25px;
+  margin-right: 2%;
+  margin-left: 2%;
+}
 
-	.products{
-		max-height: 550px;
-		overflow-y: scroll;
-	}
+.products {
+  max-height: 550px;
+  overflow-y: scroll;
+}
 
-	.redondo{
-		margin-top: -20px;
-		border-bottom-left-radius: 15px;
-		border-bottom-right-radius: 15px;
-		border-right: 2px solid white;
-		border-left: 2px solid white;
-		border-bottom: 2px solid white;
-		background: #FFF;
-	}
+.redondo {
+  margin-top: -20px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border-right: 2px solid white;
+  border-left: 2px solid white;
+  border-bottom: 2px solid white;
+  background: #FFF;
+}
 
-	h6{
-		padding: 10px 10px 10px 10px;
-	}
+h6 {
+  padding: 10px 10px 10px 10px;
+}
 
-	.waves-effect{
-		margin-top: 2%;
-	}
+.waves-effect {
+  margin-top: 2%;
+}
+
+.card {
+  height: 130px;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+}
+
+.card .card-image .card-title
+  bottom: 46px;
+}
+
+#idCardRara {
+  bottom: -17px!important
+}
+
+.cardFixed {
+  height: unset;
+  overflow-y: scroll;
+}
 </style>
-
- <div class="row" style="margin-top: 4%;">
- 	<div class="col s12 m7">
- 		<div class="row">
-    {{#link-to "vendedor.venta" myModel.id}}
-    <div class="col s12 m5 img" style="margin-left: 3%;">
-     	<div class="card">
+<div class="row">
+  <div class="col s12 m7">
+    <div class="row">
+      {{#link-to "vendedor.venta" model.id}}
+        <div class="col s12 m5 img" style="margin-left: 3%;">
+          <div class="card">
             <div class="card-image">
               <img src="../media/vender.jpg" width="100%">
               <span class="card-title">Nueva Venta</span>
             </div>
+          </div>
         </div>
-    </div>{{/link-to}}
-    {{#link-to "vendedor.index"}}
-    <div class="col s12 m5 img">
-     	<div class="card">
-            <div class="card-image">
-              <img src="../media/pan-panel.jpg">
-              <span class="card-title">Acceso Directo</span>
+      {{/link-to}}
+      {{#link-to "vendedor.index"}}
+        <div class="col s12 m5 img">
+          <div class="card">
+            <div class="card-image" style="bottom:0!important">
+              <img src="../media/the-courtesy.png">
+              <span id="idCardRara" class="card-title">Nueva Cortesía</span>
             </div>
+          </div>
         </div>
-    </div>{{/link-to}}
-    {{#link-to "vendedor.index"}}
-    <div class="col s12 m5 img" style="margin-left: 3%;">
-     	<div class="card">
+      {{/link-to}}
+      {{#link-to "vendedor.index"}}
+        <div class="col s12 m5 img" style="margin-left: 3%;">
+          <div class="card">
             <div class="card-image">
               <img src="../media/pan-panel.jpg" width="100%">
               <span class="card-title">Acceso Directo</span>
             </div>
+          </div>
         </div>
+      {{/link-to}}
+      {{#link-to "vendedor.index"}}
+        <div class="col s12 m5 img">
+          <div class="card">
+            <div class="card-image">
+              <img src="../media/pan-panel.jpg" width="100%">
+              <span class="card-title">Acceso Directo</span>
+            </div>
+          </div>
+        </div>
+      {{/link-to}}
+      {{#link-to "vendedor.index"}}
+        <div class="col s12 m5 img" style="margin-left: 3%;">
+          <div class="card">
+            <div class="card-image">
+              <img src="../media/pan-panel.jpg" width="100%">
+              <span class="card-title">Acceso Directo</span>
+            </div>
+          </div>
+        </div>
+      {{/link-to}}
+      {{#link-to "vendedor.index"}}
+        <div class="col s12 m5 img">
+          <div class="card">
+            <div class="card-image">
+              <img src="../media/pan-panel.jpg" width="100%">
+              <span class="card-title">Acceso Directo</span>
+            </div>
+          </div>
+        </div>
+      {{/link-to}}
+      {{#link-to "vendedor.index"}}
+        <div class="col s12 m5 img" style="margin-left: 3%;">
+          <div class="card">
+            <div class="card-image">
+              <img src="../media/pan-panel.jpg" width="100%">
+              <span class="card-title">Acceso Directo</span>
+            </div>
+          </div>
+        </div>
+      {{/link-to}}
+      {{#link-to "vendedor.index"}}
+        <div class="col s12 m5 img">
+          <div class="card">
+            <div class="card-image">
+              <img src="../media/pan-panel.jpg" width="100%">
+              <span class="card-title">Acceso Directo</span>
+            </div>
+          </div>
+        </div>
+      {{/link-to}}
+      {{#link-to "vendedor.index"}}
+        <div class="col s12 m5 img" style="margin-left: 3%;">
+          <div class="card">
+            <div class="card-image">
+              <img src="../media/pan-panel.jpg" width="100%">
+              <span class="card-title">Acceso Directo</span>
+            </div>
+          </div>
+        </div>
+      {{/link-to}}
+      {{#link-to "vendedor.index"}}
+        <div class="col s12 m5 img">
+          <div class="card">
+            <div class="card-image">
+              <img src="../media/pan-panel.jpg" width="100%">
+              <span class="card-title">Acceso Directo</span>
+            </div>
+          </div>
+        </div>
+      {{/link-to}}
     </div>
-    {{/link-to}}
-    {{#link-to "vendedor.index"}}
-    <div class="col s12 m5 img">
-     	<div class="card">
-            <div class="card-image">
-              <img src="../media/pan-panel.jpg" width="100%">
-              <span class="card-title">Acceso Directo</span>
-            </div>
-        </div>
-    </div>{{/link-to}}
-   
+  </div>
+  <div class="col s12 m5">
+    <div class="card products cardFixed">
+      <table class="centered stripped">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th>Accion</th>
+          </tr>
+        </thead>
+        <tbody>
+            {{#each model.pedidos as |pedido|}}
+              {{#unless pedido.isNew}}
+                <tr>
+                  <td>{{pedido.producto.nombre}}</td>
+                  <td>{{format-money pedido.producto.precio symbol=selectedCurrency format="%v %s"}}</td>
+                  <td>{{number-input cantidad=pedido.cantidad}}</td>
+                  <td>
+                    {{#unless pedido.isCourtesy}}
+                      {{format-money (mult pedido.cantidad pedido.producto.precio) symbol=selectedCurrency format="%v %s"}}
+                    {{else}}
+                      {{format-money 0 symbol=selectedCurrency format="%v %s"}}
+                    {{/unless}}
+                  </td>
+                  <td><a class="btn-floating waves-effect waves-light red" {{action 'delete' pedido}}><i class="material-icons">delete</i></a></td>
+                </tr>
+              {{/unless}}
+              {{else}}Ningún producto agregado
+            {{/each}}
+        </tbody>
+      </table>
+    </div>
+    <div class="redondo">
+        <h6> Total {{if model.isCourtesy 'Cortesía'}}: {{format-money model.importeTotal symbol=selectedCurrency format="%v %s"}}</h6>
+    </div>
+      <a class="waves-effect waves-light btn right {{unless disabledVender 'disabled'}}" {{action 'finalizar' model}}><i class="material-icons left">save</i>Vender</a>
+
+  </div>
+  {{#if isNew}}
+    <div class="row">
+      {{#link-to "vendedor.historial-venta" (query-params year=year month=month day=day) class="waves-effect waves-light btn right" }}
+        <i class="material-icons">history</i> Ventas de hoy
+      {{/link-to}}
+    </div>
+  {{/if}}
 </div>
-
-   </div>
-   <div class="col s12 m5">
-   	<div class="card products">
-		<table class="centered sripped">
-			<thead>
-				<tr>
-				    <th>Cantidad</th>
-				    <th>Producto</th>
-				    <th>Accion</th>
-				</tr>
-			</thead>
-			<tbody>
-				{{#each myModel.pedidos as |pedido|}}
-				    {{#unless pedido.isNew}}
-					    <tr>
-					        <td>{{number-input cantidad=pedido.cantidad}}</td>						
-					        <td>{{pedido.producto.nombre}}</td>
-					        <td><a class="btn-floating waves-effect waves-light red" {{action 'delete' pedido}}><i class="material-icons">delete</i></a></td>
-					    </tr>
-				    {{/unless}}
-				    {{else}} Ningún producto agregado
-				{{/each}}
-			</tbody>
-		</table>
-	</div>
-	<div class="redondo">
-		<h6> Total: ${{myModel.importeTotal}}</h6>
-	</div>
-	<a class="waves-effect waves-light btn right {{unless disabledVender 'disabled'}}" {{action 'finalizar' myModel}} ><i class="material-icons left">save</i>Vender</a>
-   </div>
-</div>
-
-{{#unless disabledVender}}
-	<div>
-		{{#link-to "vendedor.historial-venta" (query-params year=year month=month day=day)  class="waves-effect waves-light btn right"}}
-			<i class="material-icons">history</i>
-			Ventas de hoy
-		{{/link-to}} 
-	</div>
-{{/unless}}
-
-
-

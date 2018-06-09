@@ -1,59 +1,104 @@
 <nav style="padding-left: 10px" class="teal brown lighten-1">
-    <div class="nav-wrapper ">
-      <div class="col s12">
-        {{#link-to 'cajero.index' class='breadcrumb'}}Registrar Pago{{/link-to}} 
-      </div>
+  <div class="nav-wrapper ">
+    <div class="col s12">
+      {{#link-to 'cajero.index' class='breadcrumb' }}<i class="material-icons">arrow_back</i> Registrar Pago{{/link-to}}
     </div>
+  </div>
 </nav>
 {{outlet}}
 <style type="text/css">
-	body {
-		background: url(https://images.unsplash.com/photo-1413745000559-46fdd2d81cd7?auto=format&fit=crop&w=1334&q=80);
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      height: 100vh;
-      margin: 3px auto 0;
-      position: relative;
-	}
+body {
+  background: url(https://images.unsplash.com/photo-1413745000559-46fdd2d81cd7?auto=format&fit=crop&w=1334&q=80);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 100vh;
+  margin: 3px auto 0;
+  position: relative;
+}
 
-	.btn-floating {
-		margin-left: 2%;
-	}
+.btn-floating {
+  margin-left: 2%;
+}
 
-	.mt{
-		margin-top: 3%;
-	}
-input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=number]:not(.browser-default), input[type=search]:not(.browser-default), textarea.materialize-textarea{
-	color: white;
+.mt {
+  margin-top: 3%;
+}
+
+textarea {
+  color: black!important;
+}
+
+input:not([type]),
+input[type=text]:not(.browser-default),
+input[type=password]:not(.browser-default),
+input[type=email]:not(.browser-default),
+input[type=url]:not(.browser-default),
+input[type=time]:not(.browser-default),
+input[type=date]:not(.browser-default),
+input[type=datetime]:not(.browser-default),
+input[type=datetime-local]:not(.browser-default),
+input[type=tel]:not(.browser-default),
+input[type=number]:not(.browser-default),
+input[type=search]:not(.browser-default),
+textarea.materialize-textarea {
+  color: white;
 }
 </style>
 <div class="row">
-	<div class="col s8 offset-s2 mt">
-		{{#m-wrapper query=".datepicker" method="pickadate"}}
-		<input type="text" class="datepicker" placeholder="Selecciona la fecha...">
-		{{/m-wrapper}}
-	</div>
-	<div class="col s8 offset-s2">
-		<div class="card">
-			<table class="striped centered">
-				<thead>
-					<tr>
-						<th>Hora</th>
-						<th>Cantidad</th>
-						<th>Acciones</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>17:45</td>
-						<td>$532.00</td>
-						<td>
-							<a class="btn-floating"><i class="material-icons">edit</i></a>
-                			<a class="btn-floating red"><i class="material-icons">delete</i></a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
+  <div class="col s8 offset-s2 mt">
+    {{#m-wrapper query=".datepicker" method="pickadate" }}
+      {{input type="text" class="datepicker" placeholder="Selecciona la fecha..." change=(action 'changeFecha')}}
+    {{/m-wrapper}}
+  </div>
+  <div class="col s8 offset-s2">
+    <div class="card">
+      <table class="striped centered">
+        <thead>
+          <tr>
+            <th>Fecha de Expedición</th>
+            <th>Fecha de Cobro</th>
+            <th>Cantidad</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each model as |cobro|}}
+            {{#unless cobro.isNew}}
+              <tr>
+                <td>{{moment-format cobro.venta.fechaUnix 'MMM DD, HH:mm' 'X' utc=true}}</td>
+                <td>{{moment-format cobro.fechaUnix 'MMM DD, HH:mm' 'X' utc=true}}</td>
+                <td>{{format-money cobro.venta.importeTotal symbol=selectedCurrency format="%v %s"}}</td>
+                <td>{{cobro.venta.status}}</td>
+                <td>
+                  {{#if (eq cobro.venta.status "Pagado")}}
+                    <a class="btn-floating red" {{action 'openModal' cobro}}><i class="material-icons">cancel</i></a>
+                  {{/if}}
+                </td>
+              </tr>
+            {{/unless}}
+            {{else}}
+              <h5>Aún no se registran cobros. </h5>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
+<!-- Modal Structure -->
+{{#m-wrapper query="#modal1" method="modal" }}
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Solicitud de cancelación</h4>
+      <h5>Cobro {{selectedCobro.id}}</h5>
+      <div class="input-field col s12">
+        {{textarea class="materialize-textarea" value=motivo}}
+        <label for="textarea1">Motivo</label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+      <a {{action 'sendRequest' selectedCobro motivo}} class="modal-action modal-close waves-effect waves-green btn-flat">Enviar</a>
+    </div>
+  </div>
+{{/m-wrapper}}

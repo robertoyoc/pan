@@ -71,6 +71,8 @@ export default Controller.extend(Validations, {
             password: pass
           }).then(()=>{
             this.get('currentUser.account').then((account)=>{
+              console.log(account)
+              //debugger
               account.set('sucursal', this.get('sucursal'))
               account.save()
             })
