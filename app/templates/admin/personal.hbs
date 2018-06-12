@@ -39,21 +39,35 @@
 		    <div class="col s12 m5 img" style="margin-left: 3%;">
 		     	<div class="card">
 		            <div class="card-image">
-		              <img src="../media/inventario-produccion.jpg" width="100%">
-		              <span class="card-title">Cortes</span>
+		              <img src="https://images.unsplash.com/photo-1521710338287-b65ff0a96e4a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=2526bd0cb7dbf1f703d29c6dd0773e7b&auto=format&fit=crop&w=1350&q=80" width="100%">
+		              <span class="card-title">Historial</span>
 		            </div>
 		        </div>
 		    </div>
         {{/link-to}}
-		{{#link-to "admin.retiros"}}
-		    <div class="col s12 m5 offset-m1 img">
-		     	<div class="card">
-		            <div class="card-image">
-		              <img src="../media/retiros.png">
-		              <span class="card-title">Retiros</span>
-		            </div>
-		        </div>
-		    </div>{
-        {{/link-to}}
+
+        {{#unless listaExists}}
+          {{#link-to "admin.nvo-paselista"}}
+            <div class="col s12 m5 offset-m1 img">
+              <div class="card">
+                    <div class="card-image">
+                      <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=612621fd686897b4812287430c8be9db&auto=format&fit=crop&w=1052&q=80g">
+                      <span class="card-title">Crear Pase de Lista</span>
+                    </div>
+                </div>
+            </div>
+          {{/link-to}}
+        {{else}}
+          {{#link-to "admin.edit-paselista" currentList.id}}
+            <div class="col s12 m5 offset-m1 img">
+              <div class="card">
+                    <div class="card-image">
+                      <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=612621fd686897b4812287430c8be9db&auto=format&fit=crop&w=1052&q=80">
+                      <span class="card-title">Acceder al Pase de Lista</span>
+                    </div>
+                </div>
+            </div>
+          {{/link-to}}
+        {{/unless}}
     </div>
 </div>

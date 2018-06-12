@@ -43,7 +43,7 @@ Router.map(function() {
     this.route('retiros');
     this.route('personal');
     this.route('nvo-paselista');
-    this.route('edit-paselista');
+    this.route('edit-paselista', {path: "/pase-lista/:id"});
   });
 
   this.route('cliente', function() {

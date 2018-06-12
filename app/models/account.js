@@ -6,5 +6,6 @@ export default DS.Model.extend({
   apellido: DS.attr('string'),
   perfil: DS.attr('string'),
   telefono: DS.attr('string'),
-  sucursal: DS.belongsTo('sucursal')
+  sucursal: DS.belongsTo('sucursal'),
+  qrCode: DS.attr('string')
 });
