@@ -62,13 +62,14 @@ body {
                     {{input  id="psw" type="password" class="validate" value=password}}
                     <label for="psw">Contraseña</label>
                     </div>
+                {{else}}
+                  {{#if model.qrCode}}
+                    <div class="col s6 offset-s4">
+                      <img src="{{model.qrCode}}"class="materialboxed" width="250" id="qrcode">
+                      <label for="qrcode">Código Identificador</label>
+                    </div>
+                  {{/if}}
                 {{/unless}}
-                {{#if model.qrCode}}
-                  <div class="col s6 offset-s4">
-                    <img src="{{model.qrCode}}"class="materialboxed" width="250" id="qrcode">
-                    <label for="qrcode">Código Identificador</label>
-                  </div>
-                {{/if}}
 			</div>
 		</div>
 		<a class="waves-effect waves-light btn right" {{action "guardar" model sucursal newUser}}><i class="material-icons left">done</i>Guardar Cajero</a>

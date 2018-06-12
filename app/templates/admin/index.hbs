@@ -90,8 +90,10 @@
     </div>
     {{/link-to}}
 
+		{{log listaExists}}
+
     {{#unless listaExists}}
-        {{#link-to "admin.nvo-paselista"}}
+        {{#link-to "admin.nvo-paselista" (query-params turno=turno)}}
             <div class="col s12 m3 offset img" style="margin-left: 3%;">
                 <div class="card">
                     <div class="card-image">
@@ -102,7 +104,7 @@
             </div>
         {{/link-to}}
     {{else}}
-        {{#link-to "admin.nvo-paselista"}}
+        {{#link-to "admin.edit-paselista" currentList.id}}
             <div class="col s12 m3 offset img" style="margin-left: 3%;">
                 <div class="card">
                     <div class="card-image">

@@ -1,1 +1,5 @@
-{{outlet}}
+{{#ember-wormhole to='admin-nav' }}
+  {{#link-to 'admin.personal' class='breadcrumb' }}Personal{{/link-to}}
+{{/ember-wormhole}}
+
+{{add-paselista model=model}}

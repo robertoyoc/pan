@@ -11,7 +11,7 @@ body {
 
 .container {
   margin-top: 15%;
-} 
+}
 
 .input-field label {
      color: #000 !important;
@@ -65,21 +65,8 @@ body{
           focus-out=(action 'toogleError' 'pass') tabindex=5}}
           <label id="userlabel" for="loginpass" data-error="{{if loginPassError loginPassError 'Revisando...'}}" >Password</label>
         </div>
-            <div class="input-field col s10 offset-s1" style="color:black">
-              <label>Selecciona la sucursal</label><br><br>
-              {{#power-select 
-                selected=sucursal
-                options=sucursales
-                onchange=(action (mut sucursal))
-                as |sucursalOption|
-              }}
-                {{sucursalOption.nombre}}
-              {{/power-select}}
-              <br>
-            </div>
           </div>
       <button type="submit" class="waves-effect waves-light btn red right {{if (or isWorking (v-get this 'isInvalid')) 'disabled'}}" style="width:150px">{{if isWorking 'Trabajando' 'Entrar'}}</button>
     </div>
-    
-</form>
 
+</form>

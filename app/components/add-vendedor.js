@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { isEmpty } from '@ember/utils';
-
+import QRCode from 'qrcode';
 
 export default Component.extend({
     store: service(),
@@ -19,19 +19,36 @@ export default Component.extend({
 
     actions: {
         guardar(vendedor, sucursal, isNew){
-            if(isEmpty(sucursal.get('vendedoresId')))
-                sucursal.set('vendedoresId', []);
+            vendedor.set('vendedorDe', sucursal);
 
-            vendedor.set('sucursal', sucursal);
+            if(isEmpty(vendedor.get('qrCode'))){
+              var opts = {
+                type: 'image/png',
+                rendererOpts: {
+                  quality: 0.99
+                }
+              }
+
+              QRCode.toDataURL(vendedor.get('id'), opts, function (err, url) {
+                  if (err) throw err
+                  vendedor.set('qrCode', url)
+              })
+            }
 
             if(isNew){
                 //console.log('Nuevo')
                 this.get('firebase').auth().createUserWithEmailAndPassword(this.get('halfmail') + "@panlavillita.mx", this.get('password')).then((newUser)=>{
                     vendedor.set('uid', newUser.uid);
                     //console.log(sucursal.get('vendedoresId'))
-                    sucursal.get('vendedoresId').push(vendedor.get('id'))
                     vendedor.save().then(()=>{
-                        this.sendAction('saveVendedor')
+                      sucursal.get('cajeros').then((vendedoresList)=>{
+                        vendedoresList.pushObject(vendedor)
+                        vendedoresList.save().then(()=>{
+                          sucursal.save().then(()=>{
+                            this.sendAction('saveVendedor')
+                          })
+                        })
+                      })
                     })
                 })
             } else {

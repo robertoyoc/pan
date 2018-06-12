@@ -9,16 +9,11 @@ const Validations = buildValidations({
   pass: [
     validator('presence', true),
     validator('presence', true)
-  ],
-  sucursal: validator('presence', true)
+  ]
 })
 
 export default Controller.extend(Validations, {
   currentUser: service(),
-  sucursales: computed(function(){
-    return this.store.findAll('sucursal')
-
-  }),
 
 	actions: {
 		toogleError(attr){
@@ -57,11 +52,6 @@ export default Controller.extend(Validations, {
 
       this.validate().then(({validations})=>{
 
-        if(get(this, 'validations.attrs.sucursal.isInvalid')){
-          window.Materialize.toast('Selecciona usa sucursal', 1000)
-          return false
-        }
-
         if(get(this, 'validations.isValid')){
           let newemail = this.get("user") + "@panlavillita.mx";
           let pass = this.get("pass");
@@ -71,12 +61,9 @@ export default Controller.extend(Validations, {
             password: pass
           }).then(()=>{
             this.get('currentUser.account').then((account)=>{
-              console.log(account)
+              console.log('Usuario: ', account)
               //debugger
-              account.set('sucursal', this.get('sucursal'))
-              account.save()
             })
-
 
             this.set('user', undefined);
             this.set('pass', undefined);
@@ -99,7 +86,7 @@ export default Controller.extend(Validations, {
 
             }
             this.set('isWorking', false)
-            
+
           });
         }
       }).catch((error)=>{

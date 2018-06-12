@@ -20,10 +20,8 @@ export default Component.extend({
     actions: {
         guardar(cajero, sucursal, isNew){
           let ctx = this;
-            if(isEmpty(sucursal.get('cajerosId')))
-                sucursal.set('cajerosId', []);
 
-            cajero.set('sucursal', sucursal);
+            cajero.set('cajeroDe', sucursal);
 
             if(isEmpty(cajero.get('qrCode'))){
               var opts = {
@@ -45,9 +43,16 @@ export default Component.extend({
               this.get('firebaseApp').auth().createUserWithEmailAndPassword(this.get('halfmail') + "@panlavillita.mx", this.get('password')).then((newUser)=>{
                   cajero.set('uid', newUser.uid);
                   //console.log(sucursal.get('cajerosId'))
-                  sucursal.get('cajerosId').push(cajero.get('id'))
+
                   cajero.save().then(()=>{
-                      this.sendAction('saveCajero')
+                    sucursal.get('cajeros').then((cajerosList)=>{
+                      cajerosList.pushObject(cajero)
+                      cajerosList.save().then(()=>{
+                        sucursal.save().then(()=>{
+                          this.sendAction('saveCajero')
+                        })
+                      })
+                    })
                   })
               })
             } else {

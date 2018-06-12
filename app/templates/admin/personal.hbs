@@ -47,7 +47,7 @@
         {{/link-to}}
 
         {{#unless listaExists}}
-          {{#link-to "admin.nvo-paselista"}}
+          {{#link-to "admin.nvo-paselista" (query-params turno=turno)}}
             <div class="col s12 m5 offset-m1 img">
               <div class="card">
                     <div class="card-image">

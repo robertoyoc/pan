@@ -26,7 +26,7 @@ export default Route.extend({
 
     model() {
       return this.get('currentUser.account').then((account)=>{
-        	return account.get('sucursal').then((sucursal)=>{
+        	return account.get('vendedorDe').then((sucursal)=>{
         		  return this.store.createRecord('venta', {
 		              	propietario: account,
 		              	sucursal: sucursal
