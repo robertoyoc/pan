@@ -25,19 +25,22 @@ export default Component.extend({
 
             cajero.set('sucursal', sucursal);
 
-            if(isNew){
+            if(isEmpty(cajero.get('qrCode'))){
               var opts = {
-                errorCorrectionLevel: 'H',
-                type: 'image/jpeg',
+                type: 'image/png',
                 rendererOpts: {
-                  quality: 0.3
+                  quality: 0.99
                 }
               }
 
               QRCode.toDataURL(cajero.get('id'), opts, function (err, url) {
                   if (err) throw err
-                  ctx.send('saveQR', url)
+                  cajero.set('qrCode', url)
               })
+            }
+
+            if(isNew){
+
               //console.log('Nuevo')
               this.get('firebaseApp').auth().createUserWithEmailAndPassword(this.get('halfmail') + "@panlavillita.mx", this.get('password')).then((newUser)=>{
                   cajero.set('uid', newUser.uid);
@@ -54,33 +57,5 @@ export default Component.extend({
                 })
             }
         },
-
-        saveQR(dataURL) {
-    		  let model = this.get('model');
-    		  let cntx = this;
-    		  let storageRef = cntx.get('firebaseApp').storage().ref();
-
-          var blobb = this.send('dataURLtoBlob',dataURL)
-
-            var reader = new FileReader();
-    			  reader.readAsArrayBuffer(blobb)
-    			  reader.onload = function(e) {
-    			    var data = e.target.result;
-    			    var imgRef = storageRef.child(`cajeros/${model.get('id')}/QRCode.jpeg`);
-    			    imgRef.put(data).then(function(snapshot) {
-    			      cntx.get('model').set('qrCode', snapshot.downloadURL);
-    			      return true
-    			    })
-            }
-    		},
-
-        dataURLtoBlob(dataurl) {
-          var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-              bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-          while(n--){
-              u8arr[n] = bstr.charCodeAt(n);
-          }
-          return new Blob([u8arr], {type:mime});
-      }
     }
 });

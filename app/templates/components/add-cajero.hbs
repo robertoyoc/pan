@@ -41,7 +41,7 @@ body {
                 <div class="input-field col s10 offset-s1">
                     <i class="material-icons prefix">view_list</i>
                     <label>Selecciona la Sucursal</label><br><br>
-                    {{#power-select 
+                    {{#power-select
                         selected=sucursal
                         options=sucursales
                         onchange=(action (mut sucursal))
@@ -63,6 +63,12 @@ body {
                     <label for="psw">Contraseña</label>
                     </div>
                 {{/unless}}
+                {{#if model.qrCode}}
+                  <div class="col s6 offset-s4">
+                    <img src="{{model.qrCode}}"class="materialboxed" width="250" id="qrcode">
+                    <label for="qrcode">Código Identificador</label>
+                  </div>
+                {{/if}}
 			</div>
 		</div>
 		<a class="waves-effect waves-light btn right" {{action "guardar" model sucursal newUser}}><i class="material-icons left">done</i>Guardar Cajero</a>
