@@ -18,8 +18,8 @@ export default Component.extend({
     },
 
     evalAttendance(result){
-      // console.log('expected', this.get('selectedAsistencia.empleado.id'))
-      // console.log('result', result)
+      console.log('expected', this.get('selectedAsistencia.empleado.id'))
+      console.log('result', result)
       if(result == this.get('selectedAsistencia.empleado.id')){
 
         this.set('selectedAsistencia.asistencia', true);
