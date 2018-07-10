@@ -1,13 +1,22 @@
-module.exports = function () {
+module.exports = function() {
   let express = require("express")
   let app = express()
+  let exportablesController = require(global.rootPath('controllers/exportables'));
+  const bodyParser = require('body-parser');
 
-	app.get('/recargas', function(req, res){
-		console.log(req)
+  app.use(bodyParser.json()); // support json encoded bodies
+  app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-		res.header("Access-Control-Allow-Origin", "*");
-		res.send("Hola")
-	})
+
+
+  app.get('/recargas', function(req, res) {
+    console.log(req)
+
+    res.header("Access-Control-Allow-Origin", "*");
+    res.send("Hola")
+  })
+  app.get('/ventas/:id.pdf', exportablesController.generateTicket)
+
 
 
 

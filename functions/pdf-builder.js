@@ -1,4 +1,4 @@
-module.exports = function () {
+module.exports = function() {
   let path = require('path')
   let rootPath = path.resolve('')
 
@@ -13,7 +13,7 @@ module.exports = function () {
 
 
 
-  return function (venta, templateName) {
+  return function(venta, templateName) {
     console.log("enviando a renderizar")
     // process.chdir(path.resolve(rootPath, './'));
     let fonts = {
@@ -32,17 +32,16 @@ module.exports = function () {
 
     // Firebase Admin
     let admin = require("./config/admin").app
-    let bucket = admin.storage().bucket()
     let db = require("./config/admin").db
 
     let template = getTemplate(templateName)
     let defaultDd = {}
 
 
-    return template.render(venta, defaultDd).then((result)=>{
+    return template.render(venta, defaultDd).then((result) => {
       return printer.createPdfKitDocument(result)
 
     })
-    
+
   };
 }();

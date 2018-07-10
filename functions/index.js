@@ -6,11 +6,12 @@ const config = functions.config();
 
 const db = require('./config/admin').db;
 
+
+let path = require('path')
+global._rootPath = path.resolve('')
+global.rootPath = function(){ return require('path').resolve(global._rootPath, ...arguments) }
+
 exports.api = functions.https.onRequest(require('./config/router'));
-
-
-let exportablesController = require('./controllers/exportables')
-
 
 //	Router para API
 // if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'api') {

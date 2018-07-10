@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "panlavillita-dev",
+  "private_key_id": "0e79bb819d93ff2f3337c1c2c5d9a6e5365e1ee3",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC4r3Lu1UnMslan\nCLXXmMzDfQO7T4dfNgJhJZxrxTOX6N5X67X+SlgXEvvlPh//vdQ203tj1b0DKhkN\nszwVmuBXqHIHh7Xe51MkLx2oR0uH7NfoM99zFN/Il3E1/FZE3sBxm1FDs1Llgf0Z\ng3Ca1OC0+GERL4tsN0445TFUhFhDBn5A+IZDOHLzd+WdK4cwRRkJRm0LcQylr6S8\n6Sn1Vcd08XHapnva9Z1OUkf06mUznHtAMxJIHfantQcS+cct2OSunoWukOnfnYLb\n6wFakldafkg4p36/Lar5M/X0k5ih9sPyc04fMXrJ9jzL1/lTSHymTwNCDZljQVV1\nJpKQ4viDAgMBAAECggEAAfYbCl5JglsCgJOfGsMMqabSO1ME5QX10IJNvvdBLQPU\nGKrwK9suRFB3TF/0hwrFDjAAx3alozr3OSYGJVSXvVaUn2/Zhpx+TYwSjI71RmRF\nhrnGTbqTBdZV5XTglaqn8IztuAJXhwhyX6r9rydDm6hnn38Zw/RyaDhG5dbh+RQ7\n55wblT9vWd1mAhDcl83pgJNnBDy8tuig2uaF8CWapI3H5YLEUjzxy+tkdhz7/EW+\n2prIWnuwFbEpGfDrK81f0rSxP9FU1ptzN/Uv4hQuVmoYLzQqgvLkosGxPk4XRbvY\nv/tt+vBxr0MAjHsZBFCy0GF+D8bP9ECoXRa7FtwxwQKBgQD8SZkYt7pk5vuYK9t8\nhIyDN1kJRoUxSJmDq/k3bFM7VLg9QSxlD4U38cv90OHRHA73gc4rYoGK28F4c1mT\nvtQ7Z41xP1ORO42lRU2pcutroH4rRL+HcfilYr2TVhXmlsvHJQBpy9ppNpEjRxAf\nKDOotg+YVpSYdNBmThVP9f8MPQKBgQC7Zy8sT4giKxs+7VCI9Fzi4cdJa0PIXhBU\nu9Un/WiCgSvMZnlqSYCRLnphII8pst7BaHV4FiXGge4dqqcl7VipP4VTguNbmyDZ\nZHFDk8QxZIIZiF/6kdcDgnrMjRSnzyuLlADh+6TQ8sZF2MXUf8ikdgUj1RUOhEj7\nwGl4dOajvwKBgCycwyLY0nAnXFQzZTOmqMZHUkpOmxz07piXH5HKaQlz2MSUMsqI\nLRGQg3cVqej1YjwoSxHm8Gtiotqu4yc6NoNus1dUUG29LzYLhEkzlifJEKaMGKZV\n5Bcy170nGuZUwiIsC9+peazjRlULqvEnhcMOtsFEhjBTb8q3ghNKt9gtAoGAS2+8\nyHx3UzHA9PK4gXjETzwNaZt5HJXowwMdScyzHh17EPuLEmLmEwr/jkt59ZIgIwC2\nkJFxwVeaD20bfaPuFasRM02z0bM/ZOMOyOIZjrxjtn10DTxZrfr/DYoY73fwkm4Q\ncOdIMCgZ8hHRiLmrfbBYX1Ut9bsAWf7ZNfjwwqcCgYEAviHS2QpmFEbU22/qqpRh\nfFya9kJQTAf1LO1KRclokOsvvmwJluy5XU1b4NfwTbl1xiK7BMsG1ZNwQvE77Grw\nw4mZkRCiyryOIcjbG3+JkfACN+DTV0zmz0G1Mwqe+5CenZmnRw3B8c9iDb5TcCiz\nhi+9oZ8AuRnSCDQKuZr/7L8=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-80vdz@panlavillita-dev.iam.gserviceaccount.com",
+  "client_id": "102805794408812611223",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-80vdz%40panlavillita-dev.iam.gserviceaccount.com"
+}
