@@ -43,9 +43,13 @@
         <img src="https://www.viajejet.com/wp-content/viajes/Quesadillas.jpg">
       </div>
       <a href="#!user"><img class="circle" src="media/anonim.png"></a>
-      <a href="#!email"><span class="white-text email">{{user}}</span></a>
+      <a href="#!email"><span class="white-text email">{{userActual.nombre}} {{userActual.apellido}}</span></a>
     </div></li>
-    <li>{{#link-to 'dir'}}Ir a Admin{{/link-to}}</li>
+    <li>
+      {{#link-to 'dir'}}Ir a
+        {{if (eq userActual.perfil 'dueno') 'Dueño'}}
+      {{/link-to}}
+    </li>
     <li><div class="divider"></div></li>
     <div class="hide-on-large-only">
     <li><a {{action 'signOut'}}>Cerrar Sesión</a></li>
@@ -417,6 +421,3 @@
 </div>
 
 {{/m-wrapper}}
-
-
-

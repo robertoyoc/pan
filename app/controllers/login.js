@@ -49,9 +49,7 @@ export default Controller.extend(Validations, {
   },
   signIn(){
       this.set('isWorking', true)
-
       this.validate().then(({validations})=>{
-
         if(get(this, 'validations.isValid')){
           let newemail = this.get("user") + "@panlavillita.mx";
           let pass = this.get("pass");
@@ -60,16 +58,11 @@ export default Controller.extend(Validations, {
             email: newemail,
             password: pass
           }).then(()=>{
-            this.get('currentUser.account').then((account)=>{
-              console.log('Usuario: ', account)
-              //debugger
-            })
-
+            // this.get('currentUser.account').then((account)=>{    console.log('Usuario: ', account) //debugger })
             this.set('user', undefined);
             this.set('pass', undefined);
             this.set('isWorking', false)
             this.transitionToRoute('dir')
-
           }).catch((error)=>{
             switch(error.code){
               case "auth/user-not-found":
@@ -83,10 +76,8 @@ export default Controller.extend(Validations, {
               case "auth/too-many-requests":
               this.set('loginPassError', 'Demasiadas peticiones.')
               this.send('activateError', '#loginpass')
-
             }
             this.set('isWorking', false)
-
           });
         }
       }).catch((error)=>{

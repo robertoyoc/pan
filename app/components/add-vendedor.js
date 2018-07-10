@@ -53,8 +53,17 @@ export default Component.extend({
                 })
             } else {
                 //console.log('Editado')
-                vendedor.save().then(()=>{
-                    this.sendAction('saveVendedor')
+                this.get('sucursal').then((newSucursal)=>{
+                  vendedor.save().then(()=>{
+                    newSucursal.get('cajeros').then((vendedoresList)=>{
+                      vendedoresList.pushObject(vendedor)
+                      vendedoresList.save().then(()=>{
+                        newSucursal.save().then(()=>{
+                          this.sendAction('saveVendedor')
+                        })
+                      })
+                    })
+                  })
                 })
             }
         }

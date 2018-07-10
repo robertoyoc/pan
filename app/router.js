@@ -59,10 +59,14 @@ Router.map(function() {
     this.route('nvo-retiro');
     this.route('grafica');
     this.route('cancelaciones');
+    this.route('personal');
     this.route('cajeros');
     this.route('vendedores');
+    this.route('administradores');
     this.route('nvo-vendedor');
     this.route('nvo-cajero');
+    this.route('nvo-administrador');
+    this.route('edit-administrador',{path: "/administrador/:id"});
     this.route('edit-cajero', {path: "/cajero/:id"});
     this.route('edit-vendedor', {path: "/vendedor/:id"});
   });
@@ -84,6 +88,8 @@ Router.map(function() {
     this.route('corte');
     this.route('retiros');
   });
+
+  this.route('controller', function() {});
 });
 
 export default Router;

@@ -3,7 +3,7 @@
     <div class="col s12">
       {{#link-to 'dueno.index' class='breadcrumb' }} <i class="material-icons">arrow_back</i> Dueño{{/link-to}}
       {{#link-to 'dueno.personal' class='breadcrumb' }} Control de Personal {{/link-to}}
-      <a class="breadcrumb">Cajeros</a>
+      <a class="breadcrumb">Administradores</a>
     </div>
   </div>
 </nav>
@@ -28,7 +28,7 @@ body {
 </style>
 <div class="row">
   <div class="col s8 offset-s2"><br>
-  	{{#link-to "dueno.nvo-cajero" class="waves-effect waves-light btn right"}}<i class="material-icons left">add</i>Agregar Cajero{{/link-to}}
+  	{{#link-to "dueno.nvo-administrador" class="waves-effect waves-light btn right"}}<i class="material-icons left">add</i>Agregar Administrador{{/link-to}}
     <div class="card mt">
       <table class="striped centered">
         <thead>
@@ -40,20 +40,20 @@ body {
           </tr>
         </thead>
         <tbody>
-            {{#each model as |cajero|}}
-              {{#unless cajero.isNew}}
+            {{#each model as |administrador|}}
+              {{#unless administrador.isNew}}
                 <tr>
-                  <td>{{cajero.nombre}} {{cajero.apellido}}</td>
-                  <td>{{cajero.telefono}}</td>
-                  <td>{{cajero.cajeroDe.nombre}}</td>
+                  <td>{{administrador.nombre}} {{administrador.apellido}}</td>
+                  <td>{{administrador.telefono}}</td>
+                  <td>{{administrador.administradorDe.nombre}}</td>
                   <td>
-                    <a class="btn-floating"><i class="material-icons" {{action 'editCajero' cajero}}>edit</i></a>
-                    <a class="btn-floating red"><i class="material-icons" {{action 'deleteCajero' cajero}} >delete</i></a>
+                    <a class="btn-floating"><i class="material-icons" {{action 'editAdministrador' administrador}}>edit</i></a>
+                    <a class="btn-floating red"><i class="material-icons" {{action 'deleteAdministrador' administrador}} >delete</i></a>
                   </td>
                 </tr>
               {{/unless}}
             {{else}}
-              <h5>No hay cajeros registrados.</h5>
+              <h5>No hay administradores registrados.</h5>
             {{/each}}
         </tbody>
       </table>

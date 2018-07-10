@@ -21,62 +21,79 @@
   transform: scale(1.1);
  	}
  </style>
- 
+
+ <ul id="slide-out" class="side-nav fixed">
+   <li>
+     <div class="userView">
+       <div class="background">
+         <img src="media/productos.jpg">
+       </div>
+       <blockquote class="white-text">
+         Pan La Villita
+       </blockquote>
+     </div>
+   </li>
+   <li>
+     <a><i class="material-icons">person</i>Dueño: {{dueno.nombre}} {{dueno.apellido}} </a>
+   </li>
+   <li>
+     <div class="divider"></div>
+   </li>
+	 <li>
+     {{#link-to 'index'}}<i class="material-icons">menu</i>Página Principal{{/link-to}}
+   </li>
+   <li {{action 'signOut'}}>
+     <a><i class="material-icons">closet</i>Cerrar Sesión</a>
+   </li>
+ </ul>
+
  <div class="row" style="margin-top: 4%;">
-    {{#link-to "dueno.finanzas"}}
-    <div class="col s12 m3 offset img" style="margin-left: 3%;">
-     	<div class="card">
-            <div class="card-image">
-              <img src="../media/cortes.jpg" width="100%">
-              <span class="card-title">Finanzas</span>
-            </div>
-        </div>
-    </div>{{/link-to}}
-    {{#link-to "dueno.reportes"}}
-    <div class="col s12 m3 offset-m1 img">
-     	<div class="card">
-            <div class="card-image">
-              <img src="../media/report-dueno.jpg">
-              <span class="card-title">Reportes</span>
-            </div>
-        </div>
-    </div>{{/link-to}}
-    {{#link-to "dueno.retiros"}}
-    <div class="col s12 m3 offset-m1 img">
-     	<div class="card">
-            <div class="card-image">
-              <img src="../media/retiros-dueno.jpg" width="100%">
-              <span class="card-title">Retiros</span>
-            </div>
-        </div>
-    </div>
-    {{/link-to}}
-    {{#link-to "dueno.cancelaciones"}}
-    <div class="col s12 m3 offset img" style="margin-left: 3%;">
-     	<div class="card">
-            <div class="card-image">
-              <img src="../media/dueno-cancelacion.jpg" width="100%">
-              <span class="card-title">Cancelaciones</span>
-            </div>
-        </div>
-    </div>{{/link-to}}
-    {{#link-to "dueno.cajeros"}}
-    <div class="col s12 m3 offset-m1 img">
-     	<div class="card">
-            <div class="card-image">
-              <img src="../media/cajero.jpg">
-              <span class="card-title">Cajeros</span>
-            </div>
-        </div>
-    </div>{{/link-to}}
-    {{#link-to "dueno.vendedores"}}
-    <div class="col s12 m3 offset-m1 img">
-     	<div class="card">
-            <div class="card-image">
-              <img src="../media/vendedor.jpg" width="100%">
-              <span class="card-title">Vendedores</span>
-            </div>
-        </div>
-    </div>
-    {{/link-to}}
+	 	<div class="col s9 offset-s3">
+			{{#link-to "dueno.finanzas"}}
+	    <div class="col s12 m3 offset img" style="margin-left: 3%;">
+	     	<div class="card">
+	            <div class="card-image">
+	              <img src="../media/cortes.jpg" width="100%">
+	              <span class="card-title">Finanzas</span>
+	            </div>
+	        </div>
+	    </div>{{/link-to}}
+	    {{#link-to "dueno.reportes"}}
+	    <div class="col s12 m3 offset-m1 img">
+	     	<div class="card">
+	            <div class="card-image">
+	              <img src="../media/report-dueno.jpg">
+	              <span class="card-title">Reportes</span>
+	            </div>
+	        </div>
+	    </div>{{/link-to}}
+	    {{#link-to "dueno.retiros"}}
+	    <div class="col s12 m3 offset-m1 img">
+	     	<div class="card">
+	            <div class="card-image">
+	              <img src="../media/retiros-dueno.jpg" width="100%">
+	              <span class="card-title">Retiros</span>
+	            </div>
+	        </div>
+	    </div>
+	    {{/link-to}}
+			{{#link-to "dueno.cancelaciones"}}
+	    <div class="col s12 m3 offset img" style="margin-left: 3%;">
+	     	<div class="card">
+	            <div class="card-image">
+	              <img src="../media/dueno-cancelacion.jpg" width="100%">
+	              <span class="card-title">Cancelaciones</span>
+	            </div>
+	        </div>
+	    </div>{{/link-to}}
+	    {{#link-to "dueno.personal"}}
+	    <div class="col s12 m3 offset-m1 img">
+	     	<div class="card">
+	            <div class="card-image">
+	              <img src="../media/administrador.jpg">
+	              <span class="card-title">Control de Personal</span>
+	            </div>
+	        </div>
+	    </div>{{/link-to}}
+		</div>
 </div>
