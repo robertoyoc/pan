@@ -1,6 +1,6 @@
 import { moduleForModel, test } from 'ember-qunit';
 
-moduleForModel('courtesy', 'Unit | Model | courtesy', {
+moduleForModel('roll-call', 'Unit | Model | roll call', {
   // Specify the other units that are required for this test.
   needs: []
 });

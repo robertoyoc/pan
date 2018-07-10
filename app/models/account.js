@@ -6,5 +6,12 @@ export default DS.Model.extend({
   apellido: DS.attr('string'),
   perfil: DS.attr('string'),
   telefono: DS.attr('string'),
-  sucursal: DS.belongsTo('sucursal')
+
+  administradorDe: DS.belongsTo('sucursal', { inverse: 'administradores' }),
+  cajeroDe: DS.belongsTo('sucursal', { inverse: 'cajeros' }),
+  vendedorDe: DS.belongsTo('sucursal', { inverse: 'vendedores' }),
+
+  asistencias: DS.hasMany('attendance'),
+
+  qrCode: DS.attr('string'),
 });

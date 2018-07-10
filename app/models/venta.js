@@ -8,6 +8,9 @@ export default DS.Model.extend({
   pedidos: DS.hasMany('pedidos'),
   fecha: DS.attr('string'),
   status: DS.attr('string'),
+
+  ticketUrl: DS.attr('string'),
+
   hora: computed('fecha', function() {
     let date = moment(this.get('fecha'))
     return `${date.hour()}:${date.minutes()}`
@@ -25,7 +28,20 @@ export default DS.Model.extend({
   importeTotal: computed('pedidos.@each.total', function() {
     let sum = 0;
     this.get('pedidos').forEach((pedido) => {
-      sum += parseInt(pedido.get('total'));
+      if(!pedido.get('isCourtesy')) {
+        sum += parseInt(pedido.get('total'));
+      }
+    });
+    //console.log(sum)
+    return sum;
+  }).meta({ serialize: true }),
+
+  importeCortesia: computed('pedidos.@each.total', function() {
+    let sum = 0;
+    this.get('pedidos').forEach((pedido) => {
+      if(pedido.get('isCourtesy')) {
+        sum += parseInt(pedido.get('total'));
+      }
     });
     //console.log(sum)
     return sum;

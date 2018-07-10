@@ -1,7 +1,9 @@
 <nav style="padding-left: 10px" class="teal brown lighten-1">
   <div class="nav-wrapper ">
     <div class="col s12">
-      {{#link-to 'dueno.index' class='breadcrumb' }}<i class="material-icons">arrow_back</i> Panel{{/link-to}}
+      {{#link-to 'dueno.index' class='breadcrumb' }} <i class="material-icons">arrow_back</i> Dueño{{/link-to}}
+      {{#link-to 'dueno.personal' class='breadcrumb' }} Control de Personal {{/link-to}}
+      <a class="breadcrumb">Vendedores</a>
     </div>
   </div>
 </nav>
@@ -32,8 +34,9 @@ body {
         <thead>
           <tr>
             <th>Nombre</th>
-            <th>Telefono</th>
-            <th>Acción</th> 
+            <th>Teléfono</th>
+            <th>Sucursal</th>
+            <th>Acción</th>
           </tr>
         </thead>
         <tbody>
@@ -42,7 +45,7 @@ body {
                 <tr>
                   <td>{{vendedor.nombre}} {{vendedor.apellido}}</td>
                   <td>{{vendedor.telefono}}</td>
-                  <td>{{vendedor.sucursal.nombre}}</td>
+                  <td>{{vendedor.vendedorDe.nombre}}</td>
                   <td>
                     <a class="btn-floating"><i class="material-icons" {{action 'editVendedor' vendedor}}>edit</i></a>
                     <a class="btn-floating red"><i class="material-icons" {{action 'deleteVendedor' vendedor}} >delete</i></a>
@@ -50,7 +53,7 @@ body {
                 </tr>
               {{/unless}}
             {{else}}
-              <h5>No hay cajeros registrados.</h5>
+              <h5>No hay vendedores registrados.</h5>
             {{/each}}
         </tbody>
       </table>

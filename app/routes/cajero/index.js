@@ -9,7 +9,6 @@ export default Route.extend({
       return this.store.createRecord('cobro', {
         sucursalId: account.get('sucursal.id')
       })
-
     })
 
   },

@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('route:vendedor/cortesia', 'Unit | Route | vendedor/cortesia', {
+moduleFor('route:dueno/edit-administrador', 'Unit | Route | dueno/edit administrador', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });

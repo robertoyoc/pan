@@ -3,6 +3,7 @@ import { computed } from '@ember/object';
 import moment from 'moment';
 import { inject as service } from "@ember/service";
 import { all } from 'rsvp';
+import { isBlank } from '@ember/utils';
 
 export default Component.extend({
     store: service(),
@@ -15,61 +16,77 @@ export default Component.extend({
         return this.get('store').findAll('categoria')
     }),
 
-    disabledVender: computed('myModel', 'isVenta', function() {
-      if(this.get('isVenta')) {
-        return this.get('myModel.venta.pedidos.length') > 0;
-      } else {
-        return this.get('myModel.cortesia.pedidos.length') > 0;
-      }
-    }),
-
-    disabledLinkventa: computed('isNew', 'isVenta', function(){
-      if(this.get('isNew')){
-        return false
-      } else {
-        return !this.get('isVenta')
-      }
-    }),
-
-    disabledLinkcortesia: computed('isNew', 'isVenta', function(){
-      if(this.get('isNew')){
-        return false
-      } else {
-        return this.get('isVenta')
-      }
+    disabledVender: computed('model', function() {
+      return this.get('model.pedidos.length') > 0;
     }),
 
     actions: {
         delete(pedido){
-			pedido.destroyRecord()
+          pedido.destroyRecord()
         },
 
-        finalizar(venta){
-            venta.set('fecha', moment().format())
-			      all(venta.get('pedidos').invoke('save')).then(()=>{
-				          venta.save().then(()=>{
-                    window.swal({
-                        title: '<i>VENTA</i>',
+        getDownloadUrl(url, redirectCount, venta) {
+          console.log('venta', venta)
+          redirectCount = redirectCount || 0;
+          if (redirectCount > 10) {
+              throw new Error("Redirected too many times.");
+          }
+          return new Promise(function (resolve) {
+            let redirectsTo;
+            return venta.get('ticketUrl').then((downloadURL)=>{
+              redirectsTo = (!isBlank(downloadURL) && downloadURL != url) ? downloadURL: null;
+              resolve(redirectsTo);
+            }).catch(function (redirectsTo) {
+              return redirectsTo
+                 ? getDownloadUrl(redirectsTo, redirectCount+ 1, venta)
+                : url;
+          });
+        })
+      },
+
+      finalizar(venta){
+          venta.set('fecha', moment().format())
+          all(venta.get('pedidos').invoke('save')).then(()=>{
+                venta.save().then((data)=>{
+                  swal({
+                    type: 'question',
+                    confirmButtonText: '¿Generar Ticket?',
+                    showLoaderOnConfirm: true,
+                    preConfirm: () => {
+                      return new Promise((resolve)=>{
+                        function checkData(){
+                          if(data.get('ticketUrl')){
+                            // console.log(data.get('ticketUrl'))
+                            return resolve(data.get('ticketUrl'))
+                          }
+                          else return setTimeout(checkData, 2000)
+                        }
+                        checkData()
+                      })
+                    },
+                    allowOutsideClick: false
+                  }).then((result) => {
+                    console.log(result)
+                    if (!isBlank(result)) {
+                      swal({
+                        title: '<i>TICKET</i>',
                         type: 'info',
                         html:
-                            '<a href="'+
-                            // https://firebasestorage.googleapis.com/v0/b/panlavillita-dev.appspot.com/o/ticket-ventas%2F-LAq_L91h6n1HTGRTAcF%2Fventa--LAq_L91h6n1HTGRTAcF.pdf?alt=media&token=609d1026-e30e-455d-852d-57260f546b21
-                            // https://firebasestorage.googleapis.com/v0/b/panlavillita-dev.appspot.com/o/ticket-ventas%2F-LAq_L91h6n1HTGRTAcF%2Fventa--LAq_L91h6n1HTGRTAcF.pdf?alt=media&token=609d1026-e30e-455d-852d-57260f546b21
-                            // https://firebasestorage.googleapis.com/v0/b/panlavillita-dev.appspot.com/o/ticket-ventas%2F-LAqCJnoYxyxv254qFaS%2Fventa--LAqCJnoYxyxv254qFaS.pdf?alt=media&token=233b2559-651a-4ac6-aff3-95c3a960e68d
-                            //venta.get('')+
-                            '//github.com">Ticket</a> ',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Ticket registrado!'
-                    }).then(()=>{
+                            '<a href="' +
+                            result +
+                            '" target="_blank">Ticket</a> ',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: '¡Ticket impreso correctamente!',
+                        allowOutsideClick: false
+                      }).then(()=>{
                         this.sendAction('nuevaVenta', venta);
-                    }).catch((error)=>{
+                      }).catch((error)=>{
                         console.log(error)
                     });
-                    //this.sendAction('nuevaVenta', venta);
-                })
-            })
-        },
+                    }
+                  })
+              })
+          })
+      }
     }
 });

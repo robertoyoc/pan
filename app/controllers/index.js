@@ -1,7 +1,10 @@
+import Controller from '@ember/controller';
 import { computed, observer, get } from '@ember/object';
 import { inject as service } from '@ember/service';
-import Controller from '@ember/controller';
+import { isEmpty } from '@ember/utils';
 import { all } from 'rsvp';
+import DS from 'ember-data'
+
 const perfiles = [
   { name: 'Empresa'},
   { name: 'Repartidor'},
@@ -24,6 +27,19 @@ export default Controller.extend({
 
 
   }),
+
+  userActual: computed('currentUser', function(){
+    if(!isEmpty(this.get('currentUser.account'))) {
+      return DS.PromiseObject.create({
+        promise: this.get('currentUser.account').then((account)=>{
+            return account;
+        })
+      });
+    } else {
+      return null
+    }
+  }),
+
   cartTotal: computed('model.cart.pedidos.@each.total', function(){
     let total =0;
     if(this.get('model.cart')){
@@ -104,7 +120,7 @@ export default Controller.extend({
       window.$(id).removeClass('invalid');
       window.$(id).addClass('valid');
     },
-  
+
     signOut(){
       window.swal({
         title: 'Estás seguro?',
@@ -119,7 +135,7 @@ export default Controller.extend({
         cancelButtonClass: 'cancel-class',
         closeOnConfirm: false,
         closeOnCancel: false
-      
+
       }).then(()=>{
         this.get('session').close();
           this.send('sessionChanged')
@@ -131,7 +147,7 @@ export default Controller.extend({
           });
       }).catch(()=>{});
 
-      
+
 
     },
     perfil(){
@@ -153,13 +169,13 @@ export default Controller.extend({
       window.$('#loginpass').removeClass('valid');
       window.$('#loginuser').removeClass('valid');
       window.$(".material-icons").removeClass("active");
-      
+
     },
     register(){
       window.$('#register').modal('open');
       window.$(".material-icons").removeClass("active");
       window.$(".validate").removeClass('valid');
-      
+
     },
     pedidos(){
        window.$('#pedidos').modal('open');

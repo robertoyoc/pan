@@ -29,18 +29,19 @@ input {
   width: 100%!important;
 }
 </style>
+
 <div class="row main">
   <div class="col s12">
     <div class="row">
       <div class="col s12 m4">
         <div class="card center-align">
           <div class="collection">
-            <a class="collection-item" {{action 'changeCategoria' 'all'}}>
+            <a class="collection-item" {{action 'changePrecio' 'all'}}>
 					        	Todos
 					    </a>
-            {{#each myCategorias as |categoria|}}
-              <a class="collection-item" {{action 'changeCategoria' categoria.nombre}}>
-					        	{{categoria.nombre}}
+            {{#each precios as |precio|}}
+              <a class="collection-item" {{action 'changePrecio' precio}}>
+					        	{{format-money precio symbol=selectedCurrency format="%v %s"}}
 					        </a>
             {{/each}}
           </div>
@@ -62,10 +63,17 @@ input {
       </div>
       <div class="col s12 m4">
         {{teclado-numeric myCantidad=model.cantidad maxValue=existenceProducto.cantidad}}
+        <form action="#">
+           <p>
+             {{input type="checkbox" name="isCourtesy" checked=model.isCourtesy id="test5"}}
+             <label for="test5">¿Es Cortesía?</label>
+           </p>
+        </form>
+        <hr>
         <a {{action 'agregarPedido' model}} class="waves-effect waves-light btn right {{if disabledAgregar 'disabled'}}">
-						{{!-- {{if (or disabledAgregar (v-get this 'cantidad' 'isInvalid')) 'disabled'}}"> --}}
-						Agregar al Pedido
-					</a>
+           {{!-- {{if (or disabledAgregar (v-get this 'cantidad' 'isInvalid')) 'disabled'}}"> --}}
+           Agregar al Pedido
+       </a>
       </div>
     </div>
   </div>

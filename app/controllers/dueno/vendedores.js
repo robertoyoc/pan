@@ -5,11 +5,11 @@ export default Controller.extend({
         editVendedor(vendedor) {
 			this.transitionToRoute('dueno.edit-vendedor', vendedor.get('id'))
         },
-        
+
         deleteVendedor(vendedor) {
         window.swal({
 				title: 'Estás seguro?',
-				text: 'El cajero será eliminado',
+				text: 'El vendedor será eliminado',
 				type: 'warning',
 				showCancelButton: true,
 				confirmButtonColor: '#3085d6',
@@ -23,7 +23,7 @@ export default Controller.extend({
 			}).then(()=>{
 				vendedor.destroyRecord();
 			}).catch(()=>{});
-        
+
     	}
     }
 });

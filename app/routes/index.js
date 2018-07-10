@@ -12,7 +12,6 @@ export default Route.extend({
     // this.get('ajax').request('/recargas').then(()=>{
     //   debugger
     // })
-
     // this.store.createRecord('account', {
     //   nombre: 'cajero',
     //   apellido: 'yoc',
@@ -25,15 +24,13 @@ export default Route.extend({
   },
 
   model(){
-    if(this.get('session.currentUser.uid')){
+    if(this.get('currentUser.uid')){
       return this.get('store').query('account', {
         orderBy: 'uid',
-        equalTo: this.get('session.currentUser.uid'),
+        equalTo: this.get('currentUser.uid'),
         limitToLast: 1
       }).then((account) => {
-
         let _account = account.get('firstObject');
-
         return this.get('store').query('cart', {
           orderBy: 'propietario',
           equalTo: _account.get('id'),
@@ -64,12 +61,6 @@ export default Route.extend({
         productos: this.get('store').findAll("producto"),
       });
     }
-
-
-
-
-
-
   },
   actions: {
     sessionChanged: function() {

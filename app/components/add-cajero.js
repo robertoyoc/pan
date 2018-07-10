@@ -2,12 +2,12 @@ import Component from '@ember/component';
 import { computed } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { isEmpty } from '@ember/utils';
-
+import QRCode from 'qrcode';
 
 export default Component.extend({
     store: service(),
     session: service(),
-	firebase: service('firebaseApp'),
+  	firebaseApp: service(),
 
     newUser: computed('model', function(){
         return isEmpty(this.get('model.uid'))
@@ -19,27 +19,58 @@ export default Component.extend({
 
     actions: {
         guardar(cajero, sucursal, isNew){
-            if(isEmpty(sucursal.get('cajerosId')))
-                sucursal.set('cajerosId', []);
+          let ctx = this;
 
-            cajero.set('sucursal', sucursal);
+            cajero.set('cajeroDe', sucursal);
+
+            if(isEmpty(cajero.get('qrCode'))){
+              var opts = {
+                type: 'image/png',
+                rendererOpts: {
+                  quality: 0.99
+                }
+              }
+
+              QRCode.toDataURL(cajero.get('id'), opts, function (err, url) {
+                  if (err) throw err
+                  cajero.set('qrCode', url)
+              })
+            }
 
             if(isNew){
-                //console.log('Nuevo')
-                this.get('firebase').auth().createUserWithEmailAndPassword(this.get('halfmail') + "@panlavillita.mx", this.get('password')).then((newUser)=>{
-                    cajero.set('uid', newUser.uid);
-                    //console.log(sucursal.get('cajerosId'))
-                    sucursal.get('cajerosId').push(cajero.get('id'))
-                    cajero.save().then(()=>{
-                        this.sendAction('saveCajero')
+
+              //console.log('Nuevo')
+              this.get('firebaseApp').auth().createUserWithEmailAndPassword(this.get('halfmail') + "@panlavillita.mx", this.get('password')).then((newUser)=>{
+                  cajero.set('uid', newUser.uid);
+                  //console.log(sucursal.get('cajerosId'))
+
+                  cajero.save().then(()=>{
+                    sucursal.get('cajeros').then((cajerosList)=>{
+                      cajerosList.pushObject(cajero)
+                      cajerosList.save().then(()=>{
+                        sucursal.save().then(()=>{
+                          this.sendAction('saveCajero')
+                        })
+                      })
                     })
-                })
+                  })
+              })
             } else {
                 //console.log('Editado')
-                cajero.save().then(()=>{
-                    this.sendAction('saveCajero')
+                this.get('sucursal').then((newSucursal)=>{
+                  cajero.save().then(()=>{
+                    newSucursal.get('cajeros').then((cajerosList)=>{
+                      cajerosList.pushObject(cajero)
+                      cajerosList.save().then(()=>{
+                        newSucursal.save().then(()=>{
+                          this.sendAction('saveCajero')
+                        })
+                      })
+                    })
+                  })
                 })
+
             }
-        }
+        },
     }
 });

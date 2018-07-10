@@ -1,11 +1,12 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('route:vendedor/procesando-cortesia', 'Unit | Route | vendedor/procesando cortesia', {
+moduleFor('controller:admin/nvo-paselista', 'Unit | Controller | admin/nvo paselista', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });
 
+// Replace this with your real tests.
 test('it exists', function(assert) {
-  let route = this.subject();
-  assert.ok(route);
+  let controller = this.subject();
+  assert.ok(controller);
 });

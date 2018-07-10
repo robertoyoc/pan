@@ -1,13 +1,15 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
+import { inject as service } from '@ember/service';
 import moment from 'moment';
 import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
 import DS from 'ember-data'
 
-
-
-
 export default Controller.extend(FindQuery, {
+  today: moment().format('X'),
+  currentUser: service(),
+  
   result: null,
   names: ['Efectivo', 'Tarjeta Debito/Credito', 'Cheque', ],
 
@@ -27,11 +29,8 @@ export default Controller.extend(FindQuery, {
               'warning'
             )
           }
-
         })
       })
-      //console.log(venta)
-
     } else {
       return null;
     }
@@ -54,6 +53,19 @@ export default Controller.extend(FindQuery, {
     }
   }),
 
+  currentCajero: computed('store', 'currentUser', function(){
+    console.log(this.get('curentUser'))
+    if(!isEmpty(this.get('currentUser.account'))) {
+      return DS.PromiseObject.create({
+        promise: this.get('currentUser.account').then((account)=>{
+            return account;
+        })
+      });
+    } else {
+      return null
+    }
+  }),
+
   actions: {
     realizarPago(venta) {
       if (venta.get('isFulfilled')) {
@@ -61,9 +73,8 @@ export default Controller.extend(FindQuery, {
         venta.set('fechaPago', moment().format())
         ventaObj.set('status', 'Pagado')
         ventaObj.save()
-
       }
-      let fecha = `${moment().date()} ${moment.months()[moment().month()]}, ${moment().year()}`
+      let fecha =  moment().format() // `${moment().date()} ${moment.months()[moment().month()]}, ${moment().year()}`
       this.set('model.fecha', fecha)
       this.get('model').save()
       this.set('model', this.store.createRecord('cobro', {
@@ -75,6 +86,11 @@ export default Controller.extend(FindQuery, {
         'El ticket ha sido generado',
         'success'
       )
+    },
+
+    signOut(){
+        this.get('session').close();
+        this.transitionToRoute('index')
     }
   }
 });

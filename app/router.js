@@ -41,6 +41,9 @@ Router.map(function() {
     this.route('edit-mprima', {path: "/m-prima/:id"});
     this.route('finanzas');
     this.route('retiros');
+    this.route('personal');
+    this.route('nvo-paselista');
+    this.route('edit-paselista', {path: "/pase-lista/:id"});
   });
 
   this.route('cliente', function() {
@@ -56,10 +59,14 @@ Router.map(function() {
     this.route('nvo-retiro');
     this.route('grafica');
     this.route('cancelaciones');
+    this.route('personal');
     this.route('cajeros');
     this.route('vendedores');
+    this.route('administradores');
     this.route('nvo-vendedor');
     this.route('nvo-cajero');
+    this.route('nvo-administrador');
+    this.route('edit-administrador',{path: "/administrador/:id"});
     this.route('edit-cajero', {path: "/cajero/:id"});
     this.route('edit-vendedor', {path: "/vendedor/:id"});
   });
@@ -69,9 +76,6 @@ Router.map(function() {
     this.route('procesando-venta', {path: "/:idventa"});
     this.route('venta', {path: "/venta/:idventa"});
     this.route('historial-venta');
-    this.route('cortesia', {path: "/cortesia/:id"});
-    this.route('procesando-cortesia', {path: "/:id"});
-    this.route('historial-cortesia');
   });
   this.route('nva-venta');
   this.route('nvo-especial');
@@ -84,6 +88,8 @@ Router.map(function() {
     this.route('corte');
     this.route('retiros');
   });
+
+  this.route('controller', function() {});
 });
 
 export default Router;

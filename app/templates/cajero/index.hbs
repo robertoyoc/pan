@@ -39,27 +39,38 @@ input {
   margin-right: 35%;
 }
 </style>
+
 <ul id="slide-out" class="side-nav fixed">
   <li>
     <div class="userView">
       <div class="background">
         <img src="media/productos.jpg">
       </div>
-      <a href="#!user"></a>
-      <a href="#!name"><span class="white-text name">Pan La Villia</span></a>
+      <blockquote class="white-text">
+        Pan La Villita
+      </blockquote>
     </div>
   </li>
   <li>
-    {{#link-to 'cajero.historial'}}<i class="material-icons">schedule</i>Historial{{/link-to}}
+    <a><i class="material-icons">home</i>Sucursal: {{currentCajero.sucursal.nombre}} </a>
+  </li>
+  <li>
+    <a><i class="material-icons">person</i>Cajero: {{currentCajero.nombre}} {{currentCajero.apellido}} </a>
+  </li>
+  <li>
+    <div class="divider"></div>
+  </li>
+  <li>
+    {{#link-to 'cajero.historial' (query-params date=today isToday=true)}}<i class="material-icons">schedule</i>Historial{{/link-to}}
   </li>
   <li>
     {{#link-to 'cajero.corte'}}<i class="material-icons">assessment</i>Corte{{/link-to}}
   </li>
   <li>
-    {{#link-to 'cajero.retiros'}}<i class="material-icons">call_missed_outgoing</i>Retiros{{/link-to}}
+    {{#link-to 'cajero.retiros' (query-params date=today isToday=true)}}<i class="material-icons">call_missed_outgoing</i>Retiros{{/link-to}}
   </li>
-  <li>
-    <div class="divider"></div>
+  <li {{action 'signOut'}}>
+    <a><i class="material-icons">closet</i>Cerrar Sesión</a>
   </li>
 </ul>
 <div class="row">
@@ -75,12 +86,12 @@ input {
   <div class="row">
     <div class="col s6">
       <span class="info mt right">
-        Cantidad a pagar: 
+        Cantidad a pagar:
       </span>
     </div>
     <div class="col s6">
       <span class="info mt right cp">
-        $ {{selectedVenta.importeTotal}}.00
+        {{format-money selectedVenta.importeTotal symbol=selectedCurrency format="%v %s"}}
       </span>
     </div>
     <div class="col s8 offset-s2">
@@ -96,13 +107,13 @@ input {
     <div class="col s6">
       <br>
       <span class="info right">
-        Cambio del cliente: 
+        Cambio del cliente:
       </span>
     </div>
     <div class="col s6">
       <br>
       <span class="info  right cp">
-        ${{cambioCliente}}.00 
+        {{format-money cambioCliente symbol=selectedCurrency format="%v %s"}}
       </span>
     </div>
     <div class="input-field col s8 offset-s2">

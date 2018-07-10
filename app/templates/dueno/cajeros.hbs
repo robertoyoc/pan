@@ -1,7 +1,9 @@
 <nav style="padding-left: 10px" class="teal brown lighten-1">
   <div class="nav-wrapper ">
     <div class="col s12">
-      {{#link-to 'dueno.index' class='breadcrumb' }}<i class="material-icons">arrow_back</i> Panel{{/link-to}}
+      {{#link-to 'dueno.index' class='breadcrumb' }} <i class="material-icons">arrow_back</i> Dueño{{/link-to}}
+      {{#link-to 'dueno.personal' class='breadcrumb' }} Control de Personal {{/link-to}}
+      <a class="breadcrumb">Cajeros</a>
     </div>
   </div>
 </nav>
@@ -43,7 +45,7 @@ body {
                 <tr>
                   <td>{{cajero.nombre}} {{cajero.apellido}}</td>
                   <td>{{cajero.telefono}}</td>
-                  <td>{{cajero.sucursal.nombre}}</td>
+                  <td>{{cajero.cajeroDe.nombre}}</td>
                   <td>
                     <a class="btn-floating"><i class="material-icons" {{action 'editCajero' cajero}}>edit</i></a>
                     <a class="btn-floating red"><i class="material-icons" {{action 'deleteCajero' cajero}} >delete</i></a>
