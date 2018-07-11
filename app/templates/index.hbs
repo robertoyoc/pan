@@ -47,7 +47,13 @@
     </div></li>
     <li>
       {{#link-to 'dir'}}Ir a
-        {{if (eq userActual.perfil 'dueno') 'Dueño'}}
+        {{if (eq userActual.perfil 'dueno') 'Dueño'
+          (if (eq userActual.perfil 'admin') 'Administrador'
+          (if (eq userActual.perfil 'cajero') 'Cajero'
+          (if (eq userActual.perfil 'vendedor') 'Vendedor'
+          (if (eq userActual.perfil 'cliente') 'Cliente'
+          ))))
+        }}
       {{/link-to}}
     </li>
     <li><div class="divider"></div></li>

@@ -31,8 +31,8 @@ body {
         <tbody>
             {{#each model.listaAsistencia as |asistencia|}}
                 <tr>
-                  <td>{{asistencia.empleado.nombre}}</td>
-                  <td>{{asistencia.empleado.perfil}}</td>
+                  <td>{{asistencia.empleado.nombre}} {{asistencia.empleado.apellido}}</td>
+                  <td>{{if (eq asistencia.empleado.perfil 'cajero') 'Cajero' (if (eq asistencia.empleado.perfil 'vendedor') 'Vendedor')}}</td>
                   <td>
                     {{#if (not-eq asistencia.asistencia false)}}
                       Registrada.

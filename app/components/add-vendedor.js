@@ -41,7 +41,7 @@ export default Component.extend({
                     vendedor.set('uid', newUser.uid);
                     //console.log(sucursal.get('vendedoresId'))
                     vendedor.save().then(()=>{
-                      sucursal.get('cajeros').then((vendedoresList)=>{
+                      sucursal.get('vendedores').then((vendedoresList)=>{
                         vendedoresList.pushObject(vendedor)
                         vendedoresList.save().then(()=>{
                           sucursal.save().then(()=>{
@@ -55,7 +55,7 @@ export default Component.extend({
                 //console.log('Editado')
                 this.get('sucursal').then((newSucursal)=>{
                   vendedor.save().then(()=>{
-                    newSucursal.get('cajeros').then((vendedoresList)=>{
+                    newSucursal.get('vendedores').then((vendedoresList)=>{
                       vendedoresList.pushObject(vendedor)
                       vendedoresList.save().then(()=>{
                         newSucursal.save().then(()=>{

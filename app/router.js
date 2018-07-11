@@ -44,6 +44,7 @@ Router.map(function() {
     this.route('personal');
     this.route('nvo-paselista');
     this.route('edit-paselista', {path: "/pase-lista/:id"});
+    this.route('lista-personal');
   });
 
   this.route('cliente', function() {

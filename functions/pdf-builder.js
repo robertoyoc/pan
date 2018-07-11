@@ -2,28 +2,22 @@ module.exports = function() {
   let path = require('path')
   let rootPath = path.resolve('')
 
-
-
   function getTemplate(name) {
     console.log("obteniendo template")
     return require('./views/pdf/templates/' + name)
   }
 
-
-
-
-
   return function(venta, templateName) {
     console.log("enviando a renderizar")
     // process.chdir(path.resolve(rootPath, './'));
-    let fonts = {
-      HelveticaNeue: {
-        normal: global.rootPath('./views/pdf/fonts/HelveticaNeue-01.ttf'),
-        bold: global.rootPath('./views/pdf/fonts/HelveticaNeue-Bold-02.ttf'),
-        italics: global.rootPath('./views/pdf/fonts/HelveticaNeue-Italic-03.ttf'),
-        bolditalics: global.rootPath('./views/pdf/fonts/HelveticaNeue-BoldItalic-04.ttf')
+    var fonts = {
+      Roboto: {
+        normal: 'fonts/Roboto-Regular.ttf',
+        bold: 'fonts/Roboto-Medium.ttf',
+        italics: 'fonts/Roboto-Italic.ttf',
+        bolditalics: 'fonts/Roboto-MediumItalic.ttf'
       }
-    }
+    };
 
     // Utils
     let _ = require('underscore')
@@ -36,7 +30,6 @@ module.exports = function() {
 
     let template = getTemplate(templateName)
     let defaultDd = {}
-
 
     return template.render(venta, defaultDd).then((result) => {
       return printer.createPdfKitDocument(result)

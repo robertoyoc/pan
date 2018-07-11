@@ -123,13 +123,13 @@ export default Controller.extend({
 
     signOut(){
       window.swal({
-        title: 'Estás seguro?',
-        text: 'Tu sesión será cerrada',
+        title: '¿Estás seguro?',
+        text: 'Tu sesión será cerrada.',
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Si, salir!',
+        confirmButtonText: 'Sí, salir',
         cancelButtonText: 'No',
         confirmButtonClass: 'confirm-class',
         cancelButtonClass: 'cancel-class',

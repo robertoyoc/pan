@@ -37,6 +37,7 @@ export default Controller.extend({
 
         }).then(()=>{
           this.get('session').close();
+          this.transitionToRoute('index');
             window.swal({
               type: 'success',
               title: 'Sesión cerrada!',

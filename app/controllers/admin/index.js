@@ -17,7 +17,7 @@ export default Controller.extend(FindQuery, {
     }),
     currentSucursal: computed('sucursalActual.content', function(){
 		return this.get('sucursalActual.content')
-    }), 
+    }),
 
     turno: computed(function(){
         if(moment().format('HH') < 14) {
@@ -32,14 +32,13 @@ export default Controller.extend(FindQuery, {
             startDate, endDate;
         startDate = today.clone().startOf('day').utc();
         endDate = today.clone().endOf('day').utc();
-
         return DS.PromiseObject.create({
             promise: this.get('currentUser.account').then((account)=>{
                 let sucursal = account.get('sucursal');
                 let context = this;
                 return new Promise(function (resolve, reject){
-                    context.filterCustom(context.store, 'roll-call', { 
-                        'turno': ['==', context.get('turno')], 
+                    context.filterCustom(context.store, 'roll-call', {
+                        'turno': ['==', context.get('turno')],
                         'fechaUnix': ['>=', startDate.unix()],
                     }, function(listas){
                         listas.forEach((lista)=>{
@@ -51,12 +50,12 @@ export default Controller.extend(FindQuery, {
                     })
                 })
             })
-        })  
+        })
     }),
    listaExists: computed('listaExistente.content', function(){
 		return this.get('listaExistente.content')
-    }), 
-    
+    }),
+
     listaActual: computed('turno', function(){
         let today = moment(),
             startDate, endDate;
@@ -68,8 +67,8 @@ export default Controller.extend(FindQuery, {
                 let sucursal = account.get('sucursal');
                 let context = this;
                 return new Promise(function (resolve, reject){
-                    context.filterCustom(context.store, 'roll-call', { 
-                        'turno': ['==', context.get('turno')], 
+                    context.filterCustom(context.store, 'roll-call', {
+                        'turno': ['==', context.get('turno')],
                         'fechaUnix': ['>=', startDate.unix()],
                     }, function(listas){
                         listas.forEach((lista)=>{
@@ -81,11 +80,11 @@ export default Controller.extend(FindQuery, {
                     })
                 })
             })
-        })  
+        })
     }),
 
     currentList: computed('listaActual.content', function(){
 		return this.get('listaActual.content')
-    }), 
+    }),
 
 });
