@@ -61,7 +61,7 @@ module.exports = {
 				)
 			}
 			let sucursal_id = ventaSnap.val().sucursal;
-			ventaObj.idSucursal = nVenta;
+			ventaObj.idSucursal = sucursal_id;
 			console.log('Sucursal: ', sucursal_id);
 			let vendedor_id = ventaSnap.val().propietario;
 			return db.ref(`sucursals/${sucursal_id}`).once('value').then((sucursalSnap)=>{
