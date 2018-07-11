@@ -2,6 +2,7 @@ module.exports = function() {
   let Promise = require('promise');
   let _ = require('underscore');
   const formatCurrency = require('format-currency');
+  const moment = require('moment');
 
   function buildTableBody(data) {
       var columns = ['Producto', 'Cantidad', 'Unidad', 'Importe'];
@@ -93,7 +94,6 @@ module.exports = function() {
     let dateString = moment.unix(venta.fecha).format("DD/MM/YYYY");
     let hourString = moment.unix(venta.fecha).utcOffset("-05:00").format("HH:mm:ss");
     // console.log("hora correcta", moment.unix(ventaObj.fecha).utcOffset("-05:00"))
-    let heightt = Number(cPedidos) * 20 + 180;
 
     return {
       {
@@ -120,6 +120,7 @@ module.exports = function() {
   }
 
   function render(venta, defaultDd) {
+    let heightt = Number(venta.pedidos.length) * 20 + 180;
     console.log("renderizando")
 
     let dd = _.extend(defaultDd, {
