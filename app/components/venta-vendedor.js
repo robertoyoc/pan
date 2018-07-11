@@ -47,6 +47,7 @@ export default Component.extend({
       finalizar(venta){
           venta.set('fecha', moment().format())
           all(venta.get('pedidos').invoke('save')).then(()=>{
+                venta.set('ticketUrl', 'https://us-central1-panlavillitamx.cloudfunctions.net/api/ventas/' + venta.get('id') + '.pdf')
                 venta.save().then((data)=>{
                   swal({
                     type: 'question',
@@ -76,7 +77,7 @@ export default Component.extend({
                             result +
                             '" target="_blank">Ticket</a> ',
                         confirmButtonColor: '#3085d6',
-                        confirmButtonText: '¡Ticket impreso correctamente!',
+                        confirmButtonText: '¡Ticket correcto!',
                         allowOutsideClick: false
                       }).then(()=>{
                         this.sendAction('nuevaVenta', venta);

@@ -9,6 +9,7 @@
         <th>Propietario</th>
         <th>Fecha y Hora</th>
         <th>Importe</th>
+        <th>Ticket</th>
       </tr>
     </thead>
 
@@ -16,12 +17,15 @@
       {{#each model as |venta|}}
           {{#unless venta.isNew}}
             <tr>
-              <td>{{venta.propietario.nombre}}</td>
+              <td>{{venta.propietario.nombre}} {{venta.propietario.apellido}}</td>
               <td>
                 {{moment-format venta.fechaUnix 'MMM DD, HH:mm' 'X' utc=true}}
               </td>
               <td>
-                <td>${{venta.importeTotal}}</td>
+                <td>{{format-money venta.importeTotal symbol=selectedCurrency format="%s %v"}}</td>
+              </td>
+              <td>
+                <a href={{venta.ticketUrl}} class="btn-floating" download><i class="material-icons">cloud_download</i></a>
               </td>
             </tr>
           {{/unless}}

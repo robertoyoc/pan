@@ -5,11 +5,28 @@ import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
 
 export default Route.extend(FindQuery, {
 	currentUser: service(),
+	beforeModel(){/*
+		this.get('currentUser.account').then((account)=>{
+			let sucursal = account.get('administradorDe');
+			this.get('store').findAll('receta').then((recetasList)=>{
+				recetasList.forEach((receta)=>{
+					this.get('store').createRecord('existence', {
+						cantidad: 1000,
+						limite: 100,
+						productoId: receta.get('id'),
+						sucursalId: sucursal.get('id'),
+						tipo: 'receta'
+					}).save()
+
+				})
+			})
+		})*/
+	},
 	model(){
-		
+
 		return hash({
 			recetas: this.get('currentUser.account').then((account)=>{
-				let sucursal = account.get('sucursal');
+				let sucursal = account.get('administradorDe');
 
 				let context = this;
 				return new Promise(function (resolve, reject){
@@ -22,7 +39,7 @@ export default Route.extend(FindQuery, {
 				})
 			}),
 			distribuidos: this.get('currentUser.account').then((account)=>{
-				let sucursal = account.get('sucursal');
+				let sucursal = account.get('administradorDe');
 
 				let context = this;
 				return new Promise(function (resolve, reject){
@@ -31,6 +48,6 @@ export default Route.extend(FindQuery, {
 					})
 				})
 			}),
-		})	
+		})
 	}
 });

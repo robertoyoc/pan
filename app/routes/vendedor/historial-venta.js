@@ -22,12 +22,12 @@ export default Route.extend(FindQuery, {
 		let day = params.day == "-1" ? null : Number(params.day);
 		return moment([Number(params.year) || 2018, (month || 1) - 1, day || 1]);
     },
-    
+
     model(params){
         let dateFromParams = this.dateFromParams(params)
 
         return this.get('currentUser.account').then((account)=>{
-            let sucursal_id = account.get('sucursal.id');	
+            let sucursal_id = account.get('vendedorDe.id');
             let context = this;
 			return new Promise(function (resolve, reject){
 				context.filterCustom(context.store, 'venta', {

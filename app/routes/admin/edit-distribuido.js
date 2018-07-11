@@ -10,7 +10,7 @@ export default Route.extend(FindQuery, {
     },
     afterModel(model){
 		return this.get('currentUser.account').then((account)=>{
-			let sucursal = account.get('sucursal')
+			let sucursal = account.get('administradorDe')
 
 			let context = this;
 			return new Promise(function (resolve, reject){
