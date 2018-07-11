@@ -30,8 +30,8 @@ module.exports = function() {
       }
   }
 
-  function hasCourtesy(){
-    if (ventaObj.importeC > 0) {
+  function hasCourtesy(venta){
+    if (venta.importeC > 0) {
       return {
         style: 'tableExample2',
         table: {
@@ -110,7 +110,7 @@ module.exports = function() {
       { text: `Atendió: ${venta.nombreVendedor}`, fontSize: 3, margin: [0, 2, 0, 2] },
         table(pedidosData)
       ,
-        hasCourtesy()
+        hasCourtesy(venta)
       ,
       { text: `TOTAL ${impTotal}`, fontSize: 4, margin: [40, 3, 0, 0] },
       { qr: greeting, fit: 50, margin: [10, 3, 0, 0] },
@@ -126,7 +126,7 @@ module.exports = function() {
       pageSize: { width: 80, height: heightt},
       pageMargins: [ 8, 10, 8, 10 ],
       content: [],
-      tyles: {
+      styles: {
         header: {
           fontSize: 2,
           bold: true,
