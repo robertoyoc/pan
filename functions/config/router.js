@@ -1,7 +1,7 @@
 module.exports = function() {
   let express = require("express")
   let app = express()
-  let exportablesController = require(global.rootPath('controllers/exportables'));
+  let exportablesController = require('../controllers/exportables');
   const bodyParser = require('body-parser');
 
   app.use(bodyParser.json()); // support json encoded bodies
