@@ -1,1 +1,19 @@
-{{yield}}
+{{#light-table modelTable height='75vh' as |t|}}
+    {{t.head
+      onColumnClick=(action 'onColumnClick')
+      iconSortable='fa fa-sort'
+      iconAscending='fa fa-sort-asc'
+      iconDescending='fa fa-sort-desc'
+      fixed=true
+    }}
+
+    {{#t.body canSelect=false as |body| }}
+
+    {{#if isLoading}}
+      {{#body.loader}}
+        {{table-loader}}
+      {{/body.loader}}
+    {{/if}}
+
+    {{/t.body}}
+{{/light-table}}

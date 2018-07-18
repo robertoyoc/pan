@@ -23,7 +23,6 @@ export default Route.extend(FindQuery, {
 		})*/
 	},
 	model(){
-
 		return hash({
 			recetas: this.get('currentUser.account').then((account)=>{
 				let sucursal = account.get('administradorDe');
@@ -35,13 +34,11 @@ export default Route.extend(FindQuery, {
 					context.filterEqual(context.store, 'existence', { 'tipo': 'receta', 'sucursalId': sucursal.get('id')}, function(recetas){
 						// console.log(recetas)
 						return resolve(recetas)
-
 					})
 				})
 			}),
 			distribuidos: this.get('currentUser.account').then((account)=>{
 				let sucursal = account.get('administradorDe');
-
 				let context = this;
 				return new Promise(function (resolve, reject){
 					context.filterEqual(context.store, 'existence', { 'tipo': 'distribuido', 'sucursalId': sucursal.get('id')}, function(distribuidos){
@@ -54,7 +51,5 @@ export default Route.extend(FindQuery, {
 
 	setupController(controller, model){
 		this._super(...arguments);
-		controller.set('sucursal', this.get('sucursal'))
-		controller.set('distribuidos', model.distribuidos)
 	}
 });

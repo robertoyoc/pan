@@ -38,77 +38,21 @@
   </div>
   <div class="col s6 spc">
     <div class="card">
-      {{#light-table tableRecetas height='75vh' as |t|}}
-          {{t.head
-          }}
-
-          {{#t.body canSelect=false as |body| }}
-
-          {{#if isLoading}}
-            {{#body.loader}}
-              {{table-loader}}
-            {{/body.loader}}
-          {{/if}}
-
-          {{/t.body}}
-      {{/light-table}}
-      <!-- <table class="centered">
-        <thead>`
-          <tr>
-            <th>Nombre</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each model.recetas as |existencia|}}
-            {{#unless existencia.isNew}}
-            <tr>
-              <td>
-                {{existencia.producto.nombre}}
-              </td>
-              <td>
-                {{existencia.cantidad}}
-              </td>
-              <td>
-                {{format-money existencia.producto.precio symbol=selectedCurrency format="%s %v"}}
-              </td>
-              <td>
-                <a class="btn-floating"><i class="material-icons" {{action 'editReceta' existencia.producto}}>edit</i></a>
-                <a class="btn-floating red"><i class="material-icons" {{action 'delete' existencia}} >delete</i></a>
-              </td>
-            </tr>
-            {{/unless}}
-            {{else}}
-              <h5> Aún no tienes recetas.</h5>
-          {{/each}}
-        </tbody>
-      </table> -->
+      {{dt-light
+        columns=columns
+        model=model.recetas
+        sort=sortR
+      }}
     </div>
   </div>
     <div class="col s6 spc">
     <div class="card">
 
-      {{#light-table tableDistribuidos height='75vh' as |t|}}
-          {{t.head
-            onColumnClick=(action 'onColumnClick')
-            iconSortable='fa fa-sort'
-            iconAscending='fa fa-sort-asc'
-            iconDescending='fa fa-sort-desc'
-            fixed=true
-          }}
-
-          {{#t.body canSelect=false as |body| }}
-
-          {{#if isLoading}}
-            {{#body.loader}}
-              {{table-loader}}
-            {{/body.loader}}
-          {{/if}}
-
-          {{/t.body}}
-      {{/light-table}}
+      {{dt-light
+        columns=columns
+        model=model.distribuidos
+        sort=sortD
+      }}
 
       <!-- <table class="centered">
         <thead>
