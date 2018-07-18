@@ -6,7 +6,7 @@ import Table from 'ember-light-table';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  dir: 'asc',
+  dir: 'desc',
   sortBy: computed('dir', 'sort', function() {
     return [`${this.get('sort')}:${this.get('dir')}`];
   }).readOnly(),
@@ -53,6 +53,31 @@ export default Component.extend({
         this.fetchRecords();
       }
     },
+
+    edit(row){
+      this.sendAction('performEdit', row.get('content'));
+    },
+
+    delete(row) {
+			window.swal({
+				title: 'Estás seguro?',
+				text: 'Las existencias serán eliminadas',
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Si, eliminar',
+				cancelButtonText: 'No',
+				confirmButtonClass: 'confirm-class',
+				cancelButtonClass: 'cancel-class',
+				closeOnConfirm: false,
+				closeOnCancel: false
+			}).then(()=>{
+				this.sendAction('performDelete', row.get('content'));
+			}).catch((error)=>{
+				console.log(error)
+			});
+		}
   }
 
 });

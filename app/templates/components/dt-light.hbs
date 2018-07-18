@@ -1,4 +1,9 @@
-{{#light-table modelTable height='75vh' as |t|}}
+{{#light-table modelTable
+  height='75vh'
+  tableActions=(hash
+    delete=(action 'delete')
+    edit=(action 'edit')
+  )as |t|}}
     {{t.head
       onColumnClick=(action 'onColumnClick')
       iconSortable='fa fa-sort'

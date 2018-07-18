@@ -47,48 +47,13 @@
   </div>
     <div class="col s6 spc">
     <div class="card">
-
       {{dt-light
         columns=columns
         model=model.distribuidos
         sort=sortD
+        performDelete=(action 'delete')
+        performEdit=(action 'editDistribuido')
       }}
-
-      <!-- <table class="centered">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each model.distribuidos as |existencia|}}
-            {{#unless existencia.isNew}}
-              <tr>
-                <td>
-                  {{existencia.producto.nombre}}
-                </td>
-                <td>
-                  {{existencia.cantidad}}
-                </td>
-                <td>
-                  {{format-money existencia.producto.precio symbol=selectedCurrency format="%s %v"}}
-                </td>
-                <td>
-                  <a class="btn-floating"><i class="material-icons" {{action 'editDistribuido' existencia.producto}}>edit</i></a>
-                  <a class="btn-floating red"><i class="material-icons" {{action 'delete' existencia}} >delete</i></a>
-                </td>
-              </tr>
-            {{/unless}}
-            {{else}}
-              <h5> Aún no tienes distribuidos.</h5>
-          {{/each}}
-        </tbody>
-      </table> -->
-
     </div>
   </div>
-
 </div>
