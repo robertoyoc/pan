@@ -12,6 +12,10 @@ module.exports = function(environment) {
       sessionServiceName: 'session'
     },
 
+    'ember-light-table': {
+      enableSync: true
+    },
+
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

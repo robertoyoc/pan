@@ -38,7 +38,21 @@
   </div>
   <div class="col s6 spc">
     <div class="card">
-      <table class="centered">
+      {{#light-table tableRecetas height='75vh' as |t|}}
+          {{t.head
+          }}
+
+          {{#t.body canSelect=false as |body| }}
+
+          {{#if isLoading}}
+            {{#body.loader}}
+              {{table-loader}}
+            {{/body.loader}}
+          {{/if}}
+
+          {{/t.body}}
+      {{/light-table}}
+      <!-- <table class="centered">
         <thead>`
           <tr>
             <th>Nombre</th>
@@ -70,12 +84,33 @@
               <h5> Aún no tienes recetas.</h5>
           {{/each}}
         </tbody>
-      </table>
+      </table> -->
     </div>
   </div>
     <div class="col s6 spc">
     <div class="card">
-      <table class="centered">
+
+      {{#light-table tableDistribuidos height='75vh' as |t|}}
+          {{t.head
+            onColumnClick=(action 'onColumnClick')
+            iconSortable='fa fa-sort'
+            iconAscending='fa fa-sort-asc'
+            iconDescending='fa fa-sort-desc'
+            fixed=true
+          }}
+
+          {{#t.body canSelect=false as |body| }}
+
+          {{#if isLoading}}
+            {{#body.loader}}
+              {{table-loader}}
+            {{/body.loader}}
+          {{/if}}
+
+          {{/t.body}}
+      {{/light-table}}
+
+      <!-- <table class="centered">
         <thead>
           <tr>
             <th>Nombre</th>
@@ -107,7 +142,8 @@
               <h5> Aún no tienes distribuidos.</h5>
           {{/each}}
         </tbody>
-      </table>
+      </table> -->
+
     </div>
   </div>
 

@@ -27,6 +27,7 @@ export default Route.extend(FindQuery, {
 		return hash({
 			recetas: this.get('currentUser.account').then((account)=>{
 				let sucursal = account.get('administradorDe');
+				this.set('sucursal', sucursal.get('id'));
 
 				let context = this;
 				return new Promise(function (resolve, reject){
@@ -49,5 +50,11 @@ export default Route.extend(FindQuery, {
 				})
 			}),
 		})
+	},
+
+	setupController(controller, model){
+		this._super(...arguments);
+		controller.set('sucursal', this.get('sucursal'))
+		controller.set('distribuidos', model.distribuidos)
 	}
 });
