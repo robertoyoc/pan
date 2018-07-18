@@ -10,6 +10,8 @@ export default Controller.extend({
 	store: service(),
 
 	// DATA-TABLE
+	deleteMessage: 'Las existencias serán eliminadas',
+
 	columns: computed(function() {
     return [{
       label: 'Nombre',
@@ -32,12 +34,12 @@ export default Controller.extend({
 	sortR: 'producto.nombre',
 
 	actions: {
-		editReceta(producto) {
-			this.transitionToRoute('admin.edit-receta', producto.get('id'))
+		editReceta(existencia) {
+			this.transitionToRoute('admin.edit-receta', existencia.get('producto.id'))
 		},
 
-		editDistribuido(producto) {
-			this.transitionToRoute('admin.edit-distribuido', producto.get('id'))
+		editDistribuido(existencia) {
+			this.transitionToRoute('admin.edit-distribuido', existencia.get('producto.id'))
 		},
 
 		delete(existencia) {

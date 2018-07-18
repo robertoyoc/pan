@@ -1,9 +1,16 @@
+<style>
+select.ember-view {
+  display: inline;
+}
+</style>
+
 {{#light-table modelTable
   height='75vh'
   tableActions=(hash
     delete=(action 'delete')
     edit=(action 'edit')
   )as |t|}}
+
     {{t.head
       onColumnClick=(action 'onColumnClick')
       iconSortable='fa fa-sort'
@@ -13,12 +20,33 @@
     }}
 
     {{#t.body canSelect=false as |body| }}
+      {{#if isLoading}}
+        {{#body.loader}}
+          {{table-loader}}
+        {{/body.loader}}
+      {{/if}}
 
-    {{#if isLoading}}
-      {{#body.loader}}
-        {{table-loader}}
-      {{/body.loader}}
-    {{/if}}
-
+      {{#if modelTable.isEmpty}}
+        {{#body.no-data}}
+          No se han encontrado registros.
+        {{/body.no-data}}
+        {{/if}}
     {{/t.body}}
+
+    {{#t.foot fixed=true as |columns|}}
+      <tr>
+        <td class="align-center" colspan={{columns.length}}>
+          {{one-way-select selectedFilter
+              options=possibleFilters
+              optionValuePath="valuePath"
+              optionLabelPath="label"
+              update=(action (pipe (action (mut selectedFilter)) (action 'onSearchChange')))
+          }}
+        </td>
+        <td class="align-center" colspan={{columns.length}}>
+          <input placeholder="Buscar..." value={{query}} oninput={{action (pipe (action (mut query)) (action 'onSearchChange')) value="target.value"}}>
+        </td>
+      </tr>
+  {{/t.foot}}
+
 {{/light-table}}
