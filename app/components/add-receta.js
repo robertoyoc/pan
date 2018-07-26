@@ -2,37 +2,39 @@ import Component from '@ember/component';
 import { inject as service } from "@ember/service";
 import { computed } from '@ember/object';
 import { all } from 'rsvp';
-
 import { singularize, pluralize} from 'ember-inflector';
 import Inflector from 'ember-inflector';
 
 const inflector = Inflector.inflector;
-
-    inflector.irregular('unidad', 'unidades');
-    inflector.irregular('costal', 'costales');
+inflector.irregular('unidad', 'unidades');
+inflector.irregular('costal', 'costales');
 
 export default Component.extend({
     store: service(),
     firebaseApp: service(),
-	
-	myCategorias: computed(function() {
-		return this.get('store').findAll('categoria')
-	}),
 
-	listMprimas: computed(function() {
-		return this.get('store').findAll('mprima')
-    }),   
+  	myCategorias: computed(function() {
+  		return this.get('store').findAll('categoria')
+  	}),
 
-	cantExistencia: computed(function(){
-    	if (this.get('myExistencia.cantidad') > 0) {
-    		return this.get('myExistencia.cantidad')
-    	} else {
-    		return 1;
-   		}	
+  	listMprimas: computed(function() {
+  		return this.get('store').findAll('mprima')
     }),
 
+  	cantExistencia: computed(function(){
+      	if (this.get('existencia.cantidad') > 0) {
+      		return this.get('existencia.cantidad')
+      	} else {
+      		return 1;
+     		}
+      }),
+
 	actions: {
-        guardar(producto, existencia, categoria) {
+    guardar(producto, existencia, categoria, isNew) {
+      
+
+
+
    			let productId = {
 			 	id: producto.id,
 			 	tipo: producto.get('constructor.modelName')
@@ -53,10 +55,10 @@ export default Component.extend({
 						})
 					})
 				})
-			})	
+			})
 		},
 
-        didSelectImage(files){
+    didSelectImage(files){
 			let ctrl = this;
 			let reader = new FileReader();
 			reader.onloadend = Ember.run.bind(this, function(){
@@ -68,7 +70,7 @@ export default Component.extend({
 	 				contentType: 'image/png'
 	 			};
 				var storageRef = this.get('firebaseApp').storage().ref();
-	 			var path = 'images/distribuidos/' + this.get('myModel.id') + '.png';
+	 			var path = 'images/distribuidos/' + this.get('model.id') + '.png';
 	 			var uploadTask = storageRef.child(path).put(this.get('file'), metadata);
 	 			uploadTask.on('state_changed', function(snapshot){
 				var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -77,8 +79,8 @@ export default Component.extend({
 				}, function(error) {
 				}, function() {
 	 				var downloadURL = uploadTask.snapshot.downloadURL;
-	 				ctrl.get('myModel').set('imageUrl', downloadURL);
-	 				ctrl.get('myModel').save()
+	 				ctrl.get('model').set('imageUrl', downloadURL);
+	 				ctrl.get('model').save()
 	 				ctrl.set('file', '');
 	 				ctrl.set('selectedCategory', '');
 	 				// ctrl.set(document.getElementById('output').src, '');
@@ -87,19 +89,19 @@ export default Component.extend({
 	 			});
 			})
 			//debugger;
-			reader.readAsDataURL(files[0]);	
+			reader.readAsDataURL(files[0]);
  			console.log(this.get('file'))
  		},
 
  		changePrima() {
-            this.set('selectedProducto', undefined)
-        },
+      this.set('selectedProducto', undefined)
+    },
 
-        agregar(mprima){
-			this.get('myModel.ingredientes').pushObject(mprima)
-			all(this.get('myModel.ingredientes').invoke('save'))
+    agregar(mprima){
+			this.get('model.ingredientes').pushObject(mprima)
+			all(this.get('model.ingredientes').invoke('save'))
 			this.sendAction('changePrima')
-		}, 
+		},
 
 		delete(mprima){
 			mprima.destroyRecord()

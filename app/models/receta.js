@@ -1,9 +1,12 @@
 import DS from 'ember-data';
-import Producto from './producto';
 
+export default DS.Model.extend({
+	nombre: DS.attr('string'),
+	precio: DS.attr('number'),
+	unidad: DS.attr('string'),
+	imageUrl: DS.attr('string'),
 
-export default Producto.extend({
-	ingredientes: DS.hasMany('mprima'),
-	
-
+	categoria: DS.belongsTo('categoria'),
+	existencias: DS.hasMany('existence'),
+	//ingredientes: DS.hasMany('mprima', {inverse: 'recetas'}),
 });

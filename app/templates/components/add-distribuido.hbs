@@ -18,7 +18,7 @@
 
 <div class="row">
   <div style="max-height: 450px; overflow-y: scroll;">
- 
+
 	<form class="col s12 m8 offset-m2">
       <div class="row">
         <h4>Datos generales</h4>
@@ -62,7 +62,7 @@
         <div class="col s12">
           <div class="form-group">
             <label class="col-sm-2 control-label">Imagen PNG<br>(200x200)</label>
-            <div class="col-sm-10"> 
+            <div class="col-sm-10">
               {{#if myModel.imageUrl}}
                 <img id="output" src={{myModel.imageUrl}} height="200" width="200" hidden={{shouldHideImage}}>
                 {{else}}
@@ -70,10 +70,10 @@
               {{/if}}
               <p></p>
               {{x-file-input class="btn white-text" multiple=false name="files" action=(action "didSelectImage") accept="image/*" alt="Agregar Imagen"}}
-            </div> 
+            </div>
           </div>
         </div>
-        
+
       </div>
     </form>
 </div>

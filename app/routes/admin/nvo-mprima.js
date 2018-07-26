@@ -10,10 +10,10 @@ export default Route.extend({
 	afterModel(model){
 		return this.get('currentUser.account').then((account)=>{
 			return this.set('existencia', this.store.createRecord('existence',{
-				productoId: model.get('id'),
+				mprima: model.get('id'),
 				tipo: model.get('constructor.modelName'),
 				//sucursal: account.get('sucursal'),
-				sucursalId: account.get('sucursal.id')
+				sucursal: account.get('sucursal')
 			}))
 		})
 	},

@@ -4,24 +4,23 @@ import {inject as service} from "@ember/service";
 
 export default Route.extend({
     currentUser: service(),
-    beforeModel() {
-
-    },
-
     model(){
 		  return this.store.createRecord('receta');
     },
-    
+
     afterModel(model){
 		  return this.get('currentUser.account').then((account)=>{
-			  return this.set('existencia', this.store.createRecord('existence',{
-				  productoId: model.get('id'),
-				  tipo: model.get('constructor.modelName'),
-				  sucursalId: account.get('sucursal.id'),
-			  }))
+        return account.get('administradorDe').then((sucursal)=>{
+          let existenciaTemp = this.store.createRecord('existence',{
+            receta: model,
+            tipo: model.get('constructor.modelName'),
+            sucursal: sucursal,
+          })
+          return this.set('existencia', existenciaTemp)
+        })
 		  })
     },
-    
+
     setupController(controller){
       this._super(...arguments)
       controller.set('existencia', this.get('existencia'))

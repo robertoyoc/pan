@@ -3,8 +3,10 @@ import { computed } from '@ember/object';
 
 export default DS.Model.extend({
 	nombre: DS.attr('string'),
-	productos: DS.belongsTo('producto'), // needs to be removed
-	existencias: DS.belongsTo('existence'),
+
+	existencias: DS.hasMany('existence'),
+	enviados: DS.hasMany('reparto', { inverse: 'origen' }),
+	recibidos: DS.hasMany('reparto', { inverse: 'destino' }),
 
 	cajeros: DS.hasMany('account', { inverse: 'cajeroDe' }),
 	vendedores: DS.hasMany('account', { inverse: 'vendedorDe' }),

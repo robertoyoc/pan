@@ -5,7 +5,7 @@ import { computed } from '@ember/object';
 export default Component.extend({
     store: service(),
 	firebaseApp: service(),
-	
+
 	myCategorias: computed(function() {
 		return this.get('store').findAll('categoria')
     }),
@@ -15,7 +15,7 @@ export default Component.extend({
     		return this.get('myExistencia.cantidad')
     	} else {
     		return 1;
-   		}	
+   		}
     }),
 
 	actions: {
@@ -42,7 +42,7 @@ export default Component.extend({
 				})
 			})
         },
-        
+
 		didSelectImage(files){
 			let ctrl = this;
 			let reader = new FileReader();
@@ -76,7 +76,7 @@ export default Component.extend({
 			//debugger;
 			reader.readAsDataURL(files[0]);
  			console.log(this.get('file'))
-			
+
  		}
 	}
 });

@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { isEmpty } from '@ember/utils'
+import { isEmpty } from '@ember/utils';
 import DS from 'ember-data'
 
 export default Controller.extend({

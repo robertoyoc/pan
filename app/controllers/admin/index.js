@@ -1,12 +1,25 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import { inject as service } from "@ember/service";
+import { isEmpty } from '@ember/utils';
 import DS from 'ember-data';
 import moment from 'moment';
 import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
 
 export default Controller.extend(FindQuery, {
     currentUser: service(),
+
+    admin: computed('currentUser', function(){
+      if(!isEmpty(this.get('currentUser.account'))) {
+        return DS.PromiseObject.create({
+          promise: this.get('currentUser.account').then((account)=>{
+              return account;
+          })
+        });
+      } else {
+        return null
+      }
+    }),
 
     sucursalActual: computed(function(){
         return DS.PromiseObject.create({
@@ -86,5 +99,39 @@ export default Controller.extend(FindQuery, {
     currentList: computed('listaActual.content', function(){
 		return this.get('listaActual.content')
     }),
+
+    actions: {
+      showNav(){
+        debugger
+        window.$('.button-collapse').sideNav('hide');
+      },
+
+      signOut(){
+        window.swal({
+          title: 'Estás seguro?',
+          text: 'Tu sesión será cerrada',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Sí, salir',
+          cancelButtonText: 'No',
+          confirmButtonClass: 'confirm-class',
+          cancelButtonClass: 'cancel-class',
+          closeOnConfirm: false,
+          closeOnCancel: false
+
+        }).then(()=>{
+          this.get('session').close();
+          this.transitionToRoute('index');
+            window.swal({
+              type: 'success',
+              title: 'Sesión cerrada!',
+              text: 'Gracias por tu visita.',
+              timer: 500
+            });
+        }).catch(()=>{});
+      }
+    }
 
 });

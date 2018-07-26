@@ -50,20 +50,13 @@ export default Component.extend({
     let query = this.get('query');
     let model = this.get('sortedModel');
     let valuePath = this.get('selectedFilter.valuePath');
-    let result = null;
+    let result = model;
 
     if (!isBlank(query)) {
       result = model.filter((m) => {
         return m.get(valuePath).toString().toLowerCase().includes(query.toLowerCase());
       });
-    } else {
-      result = model;
     }
-    console.log(query)
-    console.log(valuePath)
-    console.log(model)
-    console.log(result)
-    debugger
     yield this.get('setRows').perform(result);
   }).restartable(),
 

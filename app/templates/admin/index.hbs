@@ -22,97 +22,124 @@
  	}
  </style>
 
+ <ul id="slide-out" class="side-nav fixed">
+ 	<li>
+ 		<div class="userView">
+ 			<div class="background">
+ 				<img src="media/productos.jpg">
+ 			</div>
+ 			<blockquote class="white-text">
+ 				Pan La Villita
+ 			</blockquote>
+ 		</div>
+ 	</li>
+ 	<li>
+ 		<a><i class="material-icons">person</i>Administrador: {{admin.nombre}} {{admin.apellido}} </a>
+ 	</li>
+ 	<li>
+ 		<div class="divider"></div>
+ 	</li>
+ 	<li>
+ 		{{#link-to 'index'}}<i class="material-icons">menu</i>Página Principal{{/link-to}}
+ 	</li>
+ 	<li {{action 'signOut'}}>
+ 		<a><i class="material-icons">closet</i>Cerrar Sesión</a>
+ 	</li>
+ </ul>
+
  <div class="row" style="margin-top: 4%;">
-    {{#link-to "admin.compras"}}
-    <div class="col s12 m3 offset img" style="margin-left: 3%;">
-     	<div class="card">
-            <div class="card-image">
-              <img src="../media/compra-admin.jpg" width="100%">
-              <span class="card-title">Compras</span>
-            </div>
-        </div>
-    </div>{{/link-to}}
-    {{#link-to "admin.inv-produccion"}}
-    <div class="col s12 m3 offset-m1 img">
-     	<div class="card">
-            <div class="card-image">
-              <img src="../media/inventario-produccion.jpg">
-              <span class="card-title">Inventario de Producción</span>
-            </div>
-        </div>
-    </div>{{/link-to}}
-    {{#link-to "admin.productos"}}
-    <div class="col s12 m3 offset-m1 img">
-     	<div class="card">
-            <div class="card-image">
-              <img src="../media/productos.jpg" width="100%">
-              <span class="card-title">Productos</span>
-            </div>
-        </div>
-    </div>
-    {{/link-to}}
-    {{#link-to "admin.inventario"}}
-    <div class="col s12 m3 offset img" style="margin-left: 3%;">
-     	<div class="card">
-            <div class="card-image">
-              <img src="../media/inventario-ventas.jpg" width="100%">
-              <span class="card-title">Registro de Ventas</span>
-            </div>
-        </div>
-    </div>{{/link-to}}
-    {{#link-to "admin.finanzas"}}
-    <div class="col s12 m3 offset-m1 img">
-     	<div class="card">
-            <div class="card-image">
-              <img src="https://images.unsplash.com/photo-1520406625550-148d283f3620?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6aa2e7dc874f1ffb138c52c47adf72c2&auto=format&fit=crop&w=1050&q=80">
-              <span class="card-title">Finanzas</span>
-            </div>
-        </div>
-    </div>{{/link-to}}
-    {{#link-to "admin.produccion"}}
-    <div class="col s12 m3 offset-m1 img">
-     	<div class="card">
-            <div class="card-image">
-              <img src="../media/produccion.jpg" width="100%">
-              <span class="card-title">Producción</span>
-            </div>
-        </div>
-    </div>
-    {{/link-to}}
-    {{#link-to "admin.personal"}}
-    <div class="col s12 m3 offset img" style="margin-left: 3%;">
-     	<div class="card">
-            <div class="card-image">
-              <img src="https://images.unsplash.com/photo-1518413311144-e7fed23b3fac?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=d1c46fdfcc0fbd3ab8f6587fc1c8d74d&auto=format&fit=crop&w=1050&q=80" width="100%">
-              <span class="card-title">Control de Personal</span>
-            </div>
-        </div>
-    </div>
-    {{/link-to}}
+	 <div class="col s9 offset-s3">
+		 {{#link-to "admin.compras"}}
+     <div class="col s12 m3 offset img" style="margin-left: 3%;">
+      	<div class="card">
+             <div class="card-image">
+               <img src="../media/compra-admin.jpg" width="100%">
+               <span class="card-title">Compras</span>
+             </div>
+         </div>
+     </div>{{/link-to}}
+     {{#link-to "admin.inv-produccion"}}
+     <div class="col s12 m3 offset-m1 img">
+      	<div class="card">
+             <div class="card-image">
+               <img src="../media/inventario-produccion.jpg">
+               <span class="card-title">Inventario de Producción</span>
+             </div>
+         </div>
+     </div>{{/link-to}}
+		 {{#link-to "admin.productos"}}
+     <div class="col s12 m3 offset-m1 img">
+      	<div class="card">
+             <div class="card-image">
+               <img src="../media/productos.jpg" width="100%">
+               <span class="card-title">Productos</span>
+             </div>
+         </div>
+     </div>
+     {{/link-to}}
+     {{#link-to "admin.inventario"}}
+     <div class="col s12 m3 offset img" style="margin-left: 3%;">
+      	<div class="card">
+             <div class="card-image">
+               <img src="../media/inventario-ventas.jpg" width="100%">
+               <span class="card-title">Registro de Ventas</span>
+             </div>
+         </div>
+     </div>{{/link-to}}
+		 {{#link-to "admin.finanzas"}}
+     <div class="col s12 m3 offset-m1 img">
+      	<div class="card">
+             <div class="card-image">
+               <img src="https://images.unsplash.com/photo-1520406625550-148d283f3620?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6aa2e7dc874f1ffb138c52c47adf72c2&auto=format&fit=crop&w=1050&q=80">
+               <span class="card-title">Finanzas</span>
+             </div>
+         </div>
+     </div>{{/link-to}}
+     {{#link-to "admin.produccion"}}
+     <div class="col s12 m3 offset-m1 img">
+      	<div class="card">
+             <div class="card-image">
+               <img src="../media/produccion.jpg" width="100%">
+               <span class="card-title">Producción</span>
+             </div>
+         </div>
+     </div>
+     {{/link-to}}
+     {{#link-to "admin.personal"}}
+     <div class="col s12 m3 offset img" style="margin-left: 3%;">
+      	<div class="card">
+             <div class="card-image">
+               <img src="https://images.unsplash.com/photo-1518413311144-e7fed23b3fac?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=d1c46fdfcc0fbd3ab8f6587fc1c8d74d&auto=format&fit=crop&w=1050&q=80" width="100%">
+               <span class="card-title">Control de Personal</span>
+             </div>
+         </div>
+     </div>
+     {{/link-to}}
 
-    {{#unless listaExists}}
-        {{#link-to "admin.nvo-paselista" (query-params turno=turno)}}
-            <div class="col s12 m3 offset img" style="margin-left: 3%;">
-                <div class="card">
-                    <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=612621fd686897b4812287430c8be9db&auto=format&fit=crop&w=1052&q=80" width="100%">
-                    <span class="card-title">Crear Pase de Lista: Turno {{turno}}</span>
-                    </div>
-                </div>
-            </div>
-        {{/link-to}}
-    {{else}}
-        {{#link-to "admin.edit-paselista" currentList.id}}
-            <div class="col s12 m3 offset img" style="margin-left: 3%;">
-                <div class="card">
-                    <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=612621fd686897b4812287430c8be9db&auto=format&fit=crop&w=1052&q=80" width="100%">
-                    <span class="card-title">Actualizar Pase de Lista: Turno {{turno}}</span>
-                    </div>
-                </div>
-            </div>
-        {{/link-to}}
-    {{/unless}}
+     {{#unless listaExists}}
+         {{#link-to "admin.nvo-paselista" (query-params turno=turno)}}
+             <div class="col s12 m3 offset img" style="margin-left: 3%;">
+                 <div class="card">
+                     <div class="card-image">
+                     <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=612621fd686897b4812287430c8be9db&auto=format&fit=crop&w=1052&q=80" width="100%">
+                     <span class="card-title">Crear Pase de Lista: Turno {{turno}}</span>
+                     </div>
+                 </div>
+             </div>
+         {{/link-to}}
+     {{else}}
+         {{#link-to "admin.edit-paselista" currentList.id}}
+             <div class="col s12 m3 offset img" style="margin-left: 3%;">
+                 <div class="card">
+                     <div class="card-image">
+                     <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=612621fd686897b4812287430c8be9db&auto=format&fit=crop&w=1052&q=80" width="100%">
+                     <span class="card-title">Actualizar Pase de Lista: Turno {{turno}}</span>
+                     </div>
+                 </div>
+             </div>
+         {{/link-to}}
+     {{/unless}}
 
+	 </div>
 
 </div>

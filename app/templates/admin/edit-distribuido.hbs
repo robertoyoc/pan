@@ -3,5 +3,6 @@
   {{#link-to 'admin.nvo-distribuido' class='breadcrumb' }}Distribuido{{/link-to}}
 {{/ember-wormhole}}
 
+{{log currentCategoria}}
 {{m-wrapper}}
-{{nvo-producto-distribuido myModel=model myExistencia=existencia nuevoProducto = (action 'nuevoProducto')}}
+{{add-distribuido myModel=model myExistencia=existencia selectedCat=currentCategoria.content nuevoProducto = (action 'nuevoProducto')}}

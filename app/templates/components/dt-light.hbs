@@ -22,15 +22,9 @@ select.ember-view {
     {{#t.body canSelect=false as |body| }}
       {{#if isLoading}}
         {{#body.loader}}
-          {{table-loader}}
+          Cargando datos...
         {{/body.loader}}
       {{/if}}
-
-      {{#if modelTable.isEmpty}}
-        {{#body.no-data}}
-          No se han encontrado registros.
-        {{/body.no-data}}
-        {{/if}}
     {{/t.body}}
 
     {{#t.foot fixed=true as |columns|}}

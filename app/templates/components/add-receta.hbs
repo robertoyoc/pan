@@ -12,7 +12,7 @@
 
 <div class="row">
   	<div class="col s12 m8 offset-m2">
-      <h2>Nuevo producto (Receta)</h2>
+      <h2>{{if model.isNew 'Nueva' 'Editar'}} Receta</h2>
     </div>
 </div>
 
@@ -23,24 +23,24 @@
         <h4>Datos generales</h4>
         <div class="input-field col s8">
           <i class="material-icons prefix">account_circle</i>
-          {{input type="text" class="validate" value=myModel.nombre}}
+          {{input type="text" class="validate" value=model.nombre}}
           <label>Nombre del Producto</label>
         </div>
         <div class="input-field col s4">
           <i class="material-icons prefix">attach_money</i>
-          {{input type="number" class="validate" value=myModel.precio}}
+          {{input type="number" class="validate" value=model.precio}}
           <label>Costo</label>
         </div>
 
         <div class="input-field col s6">
           <i class="material-icons prefix">exposure_plus_1</i>
-              {{input disabled=(not (not myExistencia.cantidad)) type="text" min="1" class="validate" value=cantExistencia}}
+              {{input disabled=(not (not existencia.cantidad)) type="text" min="1" class="validate" value=cantExistencia}}
           <label>Cantidad</label>
         </div>
 
         <div class="input-field col s6">
           <i class="material-icons prefix">exposure_plus_1</i>
-          {{input type="number" class="validate" min="1" value=myExistencia.limite}}
+          {{input type="number" class="validate" min="1" value=existencia.limite}}
           <label>Minimo en Inventario</label>
         </div>
 
@@ -60,10 +60,15 @@
 
         <h4>Materias Primas</h4>
         <div class="col s6">
-          {{#power-select 
-            options=listMprimas selected=selectedProducto 
-            onchange=(action (mut selectedProducto)) searchPlaceholder="Escribe
-            para buscar" placeholder="Escribe para buscar" searchField='nombre' as |mprima|}} {{mprima.nombre}} 
+          {{#power-select
+            options=listMprimas
+						selected=selectedProducto
+            onchange=(action (mut selectedProducto))
+						searchPlaceholder="Escribe para buscar"
+						placeholder="Escribe para buscar"
+						searchField='nombre'
+					as |mprima|}}
+						{{mprima.nombre}}
           {{/power-select}}
 
         </div>
@@ -93,7 +98,7 @@
 
           <h5>Materias Primas de la Receta</h5>
           <div class="col s12">
-            {{#if myModel.ingredientes}}
+            {{#if model.ingredientes}}
              <table>
               <thead>
                 <tr>
@@ -103,7 +108,7 @@
                 </tr>
               </thead>
               <tbody>
-                {{#each myModel.ingredientes as |ingrediente|}}
+                {{#each model.ingredientes as |ingrediente|}}
                   <tr>
                     <td>{{ingrediente.nombre}}</td>
                     <td>{{pluralize 'unidad'}}</td>
@@ -122,16 +127,16 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Imagen PNG<br>(200x200)</label>
                 <div class="col-sm-10">
-                  {{#if myModel.imageUrl}}
-                    <img id="output" src={{myModel.imageUrl}} height="200" width="200" hidden={{shouldHideImage}}>
+                  {{#if model.imageUrl}}
+                    <img id="output" src={{model.imageUrl}} height="200" width="200" hidden={{shouldHideImage}}>
                   {{else}}
                     <h6>No hay imagen disponible.</h6>
                   {{/if}}
                   <p></p>
                   {{x-file-input class="btn white-text" multiple=false name="files" action=(action "didSelectImage") accept="image/*" alt="Agregar Imagen"}}
-                </div> 
+                </div>
               </div>
-            </div>           
+            </div>
       </div>
     </form>
 </div>
@@ -139,6 +144,6 @@
 
 <div class="row">
   	<div class="col s12 m8 offset-m2">
-      <a {{action 'guardar' myModel myExistencia selectedCat}} class="waves-effect waves-light btn right"><i class="material-icons left">save</i>Guardar</a>
+      <a {{action 'guardar' model existencia selectedCat currentSucursal}} class="waves-effect waves-light btn right"><i class="material-icons left">save</i>Guardar</a>
     </div>
 </div>
