@@ -211,13 +211,19 @@ body {
                   <td><a class="btn-floating waves-effect waves-light red" {{action 'delete' pedido}}><i class="material-icons">delete</i></a></td>
                 </tr>
               {{/unless}}
-              {{else}}Ningún producto agregado
+              {{else}}
+              <h5> Agrega productos. </h5>
+              <br>
             {{/each}}
         </tbody>
       </table>
     </div>
     <div class="redondo">
-        <h6> Total {{if model.isCourtesy 'Cortesía'}}: {{format-money model.importeTotal symbol=selectedCurrency format="%v %s"}}</h6>
+      <br>
+        {{#if model.importeCortesia}}
+          <h6> Cortesía: {{format-money model.importeCortesia symbol=selectedCurrency format="%s %v"}}</h6>
+        {{/if}}
+        <h5> Total: {{format-money model.importeTotal symbol=selectedCurrency format="%s %v"}}</h5>
     </div>
       <a class="waves-effect waves-light btn right {{unless disabledVender 'disabled'}}" {{action 'finalizar' model}}><i class="material-icons left">save</i>Vender</a>
 

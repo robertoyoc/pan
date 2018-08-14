@@ -46,7 +46,10 @@ export default Component.extend({
 
       finalizar(venta){
           venta.set('fecha', moment().format())
-          all(venta.get('pedidos').invoke('save')).then(()=>{
+          all(
+            venta.get('pedidos').invoke('save')
+
+          ).then(()=>{
                 venta.set('ticketUrl', 'https://us-central1-panlavillitamx.cloudfunctions.net/api/ventas/' + venta.get('id') + '.pdf')
                 venta.save().then((data)=>{
                   swal({

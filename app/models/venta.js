@@ -4,13 +4,14 @@ import { isBlank } from '@ember/utils';
 import moment from 'moment';
 
 export default DS.Model.extend({
+  fecha: DS.attr('string'),
+  fechaPago: DS.attr('string'),
+  status: DS.attr('string'),
+  ticketUrl: DS.attr('string'),
+
   propietario: DS.belongsTo('account'),
   sucursal: DS.belongsTo('sucursal'),
   pedidos: DS.hasMany('pedidos'),
-  fecha: DS.attr('string'),
-  status: DS.attr('string'),
-
-  ticketUrl: DS.attr('string'),
 
   hora: computed('fecha', function() {
     let date = moment(this.get('fecha'))
@@ -20,8 +21,6 @@ export default DS.Model.extend({
   fechaUnix: computed('fecha', function() {
     return (!isBlank(this.get('fecha'))) ? moment.utc(this.get('fecha')).unix() : 0;
   }).meta({ serialize: true }),
-
-  fechaPago: DS.attr('string'),
   fechaUnixPago: computed('fechaPago', function() {
     return (!isBlank(this.get('fechaPago'))) ? moment.utc(this.get('fechaPago')).unix() : 0;
   }).meta({ serialize: true }),

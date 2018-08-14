@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
-import { computed } from "@ember/object";
+import { computed } from '@ember/object';
+import DS from 'ember-data';
 import { inject as service } from "@ember/service";
 import { isBlank } from '@ember/utils';
 import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
@@ -8,6 +9,18 @@ export default Controller.extend(FindQuery, {
 	selectedPrecio: "all",
 
 	store: service(),
+	currentUser: service(),
+
+	sucursalActual: computed(function(){
+			return DS.PromiseObject.create({
+					promise: this.get('currentUser.account').then((account)=>{
+							return account.get('vendedorDe')
+					})
+			})
+	}),
+	currentSucursal: computed('sucursalActual.content', function(){
+	return this.get('sucursalActual.content')
+}),
 
 	init(){
 		this.set('cantProduct',0);
@@ -67,9 +80,17 @@ export default Controller.extend(FindQuery, {
 
 	existenceProm: computed('selectedProducto', function(){
 		let context = this;
+		let baseModel = this.get('tipoProducto');
+		let productoId = this.get('selectedProducto.id');
+		let sucursalId = this.get('currentSucursal.id');
+
 		return DS.PromiseObject.create({
 			promise: new Promise(function (resolve, reject){
-				context.filterEqual(context.get('store'), 'existence', { 'productoId': context.get('selectedProducto.id')}, function(existence){
+				context.filterEqual(context.get('store'), 'existence',
+			  (baseModel == 'receta') ?
+				{	'tipo': baseModel, 'receta.id': productoId, 'sucursal.id': sucursalId } :
+				{	'tipo': baseModel, 'distribuido.id': productoId, 'sucursal.id': sucursalId }
+				, function(existence){
 					return resolve(existence[0])
 			})
 		})
