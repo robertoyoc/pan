@@ -4,5 +4,5 @@ export default DS.Model.extend({
   nombre: DS.attr('string'),
 
   distribuidos: DS.hasMany('distribuido'),
-  recetas: DS.hasMany('receta'),
+  recetas: DS.hasMany('recetas'),
 });
