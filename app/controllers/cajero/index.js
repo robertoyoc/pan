@@ -9,7 +9,32 @@ import DS from 'ember-data'
 export default Controller.extend(FindQuery, {
   today: moment().format('X'),
   currentUser: service(),
-  
+
+  currentUser: service(),
+
+  cajero: computed('currentUser', function(){
+    if(!isEmpty(this.get('currentUser.account'))) {
+      return DS.PromiseObject.create({
+        promise: this.get('currentUser.account').then((account)=>{
+            return account;
+        })
+      });
+    } else {
+      return null
+    }
+  }),
+
+  sucursalActual: computed(function(){
+      return DS.PromiseObject.create({
+          promise: this.get('currentUser.account').then((account)=>{
+              return account.get('cajeroDe')
+          })
+      })
+  }),
+  currentSucursal: computed('sucursalActual.content', function(){
+  return this.get('sucursalActual.content')
+  }),
+
   result: null,
   names: ['Efectivo', 'Tarjeta Debito/Credito', 'Cheque', ],
 
@@ -18,7 +43,7 @@ export default Controller.extend(FindQuery, {
       //console.log(this.get('result'))
       return DS.PromiseObject.create({
         promise: this.store.findRecord('venta', this.get('result')).then((venta) => {
-          if (!venta.get('fechaPago')) {
+          if (venta.get('status') != 'Pagado') {
             console.log(venta)
             this.set('model.venta', venta)
             return venta;
@@ -53,19 +78,6 @@ export default Controller.extend(FindQuery, {
     }
   }),
 
-  currentCajero: computed('store', 'currentUser', function(){
-    console.log(this.get('curentUser'))
-    if(!isEmpty(this.get('currentUser.account'))) {
-      return DS.PromiseObject.create({
-        promise: this.get('currentUser.account').then((account)=>{
-            return account;
-        })
-      });
-    } else {
-      return null
-    }
-  }),
-
   actions: {
     realizarPago(venta) {
       if (venta.get('isFulfilled')) {
@@ -83,7 +95,7 @@ export default Controller.extend(FindQuery, {
       this.set('result', null);
       window.swal(
         'Venta finalizada',
-        'El ticket ha sido generado',
+        'El ticket ha sido cobrado.',
         'success'
       )
     },

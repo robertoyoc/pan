@@ -1,39 +1,13 @@
 <div class="container">
   <center>
-    <h4>Ventas de hoy</h4>
+    <h4>Ventas del Día: {{moment-format moment 'DD-MM-YYYY'}}</h4>
   </center>
 
-  <table style="max-height: 650px; overflow-y: scroll;">
-    <thead>
-      <tr>
-        <th>Propietario</th>
-        <th>Fecha y Hora</th>
-        <th>Importe</th>
-        <th>Ticket</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      {{#each model as |venta|}}
-          {{#unless venta.isNew}}
-            <tr>
-              <td>{{venta.propietario.nombre}} {{venta.propietario.apellido}}</td>
-              <td>
-                {{moment-format venta.fechaUnix 'MMM DD, HH:mm' 'X' utc=true}}
-              </td>
-              <td>
-                <td>{{format-money venta.importeTotal symbol=selectedCurrency format="%s %v"}}</td>
-              </td>
-              <td>
-                <a href={{venta.ticketUrl}} class="btn-floating" download><i class="material-icons">cloud_download</i></a>
-              </td>
-            </tr>
-          {{/unless}}
-        {{else}}
-          <h5>Aún no hay ventas</h5 >
-      {{/each}}
-    </tbody>
-  </table>
+  {{dt-light
+    columns=columns
+    model=model
+    sort=sort
+  }}
 
 </div>
 
@@ -41,5 +15,5 @@
 	{{#link-to "vendedor.index"  class="waves-effect waves-light btn right"}}
 		<i class="material-icons">add_shopping_cart</i>
 		Vista Vendedor
-    {{/link-to}}
+  {{/link-to}}
 </div>

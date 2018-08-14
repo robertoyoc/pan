@@ -24,28 +24,28 @@ export default Route.extend(FindQuery, {
     },
 
     model(params){
-        let dateFromParams = this.dateFromParams(params)
+      let dateFromParams = this.dateFromParams(params)
 
-        return this.get('currentUser.account').then((account)=>{
-            let sucursal_id = account.get('vendedorDe.id');
-            let context = this;
-			return new Promise(function (resolve, reject){
-				context.filterCustom(context.store, 'venta', {
-					'sucursal.id': ['==', sucursal_id],
-					'fechaUnix': ['>', dateFromParams.clone().startOf('day').utc().unix()],
-				}, function(ventas){
-					let ventasList = [];
-					ventas.forEach(function(venta){
-						if (venta.get('fechaUnix') < dateFromParams.clone().endOf('day').utc().unix()) {
-							ventasList.pushObject(venta);
-						}
-						//console.log(venta.get('pedidos').get('firstObject'))
-					})
-					// debugger
-					return resolve(ventasList)
+      return this.get('currentUser.account').then((account)=>{
+        let sucursal_id = account.get('vendedorDe.id');
+        let context = this;
+			  return new Promise(function (resolve, reject){
+          context.filterCustom(context.store, 'venta', {
+            'sucursal.id': ['==', sucursal_id],
+            'fechaUnix': ['>', dateFromParams.clone().startOf('day').utc().unix()],
+          }, function(ventas){
+  					// let ventasList = [];
+  					// ventas.forEach(function(venta){
+  					// 	if (venta.get('fechaUnix') < dateFromParams.clone().endOf('day').utc().unix()) {
+  					// 		ventasList.pushObject(venta);
+  					// 	}
+  					// 	//console.log(venta.get('pedidos').get('firstObject'))
+  					// })
+  					// // debugger
+            return resolve(ventas)
 			    })
 		    })
-		})
+		  })
     }
 
 });

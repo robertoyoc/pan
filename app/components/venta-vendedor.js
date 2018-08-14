@@ -91,6 +91,10 @@ export default Component.extend({
                   })
               })
           })
+      },
+
+      salir(){
+        this.sendAction('signOut')
       }
     }
 });

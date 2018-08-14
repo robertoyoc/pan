@@ -6,7 +6,7 @@ import moment from 'moment';
 export default DS.Model.extend({
   fecha: DS.attr('string'),
   fechaPago: DS.attr('string'),
-  status: DS.attr('string'),
+  status: DS.attr('string', {defaultValue: 'Pendiente'}),
   ticketUrl: DS.attr('string'),
 
   propietario: DS.belongsTo('account'),

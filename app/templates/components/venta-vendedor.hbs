@@ -233,6 +233,9 @@ body {
       {{#link-to "vendedor.historial-venta" (query-params year=year month=month day=day) class="waves-effect waves-light btn right" }}
         <i class="material-icons">history</i> Ventas de hoy
       {{/link-to}}
+      <a {{action 'salir'}} class="waves-effect waves-light btn right" >
+        <i class="material-icons">history</i> Cerrar Sesión
+      </a>
     </div>
   {{/if}}
 </div>
