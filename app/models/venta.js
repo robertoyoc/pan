@@ -4,6 +4,7 @@ import { isBlank } from '@ember/utils';
 import moment from 'moment';
 
 export default DS.Model.extend({
+  propietario: DS.belongsTo('account'),
   sucursal: DS.belongsTo('sucursal'),
   pedidos: DS.hasMany('pedidos'),
   fecha: DS.attr('string'),
@@ -46,6 +47,4 @@ export default DS.Model.extend({
     //console.log(sum)
     return sum;
   }).meta({ serialize: true }),
-
-  propietario: DS.belongsTo('account')
 });

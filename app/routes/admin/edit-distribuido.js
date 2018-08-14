@@ -14,7 +14,7 @@ export default Route.extend(FindQuery, {
 
 			let context = this;
 			return new Promise(function (resolve, reject){
-				context.filterEqual(context.store, 'existence', { 'tipo': 'distribuido', 'productoId': context.get('idProducto'),'sucursalId': sucursal.get('id')}, function(distribuido){
+				context.filterEqual(context.store, 'existence', { 'tipo': 'distribuido', 'distribuido.id': context.get('idProducto'),'sucursal.id': sucursal.get('id')}, function(distribuido){
 					//console.log(mprima[0])
 					context.set('existencia', distribuido[0])
 					return resolve()

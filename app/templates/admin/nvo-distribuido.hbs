@@ -3,4 +3,8 @@
   {{#link-to 'admin.nvo-distribuido' class='breadcrumb' }}Distribuido{{/link-to}}
 {{/ember-wormhole}}
 
-{{add-distribuido myModel=model myExistencia=existencia nuevoProducto = (action 'nuevoProducto')}}
+{{add-distribuido
+  myModel=model
+  myExistencia=existencia
+  mySucursal=currentSucursal
+  nuevoProducto = (action 'nuevoProducto')}}

@@ -31,8 +31,6 @@
 
 </style>
 
-{{log model}}
-
 <div class="row">
   <div class="col s12">
   	{{#link-to "admin.nvo-receta" class="waves-effect waves-light btn left izq"}}<i class="material-icons left">add</i>Agregar Nueva Receta{{/link-to}}
@@ -41,7 +39,7 @@
   <div class="col s6 spc">
     <div class="card">
       {{dt-light
-        columns=columns
+        columns=columnsReceta
         model=model.recetas
         sort=sortR
         performDelete=(action 'delete')
@@ -53,7 +51,7 @@
     <div class="col s6 spc">
     <div class="card">
       {{dt-light
-        columns=columns
+        columns=columnsDistrib
         model=model.distribuidos
         sort=sortD
         performDelete=(action 'delete')

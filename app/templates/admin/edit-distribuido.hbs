@@ -5,4 +5,9 @@
 
 {{log currentCategoria}}
 {{m-wrapper}}
-{{add-distribuido myModel=model myExistencia=existencia selectedCat=currentCategoria.content nuevoProducto = (action 'nuevoProducto')}}
+{{add-distribuido
+  myModel=model
+  myExistencia=existencia
+  selectedCat=currentCategoria.content
+  mySucursal=currentSucursal 
+  nuevoProducto = (action 'nuevoProducto')}}

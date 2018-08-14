@@ -12,34 +12,52 @@ export default Controller.extend({
 	// DATA-TABLE
 	deleteMessage: 'Las existencias serán eliminadas',
 
-	columns: computed(function() {
+	columnsDistrib: computed(function() {
     return [{
       label: 'Nombre',
-      valuePath: 'producto.nombre',
+      valuePath: 'distribuido.nombre',
     }, {
       label: 'Cantidad',
       valuePath: 'cantidad',
     }, {
       label: 'Precio',
-      valuePath: 'producto.precio',
+      valuePath: 'distribuido.precio',
 			cellComponent: 'price-wrapper'
     }, {
       label: 'Acciones',
-      valuePath: 'producto.precio',
+      valuePath: 'distribuido.precio',
 			sortable: false,
 			cellComponent: 'dt-actions'
     }];
   }),
-	sortD: 'producto.nombre',
-	sortR: 'producto.nombre',
+	columnsReceta: computed(function() {
+    return [{
+      label: 'Nombre',
+      valuePath: 'receta.nombre',
+    }, {
+      label: 'Cantidad',
+      valuePath: 'cantidad',
+    }, {
+      label: 'Precio',
+      valuePath: 'receta.precio',
+			cellComponent: 'price-wrapper'
+    }, {
+      label: 'Acciones',
+      valuePath: 'receta.precio',
+			sortable: false,
+			cellComponent: 'dt-actions'
+    }];
+  }),
+	sortD: 'distribuido.nombre',
+	sortR: 'receta.nombre',
 
 	actions: {
 		editReceta(existencia) {
-			this.transitionToRoute('admin.edit-receta', existencia.get('producto.id'))
+			this.transitionToRoute('admin.edit-receta', existencia.get('receta.id'))
 		},
 
 		editDistribuido(existencia) {
-			this.transitionToRoute('admin.edit-distribuido', existencia.get('producto.id'))
+			this.transitionToRoute('admin.edit-distribuido', existencia.get('distribuido.id'))
 		},
 
 		delete(existencia) {

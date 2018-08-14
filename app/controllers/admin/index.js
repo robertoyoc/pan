@@ -24,7 +24,7 @@ export default Controller.extend(FindQuery, {
     sucursalActual: computed(function(){
         return DS.PromiseObject.create({
             promise: this.get('currentUser.account').then((account)=>{
-                return account.get('sucursal')
+                return account.get('administradorDe')
             })
         })
     }),

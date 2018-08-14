@@ -3,45 +3,55 @@ import { inject as service } from "@ember/service";
 import { computed } from '@ember/object';
 
 export default Component.extend({
-    store: service(),
+  store: service(),
 	firebaseApp: service(),
 
 	myCategorias: computed(function() {
 		return this.get('store').findAll('categoria')
-    }),
+  }),
 
-    cantExistencia: computed(function(){
-    	if (this.get('myExistencia.cantidad') > 0) {
-    		return this.get('myExistencia.cantidad')
-    	} else {
-    		return 1;
-   		}
-    }),
+  cantExistencia: computed(function(){
+  	if (this.get('myExistencia.cantidad') > 0) {
+  		return this.get('myExistencia.cantidad')
+  	} else {
+  		return 1;
+ 		}
+  }),
 
 	actions: {
-		guardar(producto, existencia, categoria) {
-			let productId = {
-				id: producto.id,
-				tipo: producto.get('constructor.modelName')
-			}
+		guardar(producto, existencia, categoria, sucursal) {
+			categoria.get('distribuidos').then((distribuidosList)=>{
+        distribuidosList.pushObject(producto)
+        distribuidosList.save().then(()=>{
+          categoria.save().then(()=>{
 
-			categoria.get('productosId').pushObject(productId);
-			categoria.save().then(()=>{
-				existencia.set('cantidad', this.get('cantExistencia'))
-				existencia.save().then(()=>{
-					producto.set('categoria', categoria)
-					producto.save().then(()=>{
-						window.swal(
- 	  		            	'Distribuido Añadido',
-		            		'Guardaste producto distribuido',
-			            	'success'
-		        		).then(()=>{
-							this.sendAction('nuevoProducto');
-						})
-					})
-				})
-			})
-        },
+            sucursal.get('existencias').then((existenciasList)=>{
+              existenciasList.pushObject(existencia)
+              existenciasList.save().then(()=>{
+                sucursal.save().then(()=>{
+
+                  existencia.set('cantidad', this.get('cantExistencia'))
+                  existencia.save().then(()=>{
+                    producto.set('categoria', categoria)
+                    producto.save().then(()=>{
+                      window.swal(
+                        'Distribuido Añadido',
+                        'Guardaste producto distribuido',
+                        'success'
+                      ).then(()=>{
+                      this.sendAction('nuevoProducto');
+                      })
+                    })
+                  })
+
+                })
+              })
+            })
+
+          })
+        })
+      })
+    },
 
 		didSelectImage(files){
 			let ctrl = this;

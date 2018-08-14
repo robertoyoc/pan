@@ -12,5 +12,7 @@ export default DS.Model.extend({
 	vendedores: DS.hasMany('account', { inverse: 'vendedorDe' }),
 	administradores: DS.hasMany('account', { inverse: 'administradorDe' }),
 
+	ventas: DS.hasMany('ventas'),
+
 	pasesDeLista: DS.hasMany('roll-call')
 });

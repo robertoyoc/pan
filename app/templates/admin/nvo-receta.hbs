@@ -3,4 +3,8 @@
   {{#link-to 'admin.nvo-receta' class='breadcrumb' }}Receta{{/link-to}}
 {{/ember-wormhole}}
 
-{{add-receta model=model existencia=existencia nuevoProducto = (action 'nuevoProducto')}}
+{{add-receta
+  model=model
+  existencia=existencia
+  sucursal=currentSucursal
+  nuevoProducto = (action 'nuevoProducto')}}

@@ -4,4 +4,9 @@
 {{/ember-wormhole}}
 
 {{m-wrapper}}
-{{add-receta model=model existencia=existencia selectedCat=model.categoria nuevoProducto = (action 'nuevoProducto')}}
+{{add-receta
+  model=model
+  existencia=existencia
+  selectedCat=currentCategoria.content
+  sucursal=currentSucursal
+  nuevoProducto = (action 'nuevoProducto')}}

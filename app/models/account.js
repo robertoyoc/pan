@@ -12,6 +12,7 @@ export default DS.Model.extend({
   vendedorDe: DS.belongsTo('sucursal', { inverse: 'vendedores' }),
 
   asistencias: DS.hasMany('attendance'),
+  ventas: DS.hasMany('ventas'),
 
   qrCode: DS.attr('string'),
 });

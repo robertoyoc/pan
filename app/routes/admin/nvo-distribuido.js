@@ -4,7 +4,7 @@ import {inject as service} from "@ember/service";
 
 export default Route.extend({
     currentUser: service(),
-    
+
     beforeModel() {
         /*
         this.store.createRecord('categoria', {
@@ -12,7 +12,7 @@ export default Route.extend({
          }).save()
          this.store.createRecord('categoria', {
 		 	nombre: "Pan",
-         }).save() 
+         }).save()
          */
     },
 
@@ -23,13 +23,13 @@ export default Route.extend({
     afterModel(model){
 		  return this.get('currentUser.account').then((account)=>{
 			  return this.set('existencia', this.store.createRecord('existence',{
-				  productoId: model.get('id'),
+				  distribuido: model,
 				  tipo: model.get('constructor.modelName'),
-				  sucursalId: account.get('sucursal.id'),
+				  sucursal: account.get('administradorDe'),
 		  	}))
 		  })
     },
-    
+
     setupController(controller){
 		this._super(...arguments)
 		controller.set('existencia', this.get('existencia'))

@@ -1,16 +1,28 @@
 import Controller from '@ember/controller';
-import { computed } from '@ember/object';
 import { inject as service } from "@ember/service";
-import { isEmpty } from '@ember/utils';
+import { computed } from '@ember/object';
+import { isEmpty } from "@ember/utils";
 import DS from 'ember-data';
 
 export default Controller.extend({
 	currentUser: service(),
 
-	currentCategoria: computed('model', function(){
-		if(!isEmpty(this.get('currentUser.categoria'))) {
+	sucursalActual: computed(function(){
 			return DS.PromiseObject.create({
-				promise: this.get('currentUser.categoria').then((categoria)=>{
+					promise: this.get('currentUser.account').then((account)=>{
+							return account.get('administradorDe')
+					})
+			})
+	}),
+	currentSucursal: computed('sucursalActual.content', function(){
+	return this.get('sucursalActual.content')
+	}),
+
+
+	currentCategoria: computed('model', function(){
+		if(!isEmpty(this.get('model.categoria'))) {
+			return DS.PromiseObject.create({
+				promise: this.get('model.categoria').then((categoria)=>{
 						return categoria;
 				})
 			});

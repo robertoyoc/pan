@@ -30,33 +30,39 @@ export default Component.extend({
       }),
 
 	actions: {
-    guardar(producto, existencia, categoria, isNew) {
-      
+    guardar(producto, existencia, categoria, sucursal) {
+      categoria.get('recetas').then((recetasList)=>{
+        recetasList.pushObject(producto)
+        recetasList.save().then(()=>{
+          categoria.save().then(()=>{
 
+            sucursal.get('existencias').then((existenciasList)=>{
+              existenciasList.pushObject(existencia)
+              existenciasList.save().then(()=>{
+                sucursal.save().then(()=>{
 
+                  existencia.set('cantidad', this.get('cantExistencia'))
+                  existencia.save().then(()=>{
+                    producto.set('categoria', categoria)
+                    producto.save().then(()=>{
+                      window.swal(
+                        'Receta Añadida',
+                        'Guardaste producto receta',
+                        'success'
+                      ).then(()=>{
+                      this.sendAction('nuevoProducto');
+                      })
+                    })
+                  })
 
-   			let productId = {
-			 	id: producto.id,
-			 	tipo: producto.get('constructor.modelName')
-			}
-			categoria.get('productosId').pushObject(productId);
-			categoria.save().then(()=>{
-				existencia.set('cantidad', this.get('cantExistencia'))
-				existencia.save().then(()=>{
-					producto.set('categoria', categoria)
-					producto.save().then(()=>{
-						console.log(categoria.get('productos'))
-						window.swal(
- 	  		            	'Receta Añadida',
-		            		'Guardaste receta',
-			            	'success'
-		        		).then(()=>{
-							this.sendAction('nuevoProducto');
-						})
-					})
-				})
-			})
-		},
+                })
+              })
+            })
+
+          })
+        })
+      })
+    },
 
     didSelectImage(files){
 			let ctrl = this;
