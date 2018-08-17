@@ -1,2 +1,7 @@
-<a class="btn-floating"><i class="material-icons" {{action tableActions.edit row}}>edit</i></a>
-<a class="btn-floating red"><i class="material-icons" {{action tableActions.delete row}} >delete</i></a>
+
+{{#if tableActions.edit}}
+  <a class="btn-floating"><i class="material-icons" {{action tableActions.edit row}}>edit</i></a>
+{{/if}}
+{{#if tableActions.delete}}
+  <a class="btn-floating red"><i class="material-icons" {{action tableActions.delete row}} >delete</i></a>
+{{/if}}

@@ -1,16 +1,16 @@
 import DS from 'ember-data';
 import { computed } from "@ember/object";
 import { isBlank } from '@ember/utils';
-import moment from 'moment';
 
 export default DS.Model.extend({
-  fecha: DS.attr('string'),
-  fechaPago: DS.attr('string'),
+  fechaExpedicion: DS.attr('number'),
+  fechaPago: DS.attr('number'),
   status: DS.attr('string', {defaultValue: 'Pendiente'}),
   ticketUrl: DS.attr('string'),
 
   propietario: DS.belongsTo('account'),
   sucursal: DS.belongsTo('sucursal'),
+  cobro: DS.belongsTo('cobro'),
   pedidos: DS.hasMany('pedidos'),
 
   hora: computed('fecha', function() {
@@ -18,12 +18,6 @@ export default DS.Model.extend({
     return `${date.hour()}:${date.minutes()}`
 
   }),
-  fechaUnix: computed('fecha', function() {
-    return (!isBlank(this.get('fecha'))) ? moment.utc(this.get('fecha')).unix() : 0;
-  }).meta({ serialize: true }),
-  fechaUnixPago: computed('fechaPago', function() {
-    return (!isBlank(this.get('fechaPago'))) ? moment.utc(this.get('fechaPago')).unix() : 0;
-  }).meta({ serialize: true }),
 
   importeTotal: computed('pedidos.@each.total', function() {
     let sum = 0;

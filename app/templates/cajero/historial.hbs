@@ -44,6 +44,12 @@ textarea.materialize-textarea {
   color: white;
 }
 </style>
+<div class="container">
+  <center>
+    <h4>Cobros del Día: {{moment-format currentDay 'DD-MM-YYYY'}}</h4>
+  </center>
+</div>
+
 <div class="row">
   <div class="col s8 offset-s2 mt">
     {{#m-wrapper query=".datepicker" method="pickadate" }}
@@ -52,7 +58,14 @@ textarea.materialize-textarea {
   </div>
   <div class="col s8 offset-s2">
     <div class="card">
-      <table class="striped centered">
+      {{dt-light
+        columns=columns
+        model=model
+        sort=sort
+        performCancel=(action 'cancel')
+      }}
+
+      <!-- <table class="striped centered">
         <thead>
           <tr>
             <th>Fecha de Expedición</th>
@@ -66,8 +79,8 @@ textarea.materialize-textarea {
           {{#each model as |cobro|}}
             {{#unless cobro.isNew}}
               <tr>
-                <td>{{moment-format cobro.venta.fechaUnix 'MMM DD, HH:mm' 'X' utc=true}}</td>
-                <td>{{moment-format cobro.fechaUnix 'MMM DD, HH:mm' 'X' utc=true}}</td>
+                <td>{{moment-format cobro.venta.fechaExpedicion 'MMM DD, HH:mm' 'X' utc=true}}</td>
+                <td>{{moment-format cobro.fecha 'MMM DD, HH:mm' 'X' utc=true}}</td>
                 <td>{{format-money cobro.venta.importeTotal symbol=selectedCurrency format="%v %s"}}</td>
                 <td>{{cobro.venta.status}}</td>
                 <td>
@@ -81,7 +94,7 @@ textarea.materialize-textarea {
               <h5>Aún no se registran cobros. </h5>
           {{/each}}
         </tbody>
-      </table>
+      </table> -->
     </div>
   </div>
 </div>

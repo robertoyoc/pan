@@ -11,7 +11,7 @@ export default Controller.extend({
       valuePath: 'propietario.nombreCompleto',
     }, {
       label: 'Hora',
-      valuePath: 'fechaUnix',
+      valuePath: 'fechaExpedicion',
       cellComponent: 'dt-hour'
     }, {
       label: 'Importe',

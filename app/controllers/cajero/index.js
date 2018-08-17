@@ -7,10 +7,11 @@ import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
 import DS from 'ember-data'
 
 export default Controller.extend(FindQuery, {
-  today: moment().format('X'),
   currentUser: service(),
 
-  currentUser: service(),
+  today: moment().format('X'),
+  result: null,
+  names: ['Efectivo', 'Tarjeta Debito/Credito', 'Cheque', ],
 
   cajero: computed('currentUser', function(){
     if(!isEmpty(this.get('currentUser.account'))) {
@@ -32,20 +33,17 @@ export default Controller.extend(FindQuery, {
       })
   }),
   currentSucursal: computed('sucursalActual.content', function(){
-  return this.get('sucursalActual.content')
+    return this.get('sucursalActual.content')
   }),
-
-  result: null,
-  names: ['Efectivo', 'Tarjeta Debito/Credito', 'Cheque', ],
 
   selectedVenta: computed('result', function() {
     if (this.get('result')) {
-      //console.log(this.get('result'))
       return DS.PromiseObject.create({
         promise: this.store.findRecord('venta', this.get('result')).then((venta) => {
           if (venta.get('status') != 'Pagado') {
-            console.log(venta)
-            this.set('model.venta', venta)
+            //console.log(venta)
+            //venta.set(cobro, this.get('model.id'));
+            this.set('model.venta', venta);
             return venta;
           } else {
             window.swal(
@@ -82,15 +80,15 @@ export default Controller.extend(FindQuery, {
     realizarPago(venta) {
       if (venta.get('isFulfilled')) {
         let ventaObj = venta.get('content')
-        venta.set('fechaPago', moment().format())
+        venta.set('fechaPago', moment().unix())
         ventaObj.set('status', 'Pagado')
         ventaObj.save()
       }
-      let fecha =  moment().format() // `${moment().date()} ${moment.months()[moment().month()]}, ${moment().year()}`
+      let fecha =  moment().unix() // `${moment().date()} ${moment.months()[moment().month()]}, ${moment().year()}`
       this.set('model.fecha', fecha)
       this.get('model').save()
       this.set('model', this.store.createRecord('cobro', {
-        sucursalId: this.get('sucursalId')
+        sucursal: this.get('currentSucursal')
       }))
       this.set('result', null);
       window.swal(

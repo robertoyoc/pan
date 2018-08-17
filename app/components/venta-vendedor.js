@@ -45,7 +45,7 @@ export default Component.extend({
       },
 
       finalizar(venta){
-          venta.set('fecha', moment().format())
+          venta.set('fechaExpedicion', moment().unix())
           all(
             venta.get('pedidos').invoke('save')
 
@@ -54,7 +54,7 @@ export default Component.extend({
                 venta.save().then((data)=>{
                   swal({
                     type: 'question',
-                    confirmButtonText: '¿Generar Ticket?',
+                    confirmButtonText: '¿Confirmar Venta?',
                     showLoaderOnConfirm: true,
                     preConfirm: () => {
                       return new Promise((resolve)=>{
@@ -73,14 +73,14 @@ export default Component.extend({
                     console.log(result)
                     if (!isBlank(result)) {
                       swal({
-                        title: '<i>TICKET</i>',
+                        title: '<i>VENTA</i>',
                         type: 'info',
                         html:
                             '<a href="' +
                             result +
-                            '" target="_blank">Ticket</a> ',
+                            '" target="_blank">Imprimir Ticket</a> ',
                         confirmButtonColor: '#3085d6',
-                        confirmButtonText: '¡Ticket correcto!',
+                        confirmButtonText: '¡Operación Finalizada!',
                         allowOutsideClick: false
                       }).then(()=>{
                         this.sendAction('nuevaVenta', venta);

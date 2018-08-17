@@ -5,16 +5,11 @@ export default Route.extend({
   currentUser: service(),
   model() {
     return this.get('currentUser.account').then((account) => {
-      this.set('sucursalId', account.get('sucursal.id'))
-      return this.store.createRecord('cobro', {
-        sucursalId: account.get('sucursal.id')
+      return account.get('cajeroDe').then((sucursal)=>{
+        return this.store.createRecord('cobro', {
+          sucursal: sucursal
+        })
       })
     })
-
-  },
-  setupController(controller) {
-    this._super(...arguments)
-    controller.set('sucursalId', this.get('sucursalId'))
-
   }
 });

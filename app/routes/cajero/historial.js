@@ -1,7 +1,6 @@
 import Route from '@ember/routing/route';
 import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
 import { inject as service } from "@ember/service";
-import moment from 'moment';
 
 export default Route.extend(FindQuery, {
   currentUser: service(),
@@ -25,26 +24,26 @@ export default Route.extend(FindQuery, {
       startDate, endDate;
     startDate = dateFromParams.clone().startOf('day').utc();
     endDate = dateFromParams.clone().endOf('day').utc();
+    this.set('currentDay', dateFromParams);
 
     return this.get('currentUser.account').then((account) => {
-      this.set('accountId', account.get('id'))
-      return account.get('sucursal').then((sucursal)=> {
-        console.log(startDate.unix());
-        this.set('sucursalId', sucursal.get('id'))
+      return account.get('cajeroDe').then((sucursal)=> {
+        //console.log(startDate.unix());
+        let sucursal_id = sucursal.get('id');
         let context = this;
         return new Promise(function(resolve, reject) {
             context.filterCustom(context.store, 'cobro', {
-              'sucursalId': ['==', context.get('sucursalId')],
-              'fechaUnix': ['>=', startDate.unix()],
+              'sucursal.id': ['==', sucursal_id],
+              'fecha': ['>=', startDate.unix()],
             }, function(cobros){
-              console.log(cobros)
+              //console.log(cobros)
               let cobrosList = [];
               cobros.forEach(function(cobro){
-                if (cobro.get('fechaUnix') <= endDate.unix()) {
+                if (cobro.get('fecha') <= endDate.unix()) {
                   cobrosList.pushObject(cobro);
                 }
               })
-              console.log(cobrosList)
+              //console.log(cobrosList)
               return resolve(cobrosList)
           })
         })
@@ -52,9 +51,8 @@ export default Route.extend(FindQuery, {
     })
   },
 
-  setupController(controller) {
-    this._super(...arguments)
-    controller.set('sucursalId', this.get('sucursalId'))
-    controller.set('accountId', this.get('accountId'))
-  }
+  setupController(controller, model){
+		this._super(...arguments);
+    controller.set('currentDay', this.get('currentDay'))
+	}
 });

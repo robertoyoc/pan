@@ -114,6 +114,10 @@ export default Component.extend({
 				console.log(error)
 			});
 		},
+
+    cancel(row){
+      this.sendAction('performCancel', row.get('content'));
+    }
   }
 
 });
