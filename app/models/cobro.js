@@ -5,7 +5,8 @@ export default DS.Model.extend({
     pago: DS.attr('number'),
     cambio: DS.attr('number'),
 
-    sucursal: DS.belongsTo('sucursal'),
     venta: DS.belongsTo('venta'),
-    cancelacion: DS.belongsTo('cancelar-request')
+    cancelacion: DS.belongsTo('cancelar-request'),
+
+    sucursal: DS.belongsTo('sucursal'),
 });

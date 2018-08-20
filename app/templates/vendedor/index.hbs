@@ -1,1 +1,8 @@
-{{venta-vendedor model = model isNew = true signOut = (action 'signOut')}}
+{{venta-vendedor
+  model=model
+  isNew=true
+  day=day month=month year=year
+  signOut=(action 'signOut')
+  processVenta=(action 'processVenta')
+  historialVenta=(action 'historialVenta')
+}}

@@ -32,7 +32,7 @@ export default Route.extend(FindQuery, {
 			  return new Promise(function (resolve, reject){
           context.filterCustom(context.store, 'venta', {
             'sucursal.id': ['==', sucursal_id],
-            'fechaUnix': ['>', dateFromParams.clone().startOf('day').utc().unix()],
+            'fechaExpedicion': ['>', dateFromParams.clone().startOf('day').utc().unix()],
           }, function(ventas){
             //console.log(ventas)
             //debugger

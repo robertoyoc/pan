@@ -1,19 +1,35 @@
-<div class="container">
-  <center>
-    <h4>Ventas del Día: {{moment-format moment 'DD-MM-YYYY'}}</h4>
-  </center>
+<style type="text/css">
+body {
+  background: url('../media/villita_bg.jpeg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 100vh;
+  margin: 3px auto 0;
+  position: relative;
+}
+</style>
 
-  {{dt-light
-    columns=columns
-    model=model
-    sort=sort
-  }}
+<nav style="padding-left: 10px" class="teal brown lighten-1">
+  <div class="nav-wrapper ">
+    <div class="col s12">
+      {{#link-to 'vendedor.index' class='breadcrumb'}}
+        Vendedor
+      {{/link-to}}
+      {{#link-to "vendedor.historial-venta" (query-params year=year month=month day=day) class='breadcrumb'}}
+        Ventas del Día: {{moment-format moment 'DD-MM-YYYY'}}
+      {{/link-to}}
+    </div>
+  </div>
+</nav>
 
-</div>
-
-<div>
-	{{#link-to "vendedor.index"  class="waves-effect waves-light btn right"}}
-		<i class="material-icons">add_shopping_cart</i>
-		Vista Vendedor
-  {{/link-to}}
+<div class="row">
+  <div class="col s12">
+    <div class="card">
+      {{dt-light
+        columns=columns
+        model=filteredModel
+        sort=sort
+      }}
+    </div>
+  </div>
 </div>

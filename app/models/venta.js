@@ -5,19 +5,13 @@ import { isBlank } from '@ember/utils';
 export default DS.Model.extend({
   fechaExpedicion: DS.attr('number'),
   fechaPago: DS.attr('number'),
-  status: DS.attr('string', {defaultValue: 'Pendiente'}),
+  status: DS.attr('string', {defaultValue: 'En Proceso'}),
   ticketUrl: DS.attr('string'),
 
   propietario: DS.belongsTo('account'),
   sucursal: DS.belongsTo('sucursal'),
   cobro: DS.belongsTo('cobro'),
   pedidos: DS.hasMany('pedidos'),
-
-  hora: computed('fecha', function() {
-    let date = moment(this.get('fecha'))
-    return `${date.hour()}:${date.minutes()}`
-
-  }),
 
   importeTotal: computed('pedidos.@each.total', function() {
     let sum = 0;

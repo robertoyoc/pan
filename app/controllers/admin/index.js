@@ -47,7 +47,7 @@ export default Controller.extend(FindQuery, {
         endDate = today.clone().endOf('day').utc();
         return DS.PromiseObject.create({
             promise: this.get('currentUser.account').then((account)=>{
-                let sucursal = account.get('sucursal');
+                let sucursal = account.get('administradorDe');
                 let context = this;
                 return new Promise(function (resolve, reject){
                     context.filterCustom(context.store, 'roll-call', {

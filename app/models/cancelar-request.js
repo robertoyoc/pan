@@ -5,7 +5,7 @@ import { computed } from "@ember/object"
 export default DS.Model.extend({
   cobro: DS.belongsTo('cobro'),
   motivo: DS.attr('string'),
-  status: DS.attr('string', { defaultValue: "Pendiente" }),
+  status: DS.attr('string', { defaultValue: "Cancelación pendiente" }),
 
   sucursal: DS.belongsTo('sucursal'),
   cajero: DS.belongsTo('account'),

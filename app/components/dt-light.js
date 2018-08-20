@@ -44,7 +44,7 @@ export default Component.extend({
     //this.set('isLoading', false);
   }).on('init'),
 
-  filterAndSortModel : task(function*(debounceMs = 200) {
+  filterAndSortModel : task(function*(debounceMs = 100) {
     yield timeout(debounceMs); // debounce
 
     let query = this.get('query');

@@ -5,7 +5,19 @@ import { computed } from '@ember/object';
 export default Controller.extend({
     store: service(),
 
+    month: moment().format('MM'),
+    day: moment().format('DD'),
+    year: moment().format('YYYY'),
+
     actions: {
+      // TRANSICIONES
+      processVenta(venta){
+          this.transitionToRoute('vendedor.venta', venta.id);
+      },
+      historialVenta(venta, day, month, year){
+        this.transitionToRoute('vendedor.historial-venta', { queryParams: { year: year, month: month, day: day   }});
+      },
+
       signOut(){
         window.swal({
           title: 'Estás seguro?',

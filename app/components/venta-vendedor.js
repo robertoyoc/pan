@@ -1,16 +1,12 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import moment from 'moment';
 import { inject as service } from "@ember/service";
-import { all } from 'rsvp';
+import { computed } from '@ember/object';
 import { isBlank } from '@ember/utils';
+import moment from 'moment';
+import { all } from 'rsvp';
 
 export default Component.extend({
     store: service(),
-
-    month: moment().format('MM'),
-    day: moment().format('DD'),
-    year: moment().format('YYYY'),
 
     myCategorias: computed(function() {
         return this.get('store').findAll('categoria')
@@ -25,32 +21,24 @@ export default Component.extend({
           pedido.destroyRecord()
         },
 
-        getDownloadUrl(url, redirectCount, venta) {
-          console.log('venta', venta)
-          redirectCount = redirectCount || 0;
-          if (redirectCount > 10) {
-              throw new Error("Redirected too many times.");
-          }
-          return new Promise(function (resolve) {
-            let redirectsTo;
-            return venta.get('ticketUrl').then((downloadURL)=>{
-              redirectsTo = (!isBlank(downloadURL) && downloadURL != url) ? downloadURL: null;
-              resolve(redirectsTo);
-            }).catch(function (redirectsTo) {
-              return redirectsTo
-                 ? getDownloadUrl(redirectsTo, redirectCount+ 1, venta)
-                : url;
-          });
-        })
-      },
+        processVenta(venta){
+          venta.set('status', 'En Proceso');
+          venta.save().then(()=>{
+            this.sendAction('processVenta', venta);
+          })
+        },
+
+        historialVenta(venta, day,  month, year){
+          this.sendAction('historialVenta', venta, day, month, year);
+        },
 
       finalizar(venta){
-          venta.set('fechaExpedicion', moment().unix())
+          venta.set('fechaExpedicion', moment().unix());
           all(
             venta.get('pedidos').invoke('save')
-
           ).then(()=>{
                 venta.set('ticketUrl', 'https://us-central1-panlavillitamx.cloudfunctions.net/api/ventas/' + venta.get('id') + '.pdf')
+                venta.set('status', 'Cobro Pendiente');
                 venta.save().then((data)=>{
                   swal({
                     type: 'question',
@@ -60,7 +48,6 @@ export default Component.extend({
                       return new Promise((resolve)=>{
                         function checkData(){
                           if(data.get('ticketUrl')){
-                            // console.log(data.get('ticketUrl'))
                             return resolve(data.get('ticketUrl'))
                           }
                           else return setTimeout(checkData, 2000)
@@ -83,7 +70,7 @@ export default Component.extend({
                         confirmButtonText: '¡Operación Finalizada!',
                         allowOutsideClick: false
                       }).then(()=>{
-                        this.sendAction('nuevaVenta', venta);
+                        this.sendAction('nuevaVenta');
                       }).catch((error)=>{
                         console.log(error)
                     });
@@ -93,7 +80,7 @@ export default Component.extend({
           })
       },
 
-      salir(){
+      signOut(){
         this.sendAction('signOut')
       }
     }

@@ -5,17 +5,12 @@ export default Controller.extend({
 	currentUser: service(),
 
     actions: {
-        nuevaVenta(venta){
-        	this.get('currentUser.account').then((account)=>{
-        		account.get('vendedorDe').then((sucursal)=>{
-        			venta.set('propietario', account);
-        			venta.set('sucursal', sucursal);
-        			venta.save().then(()=>{
-        				this.transitionToRoute('vendedor.index');
-        			})
-        		})
-
-        	})
-        }
-    }
+      nuevaVenta(){
+      	this.transitionToRoute('vendedor.index');
+      },
+			// TRANSICIONES
+      processVenta(venta){
+          this.transitionToRoute('vendedor.venta', venta.id);
+      },
+		}
 });
