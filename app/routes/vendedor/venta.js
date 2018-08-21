@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 
 export default Route.extend({
     model(params) {
-        this.set('venta_id', params.idventa)
+        this.set('venta_id', params.idventa);
         return this.store.findRecord('venta', params.idventa).then((venta)=>{
           return venta.get('pedidos').createRecord({
               venta: venta

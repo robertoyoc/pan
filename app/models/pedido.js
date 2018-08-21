@@ -13,8 +13,8 @@ export default DS.Model.extend({
   productoId: DS.attr('string'),
   producto: computed('tipo', 'productoId', function(){
       if(this.get('tipo'))
-        return this.store.findRecord(this.get('tipo'), this.get('productoId'))
-      else return null
+        return this.store.findRecord(this.get('tipo'), this.get('productoId'));
+      else return null;
   }),
 
   total: computed('producto.precio', 'cantidad', function () {

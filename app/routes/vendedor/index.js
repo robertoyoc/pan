@@ -1,7 +1,7 @@
 import Route from '@ember/routing/route';
-import { hash } from 'rsvp';
 import {inject as service} from "@ember/service";
 import DataRoute from 'ember-data-route';
+import { hash } from 'rsvp';
 
 export default Route.extend(DataRoute, {
   	currentUser: service(),

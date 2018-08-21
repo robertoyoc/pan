@@ -113,46 +113,98 @@ export default Controller.extend(FindQuery, {
 		return isBlank(this.get('selectedProducto'));
     }),
 
-		pedidoExistss: computed('selectedProducto', 'venta_id', function(){
-			let pedido_id = this.get('model.id');
-			let venta_id = this.get('venta_id');
-			let producto_id = this.get('selectedProducto.id');
-			console.log(pedido_id)
-			let context = this;
-        return DS.PromiseObject.create({
-                promise: new Promise(function (resolve, reject){
-                    context.filterCustom(context.store, 'pedido', {
-                        'venta.id': ['==', context.get('venta_id')],
-                        'productoId': ['==', context.get('producto_id')],
-                    }, function(pedidos){
-											pedidos.forEach((pedido)=>{
-												console.log('Expected: ', pedido.get('id') ,' ; Obtained: ', pedido_id);
-												if(pedido.get('id') != pedido_id) {
-													return resolve(true);
-												}
-											});
-											return resolve(false);
-                      // return (!isBlank(pedido))? resolve(true): resolve(false);
-                    })
-                })
-        })
-    }),
-   pedidoExists: computed('pedidoExistss.content', function(){
-		return this.get('pedidoExistss.content')
-	}),
+	 alreadyProductt: computed('model', 'selectedProducto', 'venta_id', function(){
+ 		let pedido_id = this.get('model.id');
+ 		let venta_id = this.get('venta_id');
+ 		let producto_id = this.get('selectedProducto.id');
+		let courtesy_pd = this.get('model.isCourtesy');
+ 		let context = this;
+     return DS.PromiseObject.create({
+     	promise: new Promise(function (resolve, reject){
+         context.filterCustom(context.store, 'pedido', {
+         	'venta.id': ['==', context.get('venta_id')],
+         }, function(pedidos){
+					 pedidos.forEach((pedido)=>{
+						 if(pedido.get('id') != pedido_id && pedido.get('productoId') == producto_id && pedido.get('isCourtesy') == courtesy_pd) {
+							 console.log('Expected: ', courtesy_pd, 'Obtained: ', pedido.get('isCourtesy'));
+							 return resolve(pedido);
+						 }
+					 });
+					 return resolve(null);
+				 })
+ 	      })
+       })
+     }),
+    alreadyProduct: computed('alreadyProductt.content', function(){
+ 		 return this.get('alreadyProductt.content')
+ 	 }),
 
 	actions: {
-		agregarPedido(model, venta){
+		agregarPedido(model, venta, pedidoExistente){
 			if (model.get('cantidad') > 0){
 				if (this.get('selectedProducto.id') != null) {
-					model.set('productoId', this.get('selectedProducto.id'));
-					model.set('tipo', this.get('selectedProducto.constructor.modelName'));
-					model.save().then(()=>{
-						this.send('changeProducto');
-						venta.save().then(()=>{
-							this.transitionToRoute('vendedor.procesando-venta', this.get('venta_id'));
+
+					if(!isBlank(pedidoExistente)) {
+						console.log(pedidoExistente)
+						debugger;
+						if(pedidoExistente.get('isCourtesy')){
+							if(model.get('isCourtesy')) {
+								// AGREGANDO CORTESIA A CORTESIA EXISTENTE
+								pedidoExistente.set('cantidad', pedidoExistente.get('cantidad') + model.get('cantidad'));
+								pedidoExistente.save().then(()=>{
+									this.send('changeProducto');
+									venta.save().then(()=>{
+										this.transitionToRoute('vendedor.procesando-venta', this.get('venta_id'));
+									});
+								});
+							} else {
+								// NUEVO PEDIDO, CORTESIA EXISTENTE
+								debugger
+								model.set('productoId', this.get('selectedProducto.id'));
+								model.set('tipo', this.get('selectedProducto.constructor.modelName'));
+								model.save().then(()=>{
+									this.send('changeProducto');
+									venta.save().then(()=>{
+										this.transitionToRoute('vendedor.procesando-venta', this.get('venta_id'));
+									});
+								});
+							}
+						} else {
+							if(model.get('isCourtesy')) {
+								// PEDIDO EXISTENTE, NUEVA CORTESIA
+								debugger
+								model.set('productoId', this.get('selectedProducto.id'));
+								model.set('tipo', this.get('selectedProducto.constructor.modelName'));
+								model.save().then(()=>{
+									this.send('changeProducto');
+									venta.save().then(()=>{
+										this.transitionToRoute('vendedor.procesando-venta', this.get('venta_id'));
+									});
+								});
+							} else {
+								// AGREGANDO PEDIDO A PEDIDO EXISTENTE
+								pedidoExistente.set('cantidad', pedidoExistente.get('cantidad') + model.get('cantidad'));
+								pedidoExistente.save().then(()=>{
+									this.send('changeProducto');
+									venta.save().then(()=>{
+										this.transitionToRoute('vendedor.procesando-venta', this.get('venta_id'));
+									});
+								});
+							}
+						}
+					} else {
+						// LA COMPRA NO INCLUYE UN PEDIDO CON EL PRODUCTO
+						model.set('productoId', this.get('selectedProducto.id'));
+						model.set('tipo', this.get('selectedProducto.constructor.modelName'));
+						model.save().then(()=>{
+							debugger
+							this.send('changeProducto');
+							venta.save().then(()=>{
+								debugger
+								this.transitionToRoute('vendedor.procesando-venta', this.get('venta_id'));
+							});
 						});
-					});
+					}
 				} else {
 					window.Materialize.toast('Selecciona un producto', 4000)
 				}
@@ -171,7 +223,7 @@ export default Controller.extend(FindQuery, {
 		},
 
 		changeProducto(){
-			this.set('selectedProducto', undefined);
+			this.set('selectedProducto', null);
 		}
 	}
 
