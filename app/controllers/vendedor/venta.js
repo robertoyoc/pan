@@ -145,8 +145,6 @@ export default Controller.extend(FindQuery, {
 				if (this.get('selectedProducto.id') != null) {
 
 					if(!isBlank(pedidoExistente)) {
-						console.log(pedidoExistente)
-						debugger;
 						if(pedidoExistente.get('isCourtesy')){
 							if(model.get('isCourtesy')) {
 								// AGREGANDO CORTESIA A CORTESIA EXISTENTE
@@ -154,12 +152,12 @@ export default Controller.extend(FindQuery, {
 								pedidoExistente.save().then(()=>{
 									this.send('changeProducto');
 									venta.save().then(()=>{
+										model.destroyRecord();
 										this.transitionToRoute('vendedor.procesando-venta', this.get('venta_id'));
 									});
 								});
 							} else {
 								// NUEVO PEDIDO, CORTESIA EXISTENTE
-								debugger
 								model.set('productoId', this.get('selectedProducto.id'));
 								model.set('tipo', this.get('selectedProducto.constructor.modelName'));
 								model.save().then(()=>{
@@ -172,7 +170,6 @@ export default Controller.extend(FindQuery, {
 						} else {
 							if(model.get('isCourtesy')) {
 								// PEDIDO EXISTENTE, NUEVA CORTESIA
-								debugger
 								model.set('productoId', this.get('selectedProducto.id'));
 								model.set('tipo', this.get('selectedProducto.constructor.modelName'));
 								model.save().then(()=>{
@@ -187,6 +184,7 @@ export default Controller.extend(FindQuery, {
 								pedidoExistente.save().then(()=>{
 									this.send('changeProducto');
 									venta.save().then(()=>{
+										model.destroyRecord();
 										this.transitionToRoute('vendedor.procesando-venta', this.get('venta_id'));
 									});
 								});
@@ -197,10 +195,8 @@ export default Controller.extend(FindQuery, {
 						model.set('productoId', this.get('selectedProducto.id'));
 						model.set('tipo', this.get('selectedProducto.constructor.modelName'));
 						model.save().then(()=>{
-							debugger
 							this.send('changeProducto');
 							venta.save().then(()=>{
-								debugger
 								this.transitionToRoute('vendedor.procesando-venta', this.get('venta_id'));
 							});
 						});
