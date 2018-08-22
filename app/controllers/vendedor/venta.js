@@ -126,7 +126,7 @@ export default Controller.extend(FindQuery, {
          }, function(pedidos){
 					 pedidos.forEach((pedido)=>{
 						 if(pedido.get('id') != pedido_id && pedido.get('productoId') == producto_id && pedido.get('isCourtesy') == courtesy_pd) {
-							 console.log('Expected: ', courtesy_pd, 'Obtained: ', pedido.get('isCourtesy'));
+							 // console.log('Expected: ', courtesy_pd, 'Obtained: ', pedido.get('isCourtesy'));
 							 return resolve(pedido);
 						 }
 					 });

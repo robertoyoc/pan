@@ -9,7 +9,7 @@ import DS from 'ember-data'
 export default Controller.extend(FindQuery, {
   currentUser: service(),
 
-  today: moment().format('X'),
+  today: moment().format('x'),
   result: null,
   names: ['Efectivo', 'Tarjeta Debito/Credito', 'Cheque', ],
 

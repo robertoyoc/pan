@@ -1,14 +1,19 @@
 <nav style="padding-left: 10px" class="teal brown lighten-1">
   <div class="nav-wrapper ">
     <div class="col s12">
-      {{#link-to 'cajero.index' class='breadcrumb' }}<i class="material-icons">arrow_back</i> Registrar Pago{{/link-to}}
+      {{#link-to 'cajero.index' class='breadcrumb'}}
+        Cajero
+      {{/link-to}}
+      {{#link-to "cajero.historial" (query-params day=currentDayUnix) class='breadcrumb'}}
+        Cobros del Día: {{moment-format currentDay 'DD-MM-YYYY'}}
+      {{/link-to}}
     </div>
   </div>
 </nav>
 {{outlet}}
 <style type="text/css">
 body {
-  background: url(https://images.unsplash.com/photo-1413745000559-46fdd2d81cd7?auto=format&fit=crop&w=1334&q=80);
+  background: url(../media/villita_bg.jpeg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 100vh;
@@ -44,15 +49,10 @@ textarea.materialize-textarea {
   color: white;
 }
 </style>
-<div class="container">
-  <center>
-    <h4>Cobros del Día: {{moment-format currentDay 'DD-MM-YYYY'}}</h4>
-  </center>
-</div>
 
 <div class="row">
-  <div class="col s8 offset-s2 mt">
-    {{#m-wrapper query=".datepicker" method="pickadate" }}
+  <div class="col s8 offset-s2 mt teal brown lighten-1">
+    {{#m-wrapper query=".datepicker" method="pickadate"}}
       {{input type="text" class="datepicker" placeholder="Selecciona la fecha..." change=(action 'changeFecha')}}
     {{/m-wrapper}}
   </div>
@@ -60,41 +60,10 @@ textarea.materialize-textarea {
     <div class="card">
       {{dt-light
         columns=columns
-        model=model
+        model=filteredModel
         sort=sort
         performCancel=(action 'cancel')
       }}
-
-      <!-- <table class="striped centered">
-        <thead>
-          <tr>
-            <th>Fecha de Expedición</th>
-            <th>Fecha de Cobro</th>
-            <th>Cantidad</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each model as |cobro|}}
-            {{#unless cobro.isNew}}
-              <tr>
-                <td>{{moment-format cobro.venta.fechaExpedicion 'MMM DD, HH:mm' 'X' utc=true}}</td>
-                <td>{{moment-format cobro.fecha 'MMM DD, HH:mm' 'X' utc=true}}</td>
-                <td>{{format-money cobro.venta.importeTotal symbol=selectedCurrency format="%v %s"}}</td>
-                <td>{{cobro.venta.status}}</td>
-                <td>
-                  {{#if (eq cobro.venta.status "Pagado")}}
-                    <a class="btn-floating red" {{action 'openModal' cobro}}><i class="material-icons">cancel</i></a>
-                  {{/if}}
-                </td>
-              </tr>
-            {{/unless}}
-            {{else}}
-              <h5>Aún no se registran cobros. </h5>
-          {{/each}}
-        </tbody>
-      </table> -->
     </div>
   </div>
 </div>

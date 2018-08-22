@@ -8,8 +8,16 @@ import DS from 'ember-data';
 
 export default Controller.extend({
 	currentUser: service(),
+	currentDayUnix: computed('currentDay', function(){
+		return moment(this.get('currentDay')).format('x');
+	}),
+
   columns: computed(function() {
     return [{
+      label: 'Fecha',
+      valuePath: 'venta.fechaExpedicion',
+      cellComponent: 'dt-date'
+    }, {
       label: 'Hora de Expedición',
       valuePath: 'venta.fechaExpedicion',
       cellComponent: 'dt-hour'
@@ -32,6 +40,12 @@ export default Controller.extend({
     }];
   }),
   sort: 'venta.fechaExpedicion',
+
+	filteredModel:computed('model', function(){
+		return this.get('model').filter(function(item){
+			return item.get('fecha') > 0;
+		});
+	}),
 
   cajero: computed('currentUser', function(){
     if(!isEmpty(this.get('currentUser.account'))) {
@@ -60,15 +74,8 @@ export default Controller.extend({
   actions: {
     changeFecha(){
        let fecha=moment().format(event.target.dataset.pick)
-       // let fechaUnix = moment.unix(fecha)
-       // console.log(fechaUnix)
-       this.transitionToRoute({ queryParams: { date: fecha, isToday: false }});
+       this.transitionToRoute({ queryParams: { date: fecha}});
     },
-
-    /*openModal(cobro) {
-      this.set('selectedCobro', cobro)
-      window.$('#modal1').modal('open');
-    },*/
 
     sendRequest(cobro, motivo) {
       this.store.createRecord('cancelar-request', {
