@@ -72,7 +72,7 @@ textarea.materialize-textarea {
       <h4>${{selectedRetiro.cantidad}}</h4>
     </div>
     <div class="modal-footer">
-      <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+      <a {{action 'cancelRequest' selectedRetiro}} class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
       <a {{action 'sendRequest' selectedRetiro}} class="modal-action modal-close waves-effect waves-green btn-flat">Autorizar</a>
     </div>
   </div>

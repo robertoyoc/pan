@@ -12,7 +12,7 @@ export default Controller.extend({
 		return moment(this.get('currentDay')).format('x');
 	}),
 
-	height: '75vh',
+	height: '70vh',
   columns: computed(function() {
     return [{
       label: 'Fecha',

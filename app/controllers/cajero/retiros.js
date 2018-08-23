@@ -70,7 +70,17 @@ export default Controller.extend({
           'success'
         )
       })
-
+    },
+    cancelRequest(retiro) {
+      retiro.set('fechaCobro', null);
+      retiro.set('status', 'Cancelado');
+      retiro.save().then(() => {
+        window.swal(
+          'Éxito',
+          'El retiro ha sido cancelado.',
+          'success'
+        )
+      })
     }
   }
 
