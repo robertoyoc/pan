@@ -9,19 +9,11 @@ export default Route.extend(FindQuery, {
   queryParams: {
     date: {
       refreshModel: true
-    },
-    isToday: {
-      refreshModel: true
     }
   },
 
   dateFromParams(params) {
-    let fechaUnix = (params.isToday == 'true') ? moment.unix(params.date) : moment(Number(params.date));
-    return moment(fechaUnix);
-  },
-
-  beforeModel() {
-
+    return moment(Number(params.date));
   },
 
   model(params) {
@@ -30,25 +22,24 @@ export default Route.extend(FindQuery, {
     startDate = dateFromParams.clone().startOf('day').utc();
     endDate = dateFromParams.clone().endOf('day').utc();
 
-
     return this.get('currentUser.account').then((account) => {
-      this.set('accountId', account.get('id'))
-      let sucursal = account.get('sucursal');
-      this.set('sucursalId', sucursal.get('id'))
-
-      let context = this;
-      return new Promise(function(resolve, reject) {
-        context.filterCustom(context.store, 'retiro', { 
-          'sucursalId': ['==', sucursal.get('id')],
-          'fechaUnix': ['>=', startDate.unix()]
-        }, function(retiros) {
-          let retirosList = [];
-            retiros.forEach(function(retiro){
-              if (retiro.get('fechaUnix') <= endDate.unix()) {
-                retirosList.pushObject(retiro);
-              }
-            })
-            return resolve(retirosList)
+      return account.get('cajeroDe').then((sucursal)=>{
+        this.set('accountId', account.get('id'));
+        this.set('sucursalId', sucursal.get('id'));
+        let context = this;
+        return new Promise(function(resolve, reject) {
+          context.filterCustom(context.store, 'retiro', {
+            'sucursal': ['==', sucursal.get('id')],
+            'fecha': ['>=', startDate.unix()]
+          }, function(retiros) {
+            let retirosList = [];
+              retiros.forEach(function(retiro){
+                if (retiro.get('fecha') <= endDate.unix()) {
+                  retirosList.pushObject(retiro);
+                }
+              })
+              return resolve(retirosList);
+          })
         })
       })
     })

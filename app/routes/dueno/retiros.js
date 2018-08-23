@@ -3,8 +3,6 @@ import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
 import { inject as service } from "@ember/service";
 import moment from 'moment';
 
-
-
 export default Route.extend(FindQuery, {
   currentUser: service(),
   beforeModel() {
@@ -12,9 +10,8 @@ export default Route.extend(FindQuery, {
   },
   model() {
     return this.store.findAll('retiro')
-
-
   },
+
   setupController(controller) {
     this._super(...arguments)
     controller.set('sucursalId', this.get('sucursalId'))

@@ -1,10 +1,20 @@
 import Controller from '@ember/controller';
-import { computed } from "@ember/object"
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import Table from 'ember-light-table';
+import { isEmpty } from '@ember/utils';
+import moment from 'moment';
+import DS from 'ember-data';
 
 export default Controller.extend({
+  currentDayUnix: computed('currentDay', function(){
+    return moment(this.get('currentDay')).format('x');
+  }),
+
   sucursales: computed(function() {
     return this.store.findAll('sucursal')
   }),
+
   actions: {
     openModal() {
       this.set('selectedRetiro', this.store.createRecord('retiro'))
@@ -21,9 +31,7 @@ export default Controller.extend({
           'success'
         )
       })
-
     },
-
   }
 
 });
