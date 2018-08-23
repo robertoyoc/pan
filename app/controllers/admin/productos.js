@@ -12,6 +12,7 @@ export default Controller.extend({
 	// DATA-TABLE
 	deleteMessage: 'Las existencias serán eliminadas',
 
+	height: '75vh',
 	columnsDistrib: computed(function() {
     return [{
       label: 'Nombre',

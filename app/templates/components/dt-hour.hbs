@@ -1,1 +1,5 @@
-{{moment-format value 'HH:mm' 'X' utc=true}}
+{{#if value}}
+  {{moment-format value 'HH:mm' 'X' utc=true}}
+{{else}}
+  No disponible
+{{/if}}
