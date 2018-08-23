@@ -1,6 +1,6 @@
 <style type="text/css">
 body {
-  background: url(https://images.unsplash.com/photo-1413745000559-46fdd2d81cd7?auto=format&fit=crop&w=1334&q=80);
+  background: url(../media/villita_bg.jpeg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 100vh;
@@ -21,48 +21,45 @@ body {
   transform: scale(1.1);
 }
 </style>
+
 <nav style="padding-left: 10px" class="teal brown lighten-1">
   <div class="nav-wrapper ">
     <div class="col s12">
-      {{#link-to 'dueno.index' class='breadcrumb' }}<i class="material-icons">arrow_back</i> Panel{{/link-to}}
+      {{#link-to 'dueno.index' class='breadcrumb'}}
+        Dueño
+      {{/link-to}}
+      {{#link-to "dueno.cancelaciones" (query-params day=currentDayUnix) class='breadcrumb'}}
+        Cancelaciones del Día: {{moment-format currentDay 'DD-MM-YYYY'}}
+      {{/link-to}}
     </div>
   </div>
 </nav>
+
 <div class="row">
+  <div class="col s8 offset-s2 mt teal brown lighten-1">
+    {{#m-wrapper query=".datepicker" method="pickadate"}}
+      {{input type="text" class="datepicker" placeholder="Selecciona la fecha..." change=(action 'changeFecha')}}
+    {{/m-wrapper}}
+  </div>
+
   <div class="col s8 offset-s2">
     <div class="card">
-      <table class="striped centered">
-        <thead>
-          <tr>
-            <th>Hora</th>
-            <th>Cantidad</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each model as |request|}}
-            <tr>
-              <td>{{request.cobro.venta.hora}}</td>
-              <td>${{request.cobro.venta.importeTotal}}</td>
-              <td>{{request.status}}</td>
-              <td>
-                <a class="btn-floating red" {{action 'openModal' request}}><i class="material-icons">details</i></a>
-              </td>
-            </tr>
-            {{else}}
-              Aún no hay cancelaciones
-          {{/each}}
-        </tbody>
-      </table>
+      {{dt-light
+        columns=columns
+        model=model
+        sort=sort
+        performCancel=(action 'openModal')
+      }}
     </div>
   </div>
 </div>
+
 {{#m-wrapper query="#modal1" method="modal" }}
   <div id="modal1" class="modal">
     <div class="modal-content">
       <h4>Cancelación</h4>
-      <h5>Cobro {{selectedRequest.cobro.id}}</h5> Solicitado en: {{selectedRequest.sucursal.nombre}}
+      <h5>Cobro {{selectedRequest.cobro.id}}</h5>
+      <h5>Solicitado en: {{selectedRequest.sucursal.nombre}}</h5>
       <br> Por: {{selectedRequest.account.nombre}} {{selectedRequest.account.apellido}}
       <div class="input-field col s12">
         {{textarea class="materialize-textarea" value=selectedRequest.motivo disabled=true}}
@@ -70,8 +67,8 @@ body {
       </div>
     </div>
     <div class="modal-footer">
-      <a {{action 'sendDennied' selectedRequest}} class="modal-action modal-close waves-effect waves-green btn-flat">Denegar</a>
-      <a {{action 'sendAprobal' selectedRequest}} class="modal-action modal-close waves-effect waves-green btn-flat">Aprobar</a>
+      <a {{action 'sendDenial' selectedRequest}} class="modal-action modal-close waves-effect waves-green btn-flat">Denegar</a>
+      <a {{action 'sendApproval' selectedRequest}} class="modal-action modal-close waves-effect waves-green btn-flat">Aprobar</a>
     </div>
   </div>
 {{/m-wrapper}}

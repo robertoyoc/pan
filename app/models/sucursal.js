@@ -14,5 +14,6 @@ export default DS.Model.extend({
 
 	ventas: DS.hasMany('ventas'),
 	cobros: DS.hasMany('cobros'),
+	cancelaciones: DS.hasMany('cancelar-request'),
 	pasesDeLista: DS.hasMany('roll-call')
 });

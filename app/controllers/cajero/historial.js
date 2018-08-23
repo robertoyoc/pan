@@ -83,16 +83,20 @@ export default Controller.extend({
         motivo: motivo,
         sucursal: this.get('currentSucursal'),
         cajero: this.get('cajero.content'),
-      }).save().then(() => {
-        cobro.get('venta').then((venta) => {
-          venta.set('status', "Cancelación solicitada")
-          venta.save()
-          window.swal(
-            'Solicitud Enviada',
-            'Espera la aprobación',
-            'success'
-          )
-        })
+      }).save().then((cancelacion) => {
+				cobro.set('cancelacion', cancelacion);
+				cobro.save().then(()=>{
+					cobro.get('venta').then((venta) => {
+						venta.set('status', "Cancelación Solicitada")
+						venta.save().then(()=>{
+							window.swal(
+								'Solicitud Enviada',
+								'Espera la aprobación',
+								'success'
+							)
+						})
+					})
+				})
       })
     },
 

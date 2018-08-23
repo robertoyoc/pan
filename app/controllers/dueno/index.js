@@ -7,6 +7,8 @@ import DS from 'ember-data'
 export default Controller.extend({
     currentUser: service(),
 
+    today: moment().format('x'),
+
     dueno: computed('currentUser', function(){
       if(!isEmpty(this.get('currentUser.account'))) {
         return DS.PromiseObject.create({
