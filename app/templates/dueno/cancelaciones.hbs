@@ -41,7 +41,9 @@ body {
       {{input type="text" class="datepicker" placeholder="Selecciona la fecha..." change=(action 'changeFecha')}}
     {{/m-wrapper}}
   </div>
+</div>
 
+<div class="row">
   <div class="col s8 offset-s2">
     <div class="card">
       {{dt-light
@@ -60,16 +62,21 @@ body {
     <div class="modal-content">
       <h4>Cancelación</h4>
       <h5>Cobro {{selectedRequest.cobro.id}}</h5>
-      <h5>Solicitado en: {{selectedRequest.sucursal.nombre}}</h5>
-      <br> Por: {{selectedRequest.account.nombre}} {{selectedRequest.account.apellido}}
+      <h5>Solicitado en: {{selectedSucursal.nombre}}</h5>
+      <br> Por: {{selectedCajero.nombreCompleto}}
       <div class="input-field col s12">
+        <br>
         {{textarea class="materialize-textarea" value=selectedRequest.motivo disabled=true}}
-        <label for="textarea1">Motivo</label>
+        <label for="textarea1">Motivo: </label>
       </div>
     </div>
-    <div class="modal-footer">
-      <a {{action 'sendDenial' selectedRequest}} class="modal-action modal-close waves-effect waves-green btn-flat">Denegar</a>
-      <a {{action 'sendApproval' selectedRequest}} class="modal-action modal-close waves-effect waves-green btn-flat">Aprobar</a>
-    </div>
+    {{#unless (eq selectedRequest.status 'Aprobada')}}
+      <div class="modal-footer">
+        <a {{action 'sendDenial' selectedRequest}} class="modal-action modal-close waves-effect waves-green btn-flat">Denegar</a>
+        <a {{action 'sendApproval' selectedRequest}} class="modal-action modal-close waves-effect waves-green btn-flat">Aprobar</a>
+      </div>
+    {{else}}
+        <a class="modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>
+    {{/unless}}
   </div>
 {{/m-wrapper}}

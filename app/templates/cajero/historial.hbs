@@ -74,14 +74,23 @@ textarea.materialize-textarea {
     <div class="modal-content">
       <h4>Solicitud de cancelación</h4>
       <h5>Cobro {{selectedCobro.id}}</h5>
-      <div class="input-field col s12">
-        {{textarea class="materialize-textarea" value=motivo}}
-        <label for="textarea1">Motivo</label>
-      </div>
+      {{#unless (eq selectedCobro.venta.status 'Cancelada')}}
+        <div class="input-field col s12">
+          {{textarea class="materialize-textarea" value=motivo}}
+          <label for="textarea1">Motivo</label>
+        </div>
+      {{else}}
+        <h5>Motivo: </h5>
+        {{textarea disabled=true class="materialize-textarea" value=selectedCobro.cancelacion.motivo}}
+      {{/unless}}
     </div>
     <div class="modal-footer">
+    {{#unless (eq selectedCobro.venta.status 'Cancelada')}}
       <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
       <a {{action 'sendRequest' selectedCobro motivo}} class="modal-action modal-close waves-effect waves-green btn-flat">Enviar</a>
+    {{else}}
+      <a class="modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>
+    {{/unless}}
     </div>
   </div>
 {{/m-wrapper}}

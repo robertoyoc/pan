@@ -25,7 +25,7 @@ export default Route.extend(FindQuery, {
     return new Promise(function(resolve, reject) {
       context.filterCustom(context.store, 'cancelar-request', {
         'cobro.fecha': ['>=', startDate.unix()],
-        'status': ['==', 'Cancelación Pendiente']
+        //'status': ['==', 'Cancelación Pendiente']
       }, function(cancelaciones){
           let cancelacionesList = [];
           return all(

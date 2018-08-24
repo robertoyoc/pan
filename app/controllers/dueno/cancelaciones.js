@@ -1,8 +1,8 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
+import { isEmpty, isBlank } from '@ember/utils';
 import { computed } from '@ember/object';
 import Table from 'ember-light-table';
-import { isEmpty } from '@ember/utils';
 import moment from 'moment';
 import DS from 'ember-data';
 
@@ -12,7 +12,7 @@ export default Controller.extend({
     return moment(this.get('currentDay')).format('x');
   }),
 
-  height: '75vh',
+  height: '70vh',
   columns: computed(function() {
     return [{
       label: 'Fecha',
@@ -42,6 +42,36 @@ export default Controller.extend({
   }),
   sort: 'cobro.venta.fechaExpedicion',
 
+  selectedSucursaal: computed('selectedRequest', function(){
+    if(!isBlank(this.get('selectedRequest'))){
+      return DS.PromiseObject.create({
+        promise: this.get('selectedRequest.sucursal').then((sucursal)=>{
+          return sucursal;
+        })
+      });
+    } else {
+      return null;
+    }
+  }),
+  selectedSucursal: computed('selectedSucursaal.content', function(){
+    return this.get('selectedSucursaal.content');
+  }),
+  selectedCajeroo: computed('selectedRequest', function(){
+    if(!isBlank(this.get('selectedRequest'))){
+      return DS.PromiseObject.create({
+        promise: this.get('selectedRequest.cajero').then((cajero)=>{
+          return cajero;
+        })
+      });
+    } else {
+      return null;
+    }
+  }),
+  selectedCajero: computed('selectedCajeroo.content', function(){
+    return this.get('selectedCajeroo.content');
+  }),
+
+
   actions: {
     changeFecha(){
        let fecha=moment().format(event.target.dataset.pick)
@@ -49,10 +79,9 @@ export default Controller.extend({
     },
 
     openModal(request) {
-      this.set('selectedRequest', request)
+      this.set('selectedRequest', request);
+      window.Materialize.updateTextFields();
       window.$('#modal1').modal('open');
-      window.Materialize.updateTextFields()
-
     },
 
     sendApproval(request) {

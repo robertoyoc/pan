@@ -10,7 +10,7 @@ export default Controller.extend({
   month: moment().format('MM'),
   year: moment().format('YYYY'),
 
-  height: '75vh',
+  height: '80vh',
   columns: computed(function() {
     return [{
       label: 'Propietario',

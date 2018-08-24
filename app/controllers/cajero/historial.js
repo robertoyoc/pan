@@ -48,30 +48,6 @@ export default Controller.extend({
 		});
 	}),
 
-  cajero: computed('currentUser', function(){
-    if(!isEmpty(this.get('currentUser.account'))) {
-      return DS.PromiseObject.create({
-        promise: this.get('currentUser.account').then((account)=>{
-            return account;
-        })
-      });
-    } else {
-      return null
-    }
-  }),
-
-  sucursalActual: computed(function(){
-      return DS.PromiseObject.create({
-          promise: this.get('currentUser.account').then((account)=>{
-              return account.get('cajeroDe')
-          })
-      })
-  }),
-  currentSucursal: computed('sucursalActual.content', function(){
-    return this.get('sucursalActual.content')
-  }),
-
-
   actions: {
     changeFecha(){
        let fecha=moment().format(event.target.dataset.pick)
@@ -79,26 +55,30 @@ export default Controller.extend({
     },
 
     sendRequest(cobro, motivo) {
-      this.store.createRecord('cancelar-request', {
-        cobro: cobro,
-        motivo: motivo,
-        sucursal: this.get('currentSucursal'),
-        cajero: this.get('cajero.content'),
-      }).save().then((cancelacion) => {
-				cobro.set('cancelacion', cancelacion);
-				cobro.save().then(()=>{
-					cobro.get('venta').then((venta) => {
-						venta.set('status', "Cancelación Solicitada")
-						venta.save().then(()=>{
-							window.swal(
-								'Solicitud Enviada',
-								'Espera la aprobación',
-								'success'
-							)
+			this.get('currentUser.account').then((cajero)=>{
+				cajero.get('cajeroDe').then((sucursal)=>{
+					this.store.createRecord('cancelar-request', {
+						cobro: cobro,
+						motivo: motivo,
+						sucursal: sucursal,
+						cajero: cajero,
+					}).save().then((cancelacion) => {
+						cobro.set('cancelacion', cancelacion);
+						cobro.save().then(()=>{
+							cobro.get('venta').then((venta) => {
+								venta.set('status', "Cancelación Solicitada")
+								venta.save().then(()=>{
+									window.swal(
+										'Solicitud Enviada',
+										'Espera la aprobación',
+										'success'
+									)
+								})
+							})
 						})
 					})
 				})
-      })
+			})
     },
 
     cancel(cobro){
