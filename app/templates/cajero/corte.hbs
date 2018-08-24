@@ -1,7 +1,12 @@
 <nav style="padding-left: 10px" class="teal brown lighten-1">
   <div class="nav-wrapper ">
     <div class="col s12">
-      {{#link-to 'cajero.index' class='breadcrumb' }}<i class="material-icons">arrow_back</i> Registrar Pago{{/link-to}}
+      {{#link-to 'cajero.index' class='breadcrumb'}}
+        Cajero
+      {{/link-to}}
+      {{#link-to "cajero.corte" (query-params day=currentDayUnix) class='breadcrumb'}}
+        Cortes del Día: {{moment-format currentDay 'DD-MM-YYYY'}}
+      {{/link-to}}
     </div>
   </div>
 </nav>
@@ -41,11 +46,20 @@ textarea.materialize-textarea {
 }
 </style>
 <div class="row">
-  <div class="col s8 offset-s2 mt">
+  <div class="col s4 offset-s2 mt">
     {{#m-wrapper query=".datepicker" method="pickadate" }}
-      <input type="text" class="datepicker" placeholder="Selecciona la fecha...">
+    <div class="card-panel teal brown lighten-1">
+      {{input type="text" class="datepicker" placeholder="Selecciona la fecha..." change=(action 'changeFecha')}}
+    </div>
     {{/m-wrapper}}
   </div>
+  <div class="col s4 mt">
+    <div class="card-panel teal brown lighten-1">
+      <span class="white-text">Turno: {{turno}} </span>
+    </div>
+  </div>
+</div>
+<div class="row">
   <div class="col s8 offset-s2">
     <div class="card">
       <table class="striped centered">
@@ -60,9 +74,10 @@ textarea.materialize-textarea {
           </tr>
         </thead>
         <tbody>
+          {{#each model as |corte|}}
           <tr>
-            <td>$6476</td>
-            <td>$532.00</td>
+            <td>{{corte.turno}}</td>
+            <td>{{corte.fecha}}</td>
             <td>$67376</td>
             <td>$654.30</td>
             <td>Matutino</td>
@@ -71,9 +86,33 @@ textarea.materialize-textarea {
               <a class="btn-floating red"><i class="material-icons">local_printshop</i></a>
             </td>
           </tr>
+          {{/each}}
         </tbody>
       </table>
     </div>
-    <a class="waves-effect waves-light btn right"><i class="material-icons left">receipt</i>Generar Ahora</a>
+    <a {{action 'openModal'}}class="waves-effect waves-light btn right"><i class="material-icons left">receipt</i>Corte al Momento</a>
+    <a {{action 'openModal'}}class="waves-effect waves-light btn left"><i class="material-icons right">details</i>Corte Turno Anterior</a>
   </div>
 </div>
+
+{{#m-wrapper query="#modal1" method="modal" }}
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Generando Corte</h4>
+      <h5>Código: {{selectedCorte.id}}</h5>
+      {{#if corteAnterior}}
+        <h5>Corte Anterior: {{corteAnterior.id}}</h5>
+        <br> Cantidad Inicial:
+        <h4>${{input type="number" value=corteAnterior.caja}}</h4>
+      {{else}}
+        <h5><i>Corte anterior no disponible</i></h5>
+        <br> Establece Cantidad Inicial: <h5> {{format-money selectedCorte.cajaInicial symbol=selectedCurrency format="%s %v"}} </h5>
+        {{input type="text" value=selectedCorte.cajaInicial}}
+      {{/if}}
+    </div>
+    <div class="modal-footer">
+      <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+      <a {{action 'generateCorte' selectedCorte corteAnterior}} class="modal-action modal-close waves-effect waves-green btn-flat">Aprobar</a>
+    </div>
+  </div>
+{{/m-wrapper}}

@@ -64,7 +64,7 @@ input {
     {{#link-to 'cajero.historial' (query-params date=today)}}<i class="material-icons">schedule</i>Historial{{/link-to}}
   </li>
   <li>
-    {{#link-to 'cajero.corte'}}<i class="material-icons">assessment</i>Corte{{/link-to}}
+    {{#link-to 'cajero.corte' (query-params date=today)}}<i class="material-icons">assessment</i>Corte{{/link-to}}
   </li>
   <li>
     {{#link-to 'cajero.retiros' (query-params date=today)}}<i class="material-icons">call_missed_outgoing</i>Retiros{{/link-to}}
