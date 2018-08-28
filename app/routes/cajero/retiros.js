@@ -46,7 +46,6 @@ export default Route.extend(FindQuery, {
     },
 
     setupController(controller, model){
-      console.log(model);
       this._super(...arguments);
       controller.set('currentDay', this.get('currentDay'))
     }

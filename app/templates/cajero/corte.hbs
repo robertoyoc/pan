@@ -55,6 +55,7 @@ textarea.materialize-textarea {
   </div>
   <div class="col s4 mt">
     <div class="card-panel teal brown lighten-1">
+      <span class="white-text">Sucursal: {{currentSucursal.nombre}} </span> <br>
       <span class="white-text">Turno: {{turno}} </span>
     </div>
   </div>
@@ -90,8 +91,17 @@ textarea.materialize-textarea {
         </tbody>
       </table>
     </div>
-    <a {{action 'openModal'}}class="waves-effect waves-light btn right"><i class="material-icons left">receipt</i>Corte al Momento</a>
-    <a {{action 'openModal'}}class="waves-effect waves-light btn left"><i class="material-icons right">details</i>Corte Turno Anterior</a>
+
+    {{#if isToday}}
+      {{#unless corteAnterior}}
+        <a {{action 'openModal2'}}class="waves-effect waves-light btn left"><i class="material-icons right">details</i>Corte Turno Anterior</a>
+      {{else}}
+        <a {{action 'openModal'}}class="waves-effect waves-light btn right"><i class="material-icons left">receipt</i>Corte al Momento</a>
+      {{/unless}}
+    {{else}}
+      <h5> Corte Matutino </h5>
+      <h5> Corte Vespertino </h5>
+    {{/if}}
   </div>
 </div>
 
@@ -112,7 +122,21 @@ textarea.materialize-textarea {
     </div>
     <div class="modal-footer">
       <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
-      <a {{action 'generateCorte' selectedCorte corteAnterior}} class="modal-action modal-close waves-effect waves-green btn-flat">Aprobar</a>
+      <a {{action 'generateCorteMomento' selectedCorte corteAnterior}} class="modal-action modal-close waves-effect waves-green btn-flat">Aprobar</a>
+    </div>
+  </div>
+{{/m-wrapper}}
+
+{{#m-wrapper query="#modal2" method="modal" }}
+  <div id="modal2" class="modal">
+    <div class="modal-content">
+      <h4>Generando Corte del Turno Anterior</h4>
+      <h5>Día: {{moment-format fechaCorteAnterior 'DD-MM-YYYY' utc=true}}</h5>
+      <h5>Turno: {{turnoAnterior}} </h5>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+      <a {{action 'generateCorteAnterior' selectedCorte fechaCorteAnterior turnoAnterior currentSucursal}} class="modal-action modal-close waves-effect waves-green btn-flat">Generar</a>
     </div>
   </div>
 {{/m-wrapper}}
