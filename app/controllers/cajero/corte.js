@@ -74,6 +74,41 @@ export default Controller.extend(FindQuery, {
     return this.get('corteAnterioor.content')
   }),
 
+  corteAntepasaado: computed('fechaCorteAnterior', 'turnoAnterior', function(){
+      let turno = this.get('turnoAnterior'), startDate, endDate;
+      let fechaCorte = this.get('fechaCorteAnterior');
+      startDate = (turno == 'Matutino') ? fechaCorte.clone().startOf('day').utc() : fechaCorte.clone().startOf('day').add(14, 'hours');
+      endDate = (turno == 'Matutino') ? startDate.clone().add({hours: 13, minutes: 59}): fechaCorte.clone().endOf('day').utc();
+      return DS.PromiseObject.create({
+          promise: this.get('currentUser.account').then((account)=>{
+              return account.get('cajeroDe').then((sucursal)=>{
+                let sucursal_id = sucursal.get('id');
+                let turno = this.get('turno');
+                let turnoAnterior = this.get('turnoAnterior');
+                let context = this;
+                return new Promise(function (resolve, reject){
+                    context.filterCustom(context.store, 'box-cut', {
+                        'turno': ['==', turnoAnterior],
+                        'fecha': ['>=', startDate.unix()],
+                        'isAutomatic': ['==', true],
+                    }, function(cortes){
+                        cortes.forEach((corte)=>{
+                            if(corte.get('fecha') <= endDate.unix()){
+                                return resolve(corte);
+                            }
+                        })
+                        return resolve(null);
+                    })
+                })
+              })
+          })
+      })
+  }),
+  corteAntepasado: computed('corteAntepasaado.content', function(){
+    return this.get('corteAntepasaado.content')
+  }),
+
+
   actions: {
     changeFecha(){
        let fecha=moment().format(event.target.dataset.pick)
