@@ -29,6 +29,17 @@ export default Controller.extend({
 			return null
 		}
 	}),
+  currentPrecio: computed('model', function(){
+    if(!isEmpty(this.get('model.precio'))) {
+      return DS.PromiseObject.create({
+        promise: this.get('model.precio').then((precio)=>{
+            return precio;
+        })
+      });
+    } else {
+      return null
+    }
+  }),
 
     actions: {
         nuevoProducto(){

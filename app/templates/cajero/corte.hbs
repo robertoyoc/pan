@@ -92,6 +92,7 @@ textarea.materialize-textarea {
       </table>
     </div>
 
+    {{log corteAnterior}}
     {{#if isToday}}
       {{#unless corteAnterior}}
         <a {{action 'openModal2'}}class="waves-effect waves-light btn left"><i class="material-icons right">details</i>Corte Turno Anterior</a>
@@ -105,29 +106,22 @@ textarea.materialize-textarea {
   </div>
 </div>
 
-{{#m-wrapper query="#modal1" method="modal" }}
+{{#m-wrapper query="#modal1" method="modal"}}
   <div id="modal1" class="modal">
     <div class="modal-content">
       <h4>Generando Corte</h4>
       <h5>Código: {{selectedCorte.id}}</h5>
-      {{#if corteAnterior}}
-        <h5>Corte Anterior: {{corteAnterior.id}}</h5>
-        <br> Cantidad Inicial:
-        <h4>${{input type="number" value=corteAnterior.caja}}</h4>
-      {{else}}
-        <h5><i>Corte anterior no disponible</i></h5>
-        <br> Establece Cantidad Inicial: <h5> {{format-money selectedCorte.cajaInicial symbol=selectedCurrency format="%s %v"}} </h5>
-        {{input type="text" value=selectedCorte.cajaInicial}}
-      {{/if}}
+      <br> Cantidad Inicial:
+      <h4>${{input type="number" value=corteAnterior.caja}}</h4>
     </div>
     <div class="modal-footer">
       <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
-      <a {{action 'generateCorteMomento' selectedCorte corteAnterior}} class="modal-action modal-close waves-effect waves-green btn-flat">Aprobar</a>
+      <a {{action 'generateCorteMomento' selectedCorte corteAnterior fechaCorte turno currentSucursal}} class="modal-action modal-close waves-effect waves-green btn-flat">Aprobar</a>
     </div>
   </div>
 {{/m-wrapper}}
 
-{{#m-wrapper query="#modal2" method="modal" }}
+{{#m-wrapper query="#modal2" method="modal"}}
   <div id="modal2" class="modal">
     <div class="modal-content">
       <h4>Generando Corte del Turno Anterior</h4>

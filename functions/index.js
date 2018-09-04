@@ -1,4 +1,3 @@
-
 const keys = require('object-keys');
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
@@ -7,7 +6,6 @@ const formatCurrency = require('format-currency');
 const moment = require('moment');
 
 const db = require('./config/admin').db;
-
 
 let path = require('path')
 global._rootPath = path.resolve('')
@@ -20,10 +18,8 @@ exports.api = functions.https.onRequest(require('./config/router'));
 //
 // }
 
-
 //	Workers
 // addToExports(require('./workers/summarize-factura'))
-
 
 //	General triggers
 
@@ -384,7 +380,7 @@ exports.processVenta = functions.database.ref('/venta/{ventaId}').onCreate(funct
 			})
 
 			console.log("Venta procesada")
-			
+
 		})
 	})
 });

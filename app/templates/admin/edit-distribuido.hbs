@@ -3,11 +3,12 @@
   {{#link-to 'admin.nvo-distribuido' class='breadcrumb' }}Distribuido{{/link-to}}
 {{/ember-wormhole}}
 
-{{log currentCategoria}}
 {{m-wrapper}}
 {{add-distribuido
+  store=store
   myModel=model
   myExistencia=existencia
   selectedCat=currentCategoria.content
-  mySucursal=currentSucursal 
+  selectedPrice=currentPrecio.content
+  mySucursal=currentSucursal
   nuevoProducto = (action 'nuevoProducto')}}

@@ -5,6 +5,7 @@ import DS from 'ember-data';
 
 export default Controller.extend({
 	currentUser: service(),
+	store: service(),
 
 	sucursalActual: computed(function(){
 			return DS.PromiseObject.create({

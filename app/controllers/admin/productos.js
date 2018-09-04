@@ -22,7 +22,7 @@ export default Controller.extend({
       valuePath: 'cantidad',
     }, {
       label: 'Precio',
-      valuePath: 'distribuido.precio',
+      valuePath: 'distribuido.precio.value',
 			cellComponent: 'price-wrapper'
     }, {
       label: 'Acciones',
@@ -40,7 +40,7 @@ export default Controller.extend({
       valuePath: 'cantidad',
     }, {
       label: 'Precio',
-      valuePath: 'receta.precio',
+      valuePath: 'receta.precio.value',
 			cellComponent: 'price-wrapper'
     }, {
       label: 'Acciones',

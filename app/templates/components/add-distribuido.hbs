@@ -22,41 +22,48 @@
 	<form class="col s12 m8 offset-m2">
       <div class="row">
         <h4>Datos generales</h4>
-        <div class="input-field col s8">
+        <div class="input-field col s12">
           <i class="material-icons prefix">account_circle</i>
           {{input type="text" class="validate" value=myModel.nombre}}
           <label>Nombre del Producto</label>
         </div>
-        <div class="input-field col s4">
-          <i class="material-icons prefix">attach_money</i>
-          {{input type="number" class="validate" value=myModel.precio}}
-          <label>Costo</label>
-        </div>
 
-        {{!-- <h4>Existencia</h4> --}}
-        <div class="input-field col s12">
-          <i class="material-icons prefix">exposure_plus_1</i>
-            {{!-- {{#if myExistencia.cantidad}}
-              {{input disabled=(not (not myExistencia.cantidad)) type="text" min="1" class="validate" value=myExistencia.cantidad}}
-            {{else}} --}}
-              {{input disabled=(not (not myExistencia.cantidad)) type="text" min="1" class="validate" value=cantExistencia}}
-            {{!--  {{/if}} --}}
-          <label>Cantidad</label>
-        </div>
+				<div class="row" >
+					<div class="col s8">
+						<h4>Categoría</h4>
+						{{#power-select
+							options=myCategorias
+							placeholder="Selecciona una categoria"
+							selected=selectedCat
+							searchField="nombre"
+							onchange=(action (mut selectedCat))
+							as |category|
+						}}
+							{{category.nombre}}
+						{{/power-select}}
+					</div>
 
-        <h4>Categoría</h4>
-        <div class="col s12">
-          {{#power-select
-            options=myCategorias
-            placeholder="Selecciona una categoria"
-            selected=selectedCat
-            searchField="name"
-            onchange=(action (mut selectedCat))
-            as |category|
-          }}
-            {{category.nombre}}
-          {{/power-select}}
-        </div>
+					<div class="col s4">
+						<h4>Precio</h4>
+						{{#power-select
+							options=myPrices
+							placeholder="Precio"
+							selected=selectedPrice
+							searchField="value"
+							onchange=(action (mut selectedPrice))
+							as |price|
+						}}
+							{{format-money price.value symbol=selectedCurrency format="%s %v"}}
+						{{/power-select}}
+					</div>
+				</div>
+
+				<div class="input-field col s12">
+					<i class="material-icons prefix">exposure_plus_1</i>
+						<!-- {{input disabled=(not (not myExistencia.cantidad)) type="text" min="1" class="validate" value=cantExistencia}} -->
+					{{input type="text" min="1" class="validate" value=cantExistencia}}
+					<label>Cantidad</label>
+				</div>
 
         <h4>Vista</h4>
         <div class="col s12">
@@ -81,6 +88,6 @@
 
 <div class="row">
   	<div class="col s12 m8 offset-m2">
-      <a {{action 'guardar' myModel myExistencia selectedCat mySucursal}} class="waves-effect waves-light btn right"><i class="material-icons left">save</i>Guardar</a>
+      <a {{action 'guardar' myModel myExistencia selectedPrice selectedCat mySucursal mySucursales producto.isNew}} class="waves-effect waves-light btn right"><i class="material-icons left">save</i>Guardar</a>
     </div>
 </div>

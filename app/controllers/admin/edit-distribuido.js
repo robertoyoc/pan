@@ -6,6 +6,7 @@ import DS from 'ember-data';
 
 export default Controller.extend({
 	currentUser: service(),
+	store: service(),
 
 	sucursalActual: computed(function(){
 			return DS.PromiseObject.create({
@@ -24,6 +25,18 @@ export default Controller.extend({
 			return DS.PromiseObject.create({
 				promise: this.get('model.categoria').then((categoria)=>{
 						return categoria;
+				})
+			});
+		} else {
+			return null
+		}
+	}),
+
+	currentPrecio: computed('model', function(){
+		if(!isEmpty(this.get('model.precio'))) {
+			return DS.PromiseObject.create({
+				promise: this.get('model.precio').then((precio)=>{
+						return precio;
 				})
 			});
 		} else {
