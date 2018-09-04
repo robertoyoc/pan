@@ -48,9 +48,9 @@ input {
             <a class="collection-item" {{action 'changePrecio' 'all'}}>
 					        	Todos
 					    </a>
-            {{#each precios as |precio|}}
+            {{#each pricesList as |precio|}}
               <a class="collection-item" {{action 'changePrecio' precio}}>
-					        	{{format-money precio symbol=selectedCurrency format="%s %v"}}
+					        	{{format-money precio.value symbol=selectedCurrency format="%s %v"}}
 					        </a>
             {{/each}}
           </div>
@@ -71,7 +71,7 @@ input {
                   <img class="img circle" src={{if mProduct.imageUrl mProduct.imageUrl '../media/product_default.png'}}>
                 </div>
                 <div class="col s9"><span class="name">{{mProduct.nombre}}</span></div>
-                <div class="col s9"><span class="name">{{format-money mProduct.precio symbol=selectedCurrency format="%s %v"}}</span></div>
+                <div class="col s9"><span class="name">{{format-money mProduct.precio.value symbol=selectedCurrency format="%s %v"}}</span></div>
               </div>
             {{/power-select}}
           </div>

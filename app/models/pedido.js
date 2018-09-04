@@ -1,5 +1,6 @@
-import { computed } from '@ember/object';
 import DS from 'ember-data';
+import { computed } from '@ember/object';
+import { isBlank } from '@ember/utils';
 
 export default DS.Model.extend({
   cantidad: DS.attr('number'),
@@ -18,9 +19,10 @@ export default DS.Model.extend({
   }),
 
   total: computed('producto.precio', 'cantidad', function () {
-		if(this.get('producto.precio')) {
-			let total = this.get('producto.precio') * this.get('cantidad')
-	    	return total
+    let precio = this.get('producto.precio');
+		if(!isBlank(precio)) {
+        let total = precio.get('value') * this.get('cantidad');
+        return total
 	  }
 		else
 			return 0
