@@ -1,6 +1,8 @@
 import Component from '@ember/component';
 import { inject as service } from "@ember/service";
 import { computed } from '@ember/object';
+import { isBlank } from '@ember/utils';
+import { all } from 'rsvp';
 
 export default Component.extend({
   store: service(),
@@ -8,6 +10,14 @@ export default Component.extend({
 
 	myCategorias: computed(function() {
 		return this.get('store').findAll('categoria')
+  }),
+
+  myPrices: computed(function() {
+		return this.get('store').findAll('price')
+  }),
+
+  mySucursales: computed(function() {
+		return this.get('store').findAll('sucursal')
   }),
 
   cantExistencia: computed(function(){
@@ -19,38 +29,119 @@ export default Component.extend({
   }),
 
 	actions: {
-		guardar(producto, existencia, categoria, sucursal) {
-			categoria.get('distribuidos').then((distribuidosList)=>{
-        distribuidosList.pushObject(producto)
-        distribuidosList.save().then(()=>{
-          categoria.save().then(()=>{
+		guardar(producto, existencia, precio, categoria, sucursal, sucursales, isNew) {
 
-            sucursal.get('existencias').then((existenciasList)=>{
-              existenciasList.pushObject(existencia)
-              existenciasList.save().then(()=>{
-                sucursal.save().then(()=>{
+      if(!isBlank(categoria)){
+        if(!isBlank(precio)){
 
-                  existencia.set('cantidad', this.get('cantExistencia'))
-                  existencia.save().then(()=>{
-                    producto.set('categoria', categoria)
-                    producto.save().then(()=>{
-                      window.swal(
-                        'Distribuido Añadido',
-                        'Guardaste producto distribuido',
-                        'success'
-                      ).then(()=>{
-                      this.sendAction('nuevoProducto');
-                      })
+          producto.set('categoria', categoria);
+          producto.set('precio', precio);
+
+          precio.get('distribuidos').then((listaDistribuidos)=>{
+            listaDistribuidos.pushObject(producto)
+            listaDistribuidos.save().then(()=>{
+              precio.save().then(()=>{
+
+                categoria.get('distribuidos').then((distribuidosList)=>{
+                  distribuidosList.pushObject(producto)
+                  distribuidosList.save().then(()=>{
+                    categoria.save().then(()=>{
+
+                      if(isNew) {
+                        return all(
+                            sucursales.map((listedSucursal)=>{
+                              if(listedSucursal.get('id') != sucursal.get('id')) {
+                                return listedSucursal.get('existencias').then((existenciasList)=>{
+
+                                  let existenceRecord = this.get('store').createRecord('existence', {
+                                    tipo: 'distribuido',
+                                    cantidad: 0,
+                                    sucursal: listedSucursal,
+                                    distribuido: producto
+                            			});
+
+                                  return existenceRecord.save().then(()=>{
+                                    existenciasList.pushObject(existenceRecord);
+                                    return existenciasList.save().then(()=>{
+                                      return listedSucursal.save();
+                                    })
+                                  })
+                                });
+                              }
+                            })
+                        ).then(()=>{
+
+                          sucursal.get('existencias').then((existenciasList)=>{
+                            existenciasList.pushObject(existencia)
+                            existenciasList.save().then(()=>{
+                              sucursal.save().then(()=>{
+
+                                existencia.set('cantidad', this.get('cantExistencia'))
+                                existencia.save().then(()=>{
+                                  producto.set('categoria', categoria)
+                                  producto.save().then(()=>{
+                                    window.swal(
+                                      'Distribuido Guardado',
+                                      'Añadiste producto distribuido',
+                                      'success'
+                                    ).then(()=>{
+                                    this.sendAction('nuevoProducto');
+                                    })
+                                  })
+                                })
+
+                              })
+                            })
+                          })
+
+                        });
+                      } else {
+                        sucursal.get('existencias').then((existenciasList)=>{
+                          existenciasList.pushObject(existencia)
+                          existenciasList.save().then(()=>{
+                            sucursal.save().then(()=>{
+
+                              existencia.set('cantidad', this.get('cantExistencia'))
+                              existencia.save().then(()=>{
+                                producto.set('categoria', categoria)
+                                producto.save().then(()=>{
+                                  window.swal(
+                                    'Distribuido Guardado',
+                                    'Actualizaste producto distribuido',
+                                    'success'
+                                  ).then(()=>{
+                                  this.sendAction('nuevoProducto');
+                                  })
+                                })
+                              })
+
+                            })
+                          })
+                        })
+                      }
+
                     })
                   })
-
                 })
+
               })
             })
-
           })
-        })
-      })
+
+        } else {
+          window.swal(
+            'Error',
+            'Selecciona el precio',
+            'error'
+          )
+        }
+      } else {
+        window.swal(
+          'Error',
+          'Selecciona una categoría',
+          'error'
+        )
+      }
     },
 
 		didSelectImage(files){

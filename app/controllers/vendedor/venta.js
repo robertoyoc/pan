@@ -10,6 +10,9 @@ export default Controller.extend(FindQuery, {
 	currentUser: service(),
 
 	selectedPrecio: "all",
+	pricesList: computed(function(){
+		return this.store.findAll('price');
+	}),
 	precios: [1.5, 2.0, 5.0, 6.0, 7.0, 7.5, 8.0, 8.5, 10.0],
 	// Fuente: http://www3.inegi.org.mx/sistemas/inp/preciospromedio/
 	// Tulancingo, CDMX
@@ -51,23 +54,19 @@ export default Controller.extend(FindQuery, {
 					});
 		} else {
 			let productList = [];
-			let context = this;
+			let price = this.get('selectedPrecio');
 			return DS.PromiseArray.create({
 				promise: new Promise(function (resolve, reject){
-					context.filterEqual(context.get('store'), 'distribuido', {
-							'precio': context.get('selectedPrecio')
-						}, function(distribuidos){
-							context.filterEqual(context.get('store'), 'receta', {
-									'precio': context.get('selectedPrecio')
-								}, function(recetas){
-									distribuidos.forEach((distribuido)=>{
-										productList.pushObject(distribuido)
-									})
-									recetas.forEach((receta)=>{
-										productList.pushObject(receta)
-								})
-								return resolve(productList)
+					return price.get('distribuidos').then((distribuidos)=>{
+						return price.get('recetas').then((recetas)=>{
+							distribuidos.forEach((distribuido)=>{
+								productList.pushObject(distribuido)
 							})
+							recetas.forEach((receta)=>{
+								productList.pushObject(receta)
+							})
+							return resolve(productList)
+						})
 					})
 				})
 			});

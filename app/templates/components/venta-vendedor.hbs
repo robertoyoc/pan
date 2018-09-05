@@ -199,7 +199,7 @@ body {
               {{#unless pedido.isNew}}
                 <tr>
                   <td>{{pedido.producto.nombre}}</td>
-                  <td>{{format-money pedido.producto.precio symbol=selectedCurrency format="%s %v"}}</td>
+                  <td>{{format-money pedido.producto.precio.value symbol=selectedCurrency format="%s %v"}}</td>
                   <td>{{number-input cantidad=pedido.cantidad}}</td>
                   <td>
                     {{#unless pedido.isCourtesy}}

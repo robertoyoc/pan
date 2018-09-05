@@ -7,7 +7,6 @@ import {all} from 'rsvp';
 export default Route.extend(FindQuery, {
 	currentUser: service(),
 	beforeModel(){
-		
 	},
 	model(){
 		return hash({
