@@ -3,9 +3,6 @@ let moment = require('moment')
 
 
 module.exports = {
-
-
-
   buildTicket: function(ventaSnap, res) {
     console.log("cargando datos")
     return new Promise(function(resolve, reject) {
@@ -32,6 +29,32 @@ module.exports = {
     })
 
 
+  },
+  buildCorte: function(corteSnap, res) {
+    console.log("cargando datos")
+    return new Promise(function(resolve, reject) {
+      try {
+        let Corte = require('./models/corte');
+        return Corte.load(corteSnap).then(function(corteObj) {
+          let filename = `corte-${corteObj.key}`;
+          let template = 'corte'
+          res.setHeader('Content-type', 'application/pdf')
+
+          let pdfBuilder = require(global.rootPath('pdf-builder'))
+          return pdfBuilder(corteObj, template).then((pdfDoc) => {
+            pdfDoc.pipe(res)
+            pdfDoc.end()
+            return resolve(`https://us-central1-panlavillitamx.cloudfunctions.net/api/cortes/${corteObj.key}.pdf`)
+
+          })
+
+
+        }).catch(reject)
+      } catch (e) {
+        reject(e)
+      }
+    })
+
   }
 }
 
@@ -41,7 +64,7 @@ function generateFilename(ventaObj) {
 
   filename = [
     'sucursal', ventaObj.idSucursal,
-    'ticket', ventaObj.idVenta,
+    'ticket', ventaObj.idVenta, '.pdf'
   ].join('/')
 
   return filename

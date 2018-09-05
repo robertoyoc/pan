@@ -54,5 +54,6 @@ export default DS.Model.extend({
       //console.log(sum)
       return sum;
     }).meta({ serialize: true }),
+    fileUrl: DS.attr('string')
 
 });

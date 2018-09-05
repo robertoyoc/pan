@@ -17,6 +17,8 @@ module.exports = function() {
   })
   app.get('/ventas/:id.pdf', exportablesController.generateTicket)
 
+  app.get('/cortes/:id.pdf', exportablesController.generateCorte)
+
 
 
 
